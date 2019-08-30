@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="pageTitle">
+        Ajouter une tâche
+    </div>
+    
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+    {{ form_end(form) }}
+            
+                 
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function() {
+            $('#appbundle_tache_intitule').keyup(function() {
+                this.value = this.value.toUpperCase();
+            });
+        });
+    </script>
+{% endblock %} 
+    

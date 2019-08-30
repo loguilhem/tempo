@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Modifier un dossier</h1>
+    
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+    {{ form_end(form) }}
+            
+                 
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(document).ready(function() {
+            $('#appbundle_dossier_nom').keyup(function() {
+                this.value = this.value.toUpperCase();
+            });
+        });
+    </script>
+{% endblock %} 
+    

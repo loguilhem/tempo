@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Temporela{% endblock %}</title>
+        
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Oxygen" rel="stylesheet">
+        
+        
+        {% stylesheets  '@AppBundle/Resources/public/css/jquery.dataTables.min.css'
+                        '@AppBundle/Resources/public/css/jquery-ui.css'
+                        '@AppBundle/Resources/public/css/buttons.dataTables.min.css'
+                        '@AppBundle/Resources/public/css/temporela.css'
+                        '@AppBundle/Resources/public/css/temporela-usermanagement.css'
+                        '@AppBundle/Resources/public/css/chosen.min.css'
+                        '@AppBundle/Resources/public/images/*'    %}
+            <link rel="stylesheet" href="{{ asset_url }}">
+        {% endstylesheets %}  
+        {% block stylesheets %}
+        {% endblock %}
+        
+
+        
+        <link rel="icon" type="image/x-icon" href="" /><!-- favicon -->
+
+    </head>
+    <body>
+        
+        <div id='main-menu'>
+                {% if is_granted('ROLE_SUPER_ADMIN') %}
+                    {{ knp_menu_render('AppBundle:Builder:adminMenu') }}
+                {% elseif is_granted('ROLE_USER') %}
+                    {{ knp_menu_render('AppBundle:Builder:userMenu') }}
+                {% else %}
+                    {{ knp_menu_render('AppBundle:Builder:connectMenu') }}          
+                {% endif %}            
+            </div>
+            
+        <div id="contentAll">      
+                {% if app.user is not null %}  
+                    <div id='current-user'>
+                        <a href="{{ path('fos_user_profile_show') }}">{{ app.user.username }}</a> | <a href="{{ path('fos_user_security_logout') }}">X</a>
+                    </div>
+                {% endif %}
+            
+            {% block body %}{% endblock %}
+        
+            {% javascripts  '@AppBundle/Resources/public/js/jquery-1.12.4.js'
+                            '@AppBundle/Resources/public/js/jquery-ui.min.js'
+                            '@AppBundle/Resources/public/js/jquery.dataTables.min.js'
+                            '@AppBundle/Resources/public/js/dataTables.buttons.min.js'
+                            '@AppBundle/Resources/public/js/moment.min.js'
+                            '@AppBundle/Resources/public/js/datetime-moment.js'
+                            '@AppBundle/Resources/public/js/jszip.min.js'
+                            '@AppBundle/Resources/public/js/pdfmake.min.js'
+                            '@AppBundle/Resources/public/js/vfs_fonts.js'
+                            '@AppBundle/Resources/public/js/buttons.html5.min.js'
+                            '@AppBundle/Resources/public/js/chosen.jquery.js'
+                            '@AppBundle/Resources/public/js/jquery.collection.js'
+                            '@AppBundle/Resources/public/js/temporela.js' %}
+                <script src="{{ asset_url }}"></script>
+            {% endjavascripts %}
+            {% block javascripts %}
+            {% endblock %}    
+        </div>
+        
+    </body>
+</html>

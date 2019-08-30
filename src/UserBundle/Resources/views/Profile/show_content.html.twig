@@ -1,0 +1,15 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<div class="pageTitle">
+    Gestion de votre profil
+</div>
+
+<div class="fos_user_user_show">
+    <p>{{ 'profile.show.username'|trans }}: {{ user.username }}</p>
+    <p>{{ 'profile.show.email'|trans }}: {{ user.email }}</p>
+    
+    <a href="{{ path('fos_user_profile_edit')|trans }}"><input type="button" value="Editer le profil"></a>
+    
+    <a href="{{ path('fos_user_change_password')|trans }}"><input type="button" value="Modifier le mot de passe"></a>
+    
+</div>

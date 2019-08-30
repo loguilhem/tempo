@@ -1,0 +1,161 @@
+/* ALL */
+body{
+    font-family: 'Oxygen', sans-serif;
+    min-height: 100%;
+    padding: 0;
+    margin: 0;
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+#contentAll{
+    padding: 20px 10px;
+    margin: 75px 75px;
+    text-align: center;
+    background-color: #fff;
+    border-radius: 15px;
+}
+
+.success{
+    background-color: green;
+    color: white;
+    padding: 10px;
+}
+
+.error{
+    background-color: red;
+    color: white;
+    padding: 10px;
+}
+
+/* FOOTER */
+
+#footer{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 5px;
+    background-color: #fff;
+    text-align: center;
+    margin-top: 5px;
+}
+
+/**************/
+
+/* MAIN MENU */
+
+#main-menu{
+    background-color: #001f3f;
+    
+}
+
+#main-menu ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+#main-menu ul li{
+    float: left;
+    margin-bottom: 0 !important;
+}
+
+#main-menu ul li a{
+    display: block;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    color: white;
+}
+
+#main-menu ul li a:hover{
+    background-color: white;
+    color: #001f3f;
+}
+
+/**************/
+
+/* button */
+
+input[type="button"], input[type="submit"], button[type="submit"]{
+    background-color: #001f3f;
+    color: white;
+    padding: 10px 15px;
+    border: 4px solid #001f3f;
+    border-radius: 15px;
+    margin: 5px 5px !important;
+    cursor: pointer;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.2s;
+    box-shadow: 0 9px #999;
+}
+
+input[type="button"]:hover, input[type="submit"]:hover, button[type="submit"]:hover{
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);    
+}
+
+input[type="button"]:active, input[type="submit"]:active, button[type="submit"]:active{
+    background-color: white;
+    color: #6D071A;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus
+input:-webkit-autofill, 
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus  {
+    -webkit-box-shadow: 0 0 0 1000px white inset !important;
+}
+
+/* DASHBOARDS */
+
+#db-users{
+    height: 200px;
+    width: auto;
+}
+
+.db-btn{
+    width: 300px;
+    text-align: center;
+    display: inline-block;
+}
+
+/*recap page*/
+
+.recapform{
+    display: block;
+    padding: 10px;
+    margin: 10px;
+    border: 2px solid black;
+
+}
+
+/*forms*/
+
+form{
+    display: inline-flex;
+    max-width: 100vw;
+}
+
+form div{
+    min-width: 150px;
+    margin-right: 5px;
+    display: table-cell;
+}
+
+label{
+    display: block;
+}
+
+.chosen-container-single .chosen-single{
+    min-width: 100px;
+}

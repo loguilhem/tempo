@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    
+    {% for flashMessage in app.session.flashbag.get('success') %}
+        <div class="success">{{ flashMessage }}</div>
+    {% endfor %}
+
+    <div class="pageTitle">
+        Liste des utilisateurs Temporela
+    </div>
+        
+    <table id="listUsers-table" cellspacing="0" width="100%" class="display list_table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Pseudo</th>
+                <th>Email</th>
+                <th>Droits</th>
+                <th>Statut</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <th>Pseudo</th>
+                <th>ID</th>
+                <th>Email</th>
+                <th>Droits</th>
+                <th>Statut</th>
+            </tr>
+        </tfoot>      
+            <tbody>
+        {% for User in listUsers %}  
+                <tr>
+                    <td>{{ User.id }}</td>
+                    <td>{{ User.username }}</td>
+                    <td>{{ User.email }}</td>
+                    <td>
+                        {% set break = false %}
+                        {% for role in User.roles if not break %}
+                        {{ role }}
+                        {% set break = true %}
+                        {% endfor %}
+                        <a href="{{ path('promoteuser', { 'id': User.id }) }}">&uarr;</a>
+                        <a href="{{ path('demoteuser', { 'id': User.id }) }}">&darr;</a>
+                    </td>
+                    <td>
+                        <a href="{{ path('activateuser', { 'id': User.id }) }}">
+                            {% if User.enabled == 1 %}
+                                Actif
+                            {% else %}
+                                Inactif
+                            {% endif %}
+                        </a>
+                    </td>
+                </tr>
+        {% endfor %}
+            </tbody>
+    
+    </table>            
+            
+    <p><a href="{{ path('fos_user_registration_register')|trans }}"><input type="button" value="Ajouter un utilisateur"></a></p>
+                   
+{% endblock %}
+    

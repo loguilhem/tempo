@@ -1,0 +1,119 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    {# results #}
+    {% if results is defined %}
+
+        <div class="pageTitle">
+            Numéro du Dossier : <b>{{ dossier.numero }}</b>
+            <br>
+            Nom du dossier : <b>{{ dossier.nom }}</b>
+            <br>
+            Exercice : <b>{{ exercice }}</b>
+        </div>
+        <br>
+        <p><b>Temps passé total par tâche :</b></p>
+        <br>
+        <table id="list-table" cellspacing="0" width="100%" class="display list_table">
+            <thead>
+                <tr>
+                    <th>Numéro Tâche</th>
+                    <th>Intitulé Tâche</th>
+                    <th>Temps passé total</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for Tache in results %}
+                <tr>
+                    <td>{{ Tache.num }}</td>
+                    <td>{{ Tache.intitule }}</td>
+                    <td>{{ Tache.tempstotal }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <br>
+        <br>
+        <p><b>Détails des temps passés :</b></p>
+        <table id="list-table-details" cellspacing="0" width="100%" class="display list_table">
+            <thead>
+            <tr>
+                <th>Date</th>
+                <th>Intitulé Tâche</th>
+                <th>Collaborateur</th>
+                <th>Temps passé</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for Detail in details %}
+                <tr>
+                    <td>{{ Detail.date|date('d/m/Y') }}</td>
+                    <td>{{ Detail.tache.numero }} {{ Detail.tache.intitule }}</td>
+                    <td>{{ Detail.collaborateur.username }}</td>
+                    <td>{{ Detail.tempspasse }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    {% endif %}
+
+
+
+    {# results2 #}
+    {% if results2 is defined %}
+
+        <div class="pageTitle">
+            Collaborateur : <b>{{ collaborateur.username }}</b>
+            <br>
+            Exercice : <b>{{ exercice }}</b>
+        </div>
+        <br>
+        <p><b>Temps passé total par dossier :</b></p>
+        <br>
+
+        <table id="list-table" cellspacing="0" width="100%" class="display list_table">
+            <thead>
+                <tr>
+                    <th>Dossier</th>
+                    <th>Temps passé total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for Temps in results2 %}
+                    <tr>
+                        <td>{{ Temps.numdos }} {{ Temps.dossier }}</td>
+                        <td>{{ Temps.tempstotal }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <br>
+        <br>
+        <p><b>Détails des temps passés :</b></p>
+        <table id="list-table-details" cellspacing="0" width="100%" class="display list_table">
+            <thead>
+            <tr>
+                <th>Date</th>
+                <th>Dossier</th>
+                <th>Tâche</th>
+                <th>Temps passé</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for Detail in details %}
+                <tr>
+                    <td>{{ Detail.date|date('d/m/Y') }}</td>
+                    <td>{{ Detail.dossier.numero }} {{ Detail.dossier.nom }}</td>
+                    <td>{{ Detail.tache.numero }} {{ Detail.tache.intitule }}</td>
+                    <td>{{ Detail.tempspasse }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+    {% endif %}
+
+
+{% endblock %}
