@@ -49,7 +49,6 @@ class TablesController extends Controller
     public function addDossierAction(Request $request)
     {
         $dossier = new Dossier();
-
         $form = $this->createForm(DossierType::class, $dossier);
         $form->handleRequest($request);
 
@@ -59,6 +58,7 @@ class TablesController extends Controller
             $em->persist($dossier);
             $em->flush();
             $this->addFlash('success', 'Dossier correctement ajouté.');
+
             return $this->redirectToRoute('listdossier');
         }
 
@@ -125,42 +125,15 @@ class TablesController extends Controller
     /**
      * @Security("has_role('ROLE_SUPER_ADMIN')")
      */
-    public function modCollaboAction(Request $request, $id)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('Collaborateur');
-        $collaborateur = $repository->find($id);
-        
-        if(null === $collaborateur)
-        {
-            $this->addFlash('error', 'Le collaborateur avec l\'ID '.$id.' n\'existe pas.');
-            return $this->redirectToRoute('listcollaborateur');
-        }
-        
-        $form = $this->createForm(CollaborateurType::class, $collaborateur);
-        $form->handleRequest($request);
-        
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em->flush();
-            $this->addFlash('success', 'Le collaborateur a été correctement modifé.');
-            return $this->redirectToRoute('listcollabo');
-        }
-        
-        return $this->render('mod/user.html.twig', array('form' => $form->createView()));
-    }
-    
-    /**
-     * @Security("has_role('ROLE_SUPER_ADMIN')")
-     */
     public function modDossierAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('Dossier');
+        $repository = $em->getRepository(Dossier::class);
         $dossier = $repository->find($id);
         
         if(null === $dossier)
         {
-            $this->addFlash('error', 'Le dossier avec l\'ID '.$id.' n\'existe pas.');
+            $this->addFlash('error', 'Ce dossier est introuvable.');
             return $this->redirectToRoute('listdossier');
         }
         

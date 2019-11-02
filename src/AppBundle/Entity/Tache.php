@@ -31,7 +31,7 @@ class Tache
     /**
      * @var int
      *
-     * @ORM\Column(name="numero", type="integer", unique=true)
+     * @ORM\Column(name="numero", type="integer", unique=true, nullable=false)
      */
     private $numero;
 

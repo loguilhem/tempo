@@ -31,7 +31,7 @@ class Dossier
     /**
      * @var int
      *
-     * @ORM\Column(name="numero", type="integer", nullable=true)
+     * @ORM\Column(name="numero", type="integer", nullable=false, unique=true)
      */
     private $numero;
 
