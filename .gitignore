@@ -1,1 +1,5 @@
 # Created by .ignore support plugin (hsz.mobi)
+Supprimerait .web-server-pid
+/app/config/parameters.yml
+/vendor
+/var
