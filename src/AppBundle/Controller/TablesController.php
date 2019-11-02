@@ -40,7 +40,7 @@ class TablesController extends Controller
             return $this->redirectToRoute('listcollaborateur');
         }
 
-        return $this->render('add/user.html.twig', array('form' => $form->createView()));
+        return $this->render('add:collabo.html.twig', array('form' => $form->createView()));
     }
     
     /**
@@ -62,7 +62,7 @@ class TablesController extends Controller
             return $this->redirectToRoute('listdossier');
         }
 
-        return $this->render('add/dossier.html.twig', array('form' => $form->createView()));
+        return $this->render('add:dossier.html.twig', array('form' => $form->createView()));
     }
     
     /**
@@ -84,7 +84,7 @@ class TablesController extends Controller
             return $this->redirectToRoute('listtache');
         }
 
-        return $this->render('add/tache.html.twig', array('form' => $form->createView()));
+        return $this->render('add:tache.html.twig', array('form' => $form->createView()));
     }
     
     /**
@@ -119,7 +119,34 @@ class TablesController extends Controller
 
         }
 
-        return $this->render('add/temps.html.twig', array('form' => $form->createView()));
+        return $this->render('add:temps.html.twig', array('form' => $form->createView()));
+    }
+    
+    /**
+     * @Security("has_role('ROLE_SUPER_ADMIN')")
+     */
+    public function modCollaboAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('Collaborateur');
+        $collaborateur = $repository->find($id);
+        
+        if(null === $collaborateur)
+        {
+            $this->addFlash('error', 'Le collaborateur avec l\'ID '.$id.' n\'existe pas.');
+            return $this->redirectToRoute('listcollaborateur');
+        }
+        
+        $form = $this->createForm(CollaborateurType::class, $collaborateur);
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid()) {
+            $em->flush();
+            $this->addFlash('success', 'Le collaborateur a été correctement modifé.');
+            return $this->redirectToRoute('listcollabo');
+        }
+        
+        return $this->render('mod:collabo.html.twig', array('form' => $form->createView()));        
     }
     
     /**
@@ -173,7 +200,7 @@ class TablesController extends Controller
             return $this->redirectToRoute('listdossier');
         }
         
-        return $this->render('mod/dossier.html.twig', array('form' => $form->createView()));
+        return $this->render('mod:dossier.html.twig', array('form' => $form->createView()));        
     }
     
     /**
@@ -200,7 +227,7 @@ class TablesController extends Controller
             return $this->redirectToRoute('listtache');
         }
         
-        return $this->render('mod/tache.html.twig', array('form' => $form->createView()));
+        return $this->render('mod:tache.html.twig', array('form' => $form->createView()));        
     }
     
     /**
@@ -236,7 +263,7 @@ class TablesController extends Controller
             return $this->redirectToRoute('listtempscollaborateur');
         }
         
-        return $this->render('mod/temps.html.twig', array('form' => $form->createView()));
+        return $this->render('mod:temps.html.twig', array('form' => $form->createView()));        
     }
     
     /**
