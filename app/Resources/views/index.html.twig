@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+       
+    <h1>Bienvenue sur Temporela</h1>
+    <h2>L'application de Gestion du Temps Passé de la Comptarela</h2>
+
+
+    {% if app.user is not null %}
+        Bienvenue {{ app.user.username }}. Votre dernière connexion : {{ app.user.lastLogin|date('d/m/Y') }}
+        {% else %}
+        Merci de vous authentifier.
+    {% endif %}
+    
+{% endblock %}

@@ -2,47 +2,33 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Collaborateur;
+use AppBundle\Entity\Dossier;
+use AppBundle\Entity\Tache;
+use AppBundle\Entity\Temps;
 use AppBundle\Form\Recap2Type;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use AppBundle\Entity\Temps;
-use AppBundle\Entity\Dossier;
-use AppBundle\Repository\TempsRepository;
-use AppBundle\Repository\DossierRepository;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use AppBundle\Form\Recap1Type;
 
 class DefaultController extends Controller
 {
     public function indexAction()
     {        
-        return $this->render('AppBundle::index.html.twig');        
+        return $this->render('index.html.twig');
     }
     
     /**
      * @Security("has_role('ROLE_SUPER_ADMIN')")
      */
-    public function listCollaboAction()
+    public function listDossierAction()
     {
-        $repository = $this->getDoctrine()->getManager()->getRepository('AppBundle:Collaborateur');
-        $listCollaboQuery = $repository->findAll();
-        
-        return $this->render('AppBundle:lists:collabo.html.twig', array('listCollabo' => $listCollaboQuery));       
-    }
-    
-    /**
-     * @Security("has_role('ROLE_SUPER_ADMIN')")
-     */
-    public function listDossierAction(Request $request)
-    {
-        $repository = $this->getDoctrine()->getManager()->getRepository('AppBundle:Dossier');
+        $repository = $this->getDoctrine()->getManager()->getRepository(Dossier::class);
         $listDossierQuery = $repository->findAll();
                 
-        return $this->render('AppBundle:lists:dossier.html.twig', array('listDossier' => $listDossierQuery));   
+        return $this->render('lists/dossier.html.twig', array('listDossier' => $listDossierQuery));
              
     }
     
@@ -51,10 +37,10 @@ class DefaultController extends Controller
      */
     public function listTacheAction()
     {        
-        $repository = $this->getDoctrine()->getManager()->getRepository('AppBundle:Tache');
+        $repository = $this->getDoctrine()->getManager()->getRepository(Tache::class);
         $listTacheQuery = $repository->findAll();
 
-        return $this->render('AppBundle:lists:tache.html.twig', array('listTache' => $listTacheQuery));        
+        return $this->render('lists/tache.html.twig', array('listTache' => $listTacheQuery));
     }
 
     /**
@@ -62,10 +48,10 @@ class DefaultController extends Controller
      */
     public function listTempsAction()
     {
-        $repository = $this->getDoctrine()->getManager()->getRepository('AppBundle:Temps');
+        $repository = $this->getDoctrine()->getManager()->getRepository(Temps::class);
         $listTempsQuery = $repository->findAll();
 
-        return $this->render('AppBundle:lists:temps.html.twig', array('listTemps' => $listTempsQuery));
+        return $this->render('lists/temps.html.twig', array('listTemps' => $listTempsQuery));
     }
 
     /**
@@ -77,7 +63,7 @@ class DefaultController extends Controller
         $repository = $this->getDoctrine()->getManager()->getRepository('AppBundle:Temps');
         $listTempsQuery = $repository->findByCollaborateur($collaborateur);
 
-        return $this->render('AppBundle:lists:temps.html.twig', array('listTemps' => $listTempsQuery));
+        return $this->render('lists/temps.html.twig', array('listTemps' => $listTempsQuery));
     }
 
     /**
@@ -96,7 +82,7 @@ class DefaultController extends Controller
         }
 
 
-        return $this->render('AppBundle:lists:touttemps.html.twig', array('listTemps' => $listTempsQuery));
+        return $this->render('lists/touttemps.html.twig', array('listTemps' => $listTempsQuery));
     }
     
     /**
@@ -130,7 +116,7 @@ class DefaultController extends Controller
 
             $details = $repoTemps->getByDossierExercice($idDossier, $exercice, $dateDebut, $dateFin, $forever);
 
-           return $this->render('AppBundle::results.html.twig',
+           return $this->render('results.html.twig',
                array('dossier' => $dossier, 'exercice' => $exercice,
                    'dateDebut' => $dateDebut, 'dateFin' => $dateFin,
                    'results' => $results, 'details' => $details
@@ -154,7 +140,7 @@ class DefaultController extends Controller
             $details2 = $repoTemps->getByColExercice($idCol, $exercice, $dateDebut, $dateFin, $forever);
 
 
-            return $this->render('AppBundle::results.html.twig',
+            return $this->render('results.html.twig',
                 array('collaborateur' => $col, 'exercice' => $exercice,
                     'dateDebut' => $dateDebut, 'dateFin' => $dateFin,
                     'results2' => $results2, 'details' => $details2));
@@ -162,7 +148,7 @@ class DefaultController extends Controller
 
         else
         {
-            return $this->render('AppBundle::recap.html.twig', array('form1' => $form1->createView(), 'form2' => $form2->createView()));
+            return $this->render('recap.html.twig', array('form1' => $form1->createView(), 'form2' => $form2->createView()));
         }
      
     }

@@ -40,7 +40,7 @@ class TablesController extends Controller
             return $this->redirectToRoute('listcollaborateur');
         }
 
-        return $this->render('AppBundle:add:collabo.html.twig', array('form' => $form->createView()));
+        return $this->render('add:collabo.html.twig', array('form' => $form->createView()));
     }
     
     /**
@@ -62,7 +62,7 @@ class TablesController extends Controller
             return $this->redirectToRoute('listdossier');
         }
 
-        return $this->render('AppBundle:add:dossier.html.twig', array('form' => $form->createView()));
+        return $this->render('add:dossier.html.twig', array('form' => $form->createView()));
     }
     
     /**
@@ -84,7 +84,7 @@ class TablesController extends Controller
             return $this->redirectToRoute('listtache');
         }
 
-        return $this->render('AppBundle:add:tache.html.twig', array('form' => $form->createView()));
+        return $this->render('add:tache.html.twig', array('form' => $form->createView()));
     }
     
     /**
@@ -119,7 +119,7 @@ class TablesController extends Controller
 
         }
 
-        return $this->render('AppBundle:add:temps.html.twig', array('form' => $form->createView()));
+        return $this->render('add:temps.html.twig', array('form' => $form->createView()));
     }
     
     /**
@@ -128,7 +128,7 @@ class TablesController extends Controller
     public function modCollaboAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('AppBundle:Collaborateur');
+        $repository = $em->getRepository('Collaborateur');
         $collaborateur = $repository->find($id);
         
         if(null === $collaborateur)
@@ -146,7 +146,7 @@ class TablesController extends Controller
             return $this->redirectToRoute('listcollabo');
         }
         
-        return $this->render('AppBundle:mod:collabo.html.twig', array('form' => $form->createView()));        
+        return $this->render('mod:collabo.html.twig', array('form' => $form->createView()));        
     }
     
     /**
@@ -155,7 +155,7 @@ class TablesController extends Controller
     public function modDossierAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('AppBundle:Dossier');
+        $repository = $em->getRepository('Dossier');
         $dossier = $repository->find($id);
         
         if(null === $dossier)
@@ -173,7 +173,7 @@ class TablesController extends Controller
             return $this->redirectToRoute('listdossier');
         }
         
-        return $this->render('AppBundle:mod:dossier.html.twig', array('form' => $form->createView()));        
+        return $this->render('mod:dossier.html.twig', array('form' => $form->createView()));        
     }
     
     /**
@@ -182,7 +182,7 @@ class TablesController extends Controller
     public function modTacheAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('AppBundle:Tache');
+        $repository = $em->getRepository('Tache');
         $tache = $repository->find($id);
         
         if(null === $tache)
@@ -200,7 +200,7 @@ class TablesController extends Controller
             return $this->redirectToRoute('listtache');
         }
         
-        return $this->render('AppBundle:mod:tache.html.twig', array('form' => $form->createView()));        
+        return $this->render('mod:tache.html.twig', array('form' => $form->createView()));        
     }
     
     /**
@@ -209,7 +209,7 @@ class TablesController extends Controller
     public function modTempsAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('AppBundle:Temps');
+        $repository = $em->getRepository('Temps');
         $temps = $repository->find($id);
         
         if(null === $temps)
@@ -236,7 +236,7 @@ class TablesController extends Controller
             return $this->redirectToRoute('listtempscollaborateur');
         }
         
-        return $this->render('AppBundle:mod:temps.html.twig', array('form' => $form->createView()));        
+        return $this->render('mod:temps.html.twig', array('form' => $form->createView()));        
     }
     
     /**
@@ -245,7 +245,7 @@ class TablesController extends Controller
     public function delCollaboAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('AppBundle:Collaborateur');
+        $repository = $em->getRepository('Collaborateur');
         $collaborateur = $repository->find($id);
         
         if(null === $collaborateur)
@@ -266,7 +266,7 @@ class TablesController extends Controller
     public function delDossierAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('AppBundle:Dossier');
+        $repository = $em->getRepository('Dossier');
         $dossier = $repository->find($id);
         
         if(null === $dossier)
@@ -287,7 +287,7 @@ class TablesController extends Controller
     public function delTacheAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('AppBundle:Tache');
+        $repository = $em->getRepository('Tache');
         $tache = $repository->find($id);
         
         if(null === $tache)
@@ -308,7 +308,7 @@ class TablesController extends Controller
     public function delTempsAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('AppBundle:Temps');
+        $repository = $em->getRepository('Temps');
         $temps = $repository->find($id);
         
         if(null === $temps)

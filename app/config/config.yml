@@ -2,7 +2,6 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: services.yml }
-    - { resource: "@UserBundle/Resources/config/services.yml" }
 
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
@@ -72,7 +71,7 @@ swiftmailer:
 fos_user:
     db_driver: orm
     firewall_name: main
-    user_class: UserBundle\Entity\User
+    user_class: AppBundle\Entity\User
     service:
         mailer: 'fos_user.mailer.twig_swift'
     from_email:
@@ -81,8 +80,3 @@ fos_user:
     resetting:
         email:
             template: '@FOSUser/Resetting/email.txt.twig'
-assetic:
-    debug:          '%kernel.debug%'
-    use_controller: '%kernel.debug%'
-    filters:
-        cssrewrite: ~

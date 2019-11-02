@@ -36,7 +36,7 @@ class Tache
     private $numero;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Tache", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Tache", inversedBy="tachesfilles", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true, unique=false, onDelete="SET NULL")
      */
     private $tachemere;

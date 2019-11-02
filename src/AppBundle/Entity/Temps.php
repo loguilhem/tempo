@@ -42,7 +42,7 @@ class Temps
     private $dossier;
 
     /**
-     * @ORM\ManyToOne(targetEntity="UserBundle\Entity\User", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true,onDelete="SET NULL")
      */
     private $collaborateur;
@@ -193,11 +193,11 @@ class Temps
     /**
      * Set collaborateur
      *
-     * @param \UserBundle\Entity\User $collaborateur
+     * @param \AppBundle\Entity\User $collaborateur
      *
      * @return Temps
      */
-    public function setCollaborateur(\UserBundle\Entity\User $collaborateur = null)
+    public function setCollaborateur(\AppBundle\Entity\User $collaborateur = null)
     {
         $this->collaborateur = $collaborateur;
 
@@ -207,7 +207,7 @@ class Temps
     /**
      * Get collaborateur
      *
-     * @return \UserBundle\Entity\User
+     * @return \AppBundle\Entity\User
      */
     public function getCollaborateur()
     {

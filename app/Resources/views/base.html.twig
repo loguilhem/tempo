@@ -3,37 +3,50 @@
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}Temporela{% endblock %}</title>
-        
-        <!-- Google Fonts -->
+
         <link href="https://fonts.googleapis.com/css?family=Oxygen" rel="stylesheet">
-        
-        
-        {% stylesheets  '@AppBundle/Resources/public/css/jquery.dataTables.min.css'
-                        '@AppBundle/Resources/public/css/jquery-ui.css'
-                        '@AppBundle/Resources/public/css/buttons.dataTables.min.css'
-                        '@AppBundle/Resources/public/css/temporela.css'
-                        '@AppBundle/Resources/public/css/temporela-usermanagement.css'
-                        '@AppBundle/Resources/public/css/chosen.min.css'
-                        '@AppBundle/Resources/public/images/*'    %}
-            <link rel="stylesheet" href="{{ asset_url }}">
-        {% endstylesheets %}  
+        <link href="css/jquery-ui.css" rel="stylesheet">
+        <link href="css/jquery.dataTables.min.css" rel="stylesheet">
+        <link href="css/buttons.dataTables.min.css" rel="stylesheet">
+        <link href="css/chosen.min.css" rel="stylesheet">
+        <link href="css/temporela.css" rel="stylesheet">
+        <link href="css/temporela-usermanagement.css" rel="stylesheet">
+        <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
+
         {% block stylesheets %}
         {% endblock %}
-        
-
-        
-        <link rel="icon" type="image/x-icon" href="" /><!-- favicon -->
 
     </head>
     <body>
         
         <div id='main-menu'>
                 {% if is_granted('ROLE_SUPER_ADMIN') %}
-                    {{ knp_menu_render('AppBundle:Builder:adminMenu') }}
+                    <ul>
+                        <li>
+                            <a href="{{ path('listusers') }}">{{ 'Gestion Collaborateurs'|trans }}</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('listdossier') }}">{{ 'Gestion des Dossiers'|trans }}</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('listtemps') }}">{{ 'Gestion du Temps'|trans }}</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('recap') }}">{{ 'Récapitulatif'|trans }}</a>
+                        </li>
+                    </ul>
                 {% elseif is_granted('ROLE_USER') %}
-                    {{ knp_menu_render('AppBundle:Builder:userMenu') }}
+                    <ul>
+                        <li>
+                            <a href="{{ path('listtempscollaborateur') }}">{{ 'Gestion du temps'|trans }}</a>
+                        </li>
+                    </ul>
                 {% else %}
-                    {{ knp_menu_render('AppBundle:Builder:connectMenu') }}          
+                    <ul>
+                        <li>
+                            <a href="{{ path('fos_user_security_login') }}">{{ 'Se connecter'|trans }}</a>
+                        </li>
+                    </ul>
                 {% endif %}            
             </div>
             
@@ -44,26 +57,24 @@
                     </div>
                 {% endif %}
             
-            {% block body %}{% endblock %}
-        
-            {% javascripts  '@AppBundle/Resources/public/js/jquery-1.12.4.js'
-                            '@AppBundle/Resources/public/js/jquery-ui.min.js'
-                            '@AppBundle/Resources/public/js/jquery.dataTables.min.js'
-                            '@AppBundle/Resources/public/js/dataTables.buttons.min.js'
-                            '@AppBundle/Resources/public/js/moment.min.js'
-                            '@AppBundle/Resources/public/js/datetime-moment.js'
-                            '@AppBundle/Resources/public/js/jszip.min.js'
-                            '@AppBundle/Resources/public/js/pdfmake.min.js'
-                            '@AppBundle/Resources/public/js/vfs_fonts.js'
-                            '@AppBundle/Resources/public/js/buttons.html5.min.js'
-                            '@AppBundle/Resources/public/js/chosen.jquery.js'
-                            '@AppBundle/Resources/public/js/jquery.collection.js'
-                            '@AppBundle/Resources/public/js/temporela.js' %}
-                <script src="{{ asset_url }}"></script>
-            {% endjavascripts %}
+            {% block body %}
+            {% endblock %}
+
+            <script src="js/jquery-1.12.4.js"></script>
+            <script src="js/jquery-ui.min.js"></script>
+            <script src="js/jquery.dataTables.min.js"></script>
+            <script src="js/dataTables.buttons.min.js"></script>
+            <script src="js/moment.min.js"></script>
+            <script src="js/jszip.min.js"></script>
+            <script src="js/pdfmake.min.js"></script>
+            <script src="js/vfs_fonts.js"></script>
+            <script src="js/buttons.html5.min.js"></script>
+            <script src="js/chosen.jquery.js"></script>
+            <script src="js/jquery.collection.js"></script>
+            <script src="js/temporela.js"></script>
+
             {% block javascripts %}
             {% endblock %}    
         </div>
-        
     </body>
 </html>

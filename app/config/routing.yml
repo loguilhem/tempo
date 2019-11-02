@@ -1,8 +1,3 @@
-user:
-    resource: "@UserBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
 app:
     resource: '@AppBundle/Controller/'
     type: annotation
@@ -105,25 +100,25 @@ fos_user:
 listusers:
     path: /listusers
     defaults: 
-        _controller: UserBundle:User:listUsers
+        _controller: AppBundle:User:listUsers
     
 promoteuser:
     path:     /promoteuser/{id}
     defaults:
-        _controller: UserBundle:User:promoteUser
+        _controller: AppBundle:User:promoteUser
     requirements:
         id: \d*
         
 demoteuser:
     path:    /demoteuser/{id}
     defaults:
-        _controller: UserBundle:User:demoteUser
+        _controller: AppBundle:User:demoteUser
     requirements:
         id: \d*
         
 activateuser:
     path:    /activateuser/{id}
     defaults:
-        _controller: UserBundle:User:activateUser
+        _controller: AppBundle:User:activateUser
     requirements:
         id: \d*

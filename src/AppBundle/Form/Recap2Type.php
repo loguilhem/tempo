@@ -18,7 +18,7 @@ class  Recap2Type extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('collaborateur', EntityType::class, array(
-                    'class' => 'UserBundle:User',
+                    'class' => 'AppBundle:User',
                     'expanded' => false,
                     'multiple' => false,
                     'choice_label' => function($collaborateur){
