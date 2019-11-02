@@ -34,7 +34,7 @@ class TacheType extends AbstractType
                         )
                                 
                 ))               
-                ->add('+', SubmitType::class);;
+                ->add('Enregistrer', SubmitType::class);;
     }
     
     /**

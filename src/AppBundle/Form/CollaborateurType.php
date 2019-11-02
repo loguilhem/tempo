@@ -7,7 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-class DossierType extends AbstractType
+class CollaborateurType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -15,7 +15,7 @@ class DossierType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('nom')
-                ->add('numero')
+                ->add('prenom')                
                 ->add('Enregistrer', SubmitType::class);
     }
     
@@ -25,7 +25,7 @@ class DossierType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Dossier'
+            'data_class' => 'AppBundle\Entity\Collaborateur'
         ));
     }
 
@@ -34,7 +34,7 @@ class DossierType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'appbundle_dossier';
+        return 'appbundle_collaborateur';
     }
 
 

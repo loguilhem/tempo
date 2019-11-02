@@ -67,7 +67,7 @@ class  Recap2Type extends AbstractType
                     'attr' => array(
                         'class' => 'datePick form2')
                 ))
-                ->add('=>', SubmitType::class);
+                ->add('filtrer', SubmitType::class);
     }
 
     /**

@@ -1,6 +1,13 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
+    
+    {% for message in app.flashes('success') %}
+        <div class="success">{{ message }}</div>
+    {% endfor %}
+    {% for message in app.flashes('error') %}
+        <div class="error">{{ message }}</div>
+    {% endfor %}
 
     <div class="pageTitle">
         Choisir les paramètres pour filtrer les données
