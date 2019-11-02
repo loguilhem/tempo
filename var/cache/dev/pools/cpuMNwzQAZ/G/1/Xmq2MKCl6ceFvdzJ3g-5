@@ -1,4 +1,0 @@
-<?php return array (
-  0 => 9223372036854775807,
-  1 => 'a:1:{i:0;O:57:"Sensio\\Bundle\\FrameworkExtraBundle\\Configuration\\Security":1:{s:13:"' . "\0" . '*' . "\0" . 'expression";s:28:"has_role(\'ROLE_SUPER_ADMIN\')";}}',
-);
