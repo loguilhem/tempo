@@ -40,7 +40,7 @@ class TablesController extends Controller
             return $this->redirectToRoute('listcollaborateur');
         }
 
-        return $this->render('add:collabo.html.twig', array('form' => $form->createView()));
+        return $this->render('add/user.html.twig', array('form' => $form->createView()));
     }
     
     /**
@@ -62,7 +62,7 @@ class TablesController extends Controller
             return $this->redirectToRoute('listdossier');
         }
 
-        return $this->render('add:dossier.html.twig', array('form' => $form->createView()));
+        return $this->render('add/dossier.html.twig', array('form' => $form->createView()));
     }
     
     /**
@@ -84,7 +84,7 @@ class TablesController extends Controller
             return $this->redirectToRoute('listtache');
         }
 
-        return $this->render('add:tache.html.twig', array('form' => $form->createView()));
+        return $this->render('add/tache.html.twig', array('form' => $form->createView()));
     }
     
     /**
@@ -119,7 +119,7 @@ class TablesController extends Controller
 
         }
 
-        return $this->render('add:temps.html.twig', array('form' => $form->createView()));
+        return $this->render('add/temps.html.twig', array('form' => $form->createView()));
     }
     
     /**
@@ -146,7 +146,7 @@ class TablesController extends Controller
             return $this->redirectToRoute('listcollabo');
         }
         
-        return $this->render('mod:collabo.html.twig', array('form' => $form->createView()));        
+        return $this->render('mod/user.html.twig', array('form' => $form->createView()));
     }
     
     /**
@@ -173,7 +173,7 @@ class TablesController extends Controller
             return $this->redirectToRoute('listdossier');
         }
         
-        return $this->render('mod:dossier.html.twig', array('form' => $form->createView()));        
+        return $this->render('mod/dossier.html.twig', array('form' => $form->createView()));
     }
     
     /**
@@ -200,7 +200,7 @@ class TablesController extends Controller
             return $this->redirectToRoute('listtache');
         }
         
-        return $this->render('mod:tache.html.twig', array('form' => $form->createView()));        
+        return $this->render('mod/tache.html.twig', array('form' => $form->createView()));
     }
     
     /**
@@ -236,7 +236,7 @@ class TablesController extends Controller
             return $this->redirectToRoute('listtempscollaborateur');
         }
         
-        return $this->render('mod:temps.html.twig', array('form' => $form->createView()));        
+        return $this->render('mod/temps.html.twig', array('form' => $form->createView()));
     }
     
     /**

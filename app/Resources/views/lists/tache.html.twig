@@ -1,25 +1,17 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    
-    {% for message in app.flashes('success') %}
-        <div class="success">{{ message }}</div>
-    {% endfor %}
-    {% for message in app.flashes('error') %}
-        <div class="error">{{ message }}</div>
-    {% endfor %}
 
     <div class="pageTitle">
         Liste des Tâches Temporela
     </div>
     
-    <a href="{{ path('addtache') }}"><input type="button" value="Ajouter une tâche"></a>
+    <a href="{{ path('addtache') }}"><input type="button" value="+"></a>
      
         
     <table id="listTache-table" cellspacing="0" width="100%" class="display list_table">
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Intitulé</th>
                 <th>Numéro</th>
                 <th>Tâche mère</th>
@@ -28,33 +20,21 @@
                 <th>Voir temps passé</th>
             </tr>
         </thead>
-        <tfoot>
-            <tr>
-                <th>ID</th>
-                <th>Intitulé</th>
-                <th>Numéro</th>
-                <th>Tâche mère</th>
-                <th>Modifier</th>
-                <th>Supprimer</th>
-                <th>Voir temps passé</th>
-            </tr>
-        </tfoot>      
-            <tbody>
-        {% for Tache in listTache %}  
-                <tr>
-                    <td>{{ Tache.id }}</td>
-                    <td>{{ Tache.intitule }}</td>
-                    <td>{{ Tache.numero }}</td>
-                    <td>
-                    {% if Tache.tachemere != null %}
-                        {{ Tache.tachemere.intitule }}
-                    {% endif %}
-                    <td><a href="{{ path('modtache', {'id':Tache.id}) }}">Modifier</a></td>
-                    <td><a class="confirmation" href="{{ path('deltache', {'id':Tache.id}) }}">Supprimer</a></td>
-                    <td>X</td>
-                </tr>
+        <tbody>
+        {% for Tache in listTache %}
+        <tr>
+            <td>{{ Tache.intitule }}</td>
+            <td>{{ Tache.numero }}</td>
+            <td>
+            {% if Tache.tachemere != null %}
+                {{ Tache.tachemere.intitule }}
+            {% endif %}
+            <td><a href="{{ path('modtache', {'id':Tache.id}) }}">Modifier</a></td>
+            <td><a class="confirmation" href="{{ path('deltache', {'id':Tache.id}) }}">Supprimer</a></td>
+            <td>X</td>
+        </tr>
         {% endfor %}
-            </tbody>
+        </tbody>
     
     </table>            
             

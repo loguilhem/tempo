@@ -22,9 +22,7 @@ class  Recap1Type extends AbstractType
                 'expanded' => false,
                 'multiple' => false,
                 'choice_label' => function($dossier){
-                    $dosName = $dossier->getNom();
-                    $dosNum = $dossier->getNumero();
-                    return $dosNum.' '.$dosName;
+                    return $dossier->getNom().' '.$dossier->getNumero();
                 },
                 'attr' => array(
                     'class' => 'chosen-select'
@@ -68,7 +66,7 @@ class  Recap1Type extends AbstractType
                 'attr' => array(
                     'class' => 'datePick form1')
             ))
-            ->add('filtrer', SubmitType::class);
+            ->add('=>', SubmitType::class);
     }
 
     /**

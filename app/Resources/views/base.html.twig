@@ -12,6 +12,7 @@
         <link href="css/temporela.css" rel="stylesheet">
         <link href="css/temporela-usermanagement.css" rel="stylesheet">
         <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
+        <script src="https://kit.fontawesome.com/475b9c34ec.js" crossorigin="anonymous"></script>
 
         {% block stylesheets %}
         {% endblock %}
@@ -23,16 +24,19 @@
                 {% if is_granted('ROLE_SUPER_ADMIN') %}
                     <ul>
                         <li>
-                            <a href="{{ path('listusers') }}">{{ 'Gestion Collaborateurs'|trans }}</a>
+                            <a href="{{ path('listusers') }}"><i class="fas fa-users" title="{{ 'Gestion Utilisateurs'|trans }}"></i></a>
                         </li>
                         <li>
-                            <a href="{{ path('listdossier') }}">{{ 'Gestion des Dossiers'|trans }}</a>
+                            <a href="{{ path('listdossier') }}"><i class="fas fa-folder" title="{{ 'Gestion des Dossiers'|trans }}"></i></a>
                         </li>
                         <li>
-                            <a href="{{ path('listtemps') }}">{{ 'Gestion du Temps'|trans }}</a>
+                            <a href="{{ path('listtache') }}"><i class="fas fa-thumbtack" title="{{ 'Gestion des Tâches'|trans }}"></i></a>
                         </li>
                         <li>
-                            <a href="{{ path('recap') }}">{{ 'Récapitulatif'|trans }}</a>
+                            <a href="{{ path('listtemps') }}"><i class="fas fa-clock" title="{{ 'Gestion du Temps'|trans }}"></i></a>
+                        </li>
+                        <li>
+                            <a href="{{ path('recap') }}"><i class="fas fa-chart-bar" title="{{ 'Récapitulatif'|trans }}"></i></a>
                         </li>
                     </ul>
                 {% elseif is_granted('ROLE_USER') %}
@@ -53,9 +57,18 @@
         <div id="contentAll">      
                 {% if app.user is not null %}  
                     <div id='current-user'>
-                        <a href="{{ path('fos_user_profile_show') }}">{{ app.user.username }}</a> | <a href="{{ path('fos_user_security_logout') }}">X</a>
+                        <a href="{{ path('fos_user_profile_show') }}"><i class="fas fa-user-tie" title="{{ app.user.username }}"></i></a>
+                        |
+                        <a href="{{ path('fos_user_security_logout') }}"><i class="fas fa-sign-out-alt" title="{{ 'Quitter'|trans }}"></i></a>
                     </div>
                 {% endif %}
+
+            {% for message in app.flashes('success') %}
+                <div class="success">{{ message }}</div>
+            {% endfor %}
+            {% for message in app.flashes('error') %}
+                <div class="error">{{ message }}</div>
+            {% endfor %}
             
             {% block body %}
             {% endblock %}

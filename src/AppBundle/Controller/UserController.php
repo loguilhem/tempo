@@ -17,7 +17,7 @@ class UserController extends Controller
         $repository = $this->getDoctrine()->getManager()->getRepository(User::class);
         $users = $repository->findAll();
 
-        return $this->render('user/listUsers.html.twig', array(
+        return $this->render('lists/user.html.twig', array(
             'listUsers' => $users
         ));
     }

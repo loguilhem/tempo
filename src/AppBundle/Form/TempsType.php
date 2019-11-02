@@ -67,7 +67,7 @@ class TempsType extends AbstractType
                         )
                 ))
                 ->add('tempspasse')                
-                ->add('Enregistrer', SubmitType::class);
+                ->add('+', SubmitType::class);
     }
     
     /**

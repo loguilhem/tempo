@@ -1,26 +1,18 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    
-    {% for message in app.flashes('success') %}
-        <div class="success">{{ message }}</div>
-    {% endfor %}
-    {% for message in app.flashes('error') %}
-        <div class="error">{{ message }}</div>
-    {% endfor %}
 
     <div class="pageTitle">
         Gestion du temps passé
     </div>
     
-    <a href="{{ path('addtemps') }}"><input type="button" value="Enregistrer un temps passé"></a>
+    <a href="{{ path('addtemps') }}"><input type="button" value="+"></a>
     <br><br><br><br>
     Tableau des temps pour aujourd'hui :
     <br>
     <table id="" cellspacing="0" width="100%" class="display list_table">
         <thead>
         <tr>
-            <th>ID</th>
             <th>Date</th>
             <th>Exercice</th>
             <th>Dossier</th>
@@ -35,7 +27,6 @@
         {% for Temps in listTemps %}
             {% if Temps.date|date('Ymd') == "now"|date('Ymd') %}
                 <tr>
-                    <td>{{ Temps.id }}</td>
                     <td>{{ Temps.date|date('d/m/Y') }}</td>
                     <td>{{ Temps.exercice }}</td>
                     <td>{% if Temps.dossier != null %}

@@ -16,7 +16,7 @@ class DossierType extends AbstractType
     {
         $builder->add('nom')
                 ->add('numero')
-                ->add('Enregistrer', SubmitType::class);
+                ->add('+', SubmitType::class);
     }
     
     /**
