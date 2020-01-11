@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Temporela{% endblock %}</title>
+        <title>{% block title %}Tempo{% endblock %}</title>
 
         <link href="https://fonts.googleapis.com/css?family=Oxygen" rel="stylesheet">
         <link href="css/jquery-ui.css" rel="stylesheet">
@@ -23,7 +23,7 @@
                 {% if is_granted('ROLE_SUPER_ADMIN') %}
                     <ul>
                         <li>
-                            <a href="{{ path('listusers') }}">{{ 'Gestion Collaborateurs'|trans }}</a>
+                            <a href="{{ path('listusers') }}">{{ 'Gestion Utilisateurs'|trans }}</a>
                         </li>
                         <li>
                             <a href="{{ path('listdossier') }}">{{ 'Gestion des Dossiers'|trans }}</a>

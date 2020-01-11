@@ -17,39 +17,19 @@ use AppBundle\Entity\Tache;
 use AppBundle\Form\TacheType;
 use AppBundle\Entity\Temps;
 use AppBundle\Form\TempsType;
+use Symfony\Component\Routing\Annotation\Route;
 
 class TablesController extends Controller
 {
     /**
-     * @Security("has_role('ROLE_SUPER_ADMIN')")
-     */
-    public function addWorkerAction(Request $request)
-    {
-        $worker = new Worker();
-        $form = $this->createForm(WorkerType::class, $worker);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $collaborateur = $form->getData();
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($collaborateur);
-            $em->flush();
-            $this->addFlash('success', 'Worker correctement ajouté.');
-            return $this->redirectToRoute('listcollaborateur');
-        }
-
-        return $this->render('add:collabo.html.twig', array('form' => $form->createView()));
-    }
-    
-    /**
+     * @Route(path="/add_dossiers", name="adddossier", methods={"GET", "POST"})
      * @Security("has_role('ROLE_SUPER_ADMIN')")
      */
     public function addDossierAction(Request $request)
     {
         $dossier = new Dossier();
-
         $form = $this->createForm(DossierType::class, $dossier);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $dossier = $form->getData();
             $em = $this->getDoctrine()->getManager();
@@ -59,19 +39,20 @@ class TablesController extends Controller
             return $this->redirectToRoute('listdossier');
         }
 
-        return $this->render('add:dossier.html.twig', array('form' => $form->createView()));
+        return $this->render('add:dossier.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
     
     /**
+     * @Route(path="/add_taches", name="addtache", methods={"GET", "POST"})
      * @Security("has_role('ROLE_SUPER_ADMIN')")
      */
     public function addTacheAction(Request $request)
     {
         $tache = new Tache();
-
         $form = $this->createForm(TacheType::class, $tache);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $tache = $form->getData();
             $em = $this->getDoctrine()->getManager();
@@ -81,20 +62,20 @@ class TablesController extends Controller
             return $this->redirectToRoute('listtache');
         }
 
-        return $this->render('add:tache.html.twig', array('form' => $form->createView()));
+        return $this->render('add:tache.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
     
     /**
+     * @Route(path="/add_temps", name="addtemps", methods={"GET", "POST"})
      * @Security("has_role('ROLE_USER')")
      */
     public function addTempsAction(Request $request)
     {
         $temps = new Temps();
-
         $form = $this->createForm(TempsType::class, $temps);
-
         $form->handleRequest($request);
-
 
         if ($form->isSubmitted() && $form->isValid()) {
             $temps = $form->getData();
@@ -119,33 +100,7 @@ class TablesController extends Controller
     }
     
     /**
-     * @Security("has_role('ROLE_SUPER_ADMIN')")
-     */
-    public function modCollaboAction(Request $request, $id)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('Worker');
-        $collaborateur = $repository->find($id);
-        
-        if(null === $collaborateur)
-        {
-            $this->addFlash('error', 'Le collaborateur avec l\'ID '.$id.' n\'existe pas.');
-            return $this->redirectToRoute('listcollaborateur');
-        }
-        
-        $form = $this->createForm(WorkerType::class, $collaborateur);
-        $form->handleRequest($request);
-        
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em->flush();
-            $this->addFlash('success', 'Le collaborateur a été correctement modifé.');
-            return $this->redirectToRoute('listcollabo');
-        }
-        
-        return $this->render('mod/user.html.twig', array('form' => $form->createView()));
-    }
-    
-    /**
+     * @Route(path="/mod_dossier/{id}", name="moddossier", methods={"GET", "POST"})
      * @Security("has_role('ROLE_SUPER_ADMIN')")
      */
     public function modDossierAction(Request $request, $id)
@@ -173,6 +128,7 @@ class TablesController extends Controller
     }
     
     /**
+     * @Route(path="/mod_tache/{id}", name="modtache", methods={"GET", "POST"})
      * @Security("has_role('ROLE_SUPER_ADMIN')")
      */
     public function modTacheAction(Request $request, $id)
@@ -200,6 +156,7 @@ class TablesController extends Controller
     }
     
     /**
+     * @Route(path="/mod_temps/{id}", name="modtemps", methods={"GET", "POST"})
      * @Security("has_role('ROLE_USER')")
      */
     public function modTempsAction(Request $request, $id)
@@ -236,27 +193,7 @@ class TablesController extends Controller
     }
     
     /**
-     * @Security("has_role('ROLE_SUPER_ADMIN')")
-     */
-    public function delCollaboAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('Worker');
-        $collaborateur = $repository->find($id);
-        
-        if(null === $collaborateur)
-        {
-            $this->addFlash('error', 'Le collaborateur avec l\'ID '.$id.' n\'existe pas.');
-            return $this->redirectToRoute('listcollaborateur');
-        }
-        
-            $em->remove($collaborateur);
-            $em->flush();
-            $this->addFlash('success', 'Worker correctement supprimée.');
-            return $this->redirectToRoute('listcollaborateur');
-    }
-    
-    /**
+     * @Route(path="/del_dossier/{id}", name="deldossier", methods={"GET", "POST"})
      * @Security("has_role('ROLE_SUPER_ADMIN')")
      */
     public function delDossierAction($id)
@@ -278,6 +215,7 @@ class TablesController extends Controller
     }
     
     /**
+     * @Route(path="/del_tache/{id}", name="deltache", methods={"GET", "POST"})
      * @Security("has_role('ROLE_SUPER_ADMIN')")
      */
     public function delTacheAction($id)
@@ -299,6 +237,7 @@ class TablesController extends Controller
     }
     
     /**
+     * @Route(path="/del_temps/{id}", name="deltemps", methods={"GET", "POST"})
      * @Security("has_role('ROLE_USER')")
      */
     public function delTempsAction($id)
@@ -313,7 +252,6 @@ class TablesController extends Controller
             return $this->redirectToRoute('listtempscollaborateur');
         }
 
-
         $tempsCollaborateur = $temps->getCollaborateur();
         $currentCollaborateur = $this->get('security.token_storage')->getToken()->getUser();
 
@@ -327,5 +265,4 @@ class TablesController extends Controller
             $this->addFlash('success', 'La ligne temps passée correctement supprimée.');
             return $this->redirectToRoute('listtempscollaborateur');
     }
-    
 }
