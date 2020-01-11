@@ -2,9 +2,9 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Dossier;
-use AppBundle\Entity\Tache;
-use AppBundle\Entity\Temps;
+use AppBundle\Entity\Project;
+use AppBundle\Entity\Task;
+use AppBundle\Entity\Time;
 use AppBundle\Form\Recap2Type;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -26,35 +26,35 @@ class DefaultController extends Controller
     }
     
     /**
-     * @Route(path="list_dossiers", name="listdossier", methods={"GET"})
+     * @Route(path="list-projects", name="listprojects", methods={"GET"})
      * @Security("has_role('ROLE_SUPER_ADMIN')")
      */
-    public function listDossierAction(EntityManagerInterface $entityManager)
+    public function listProjects(EntityManagerInterface $entityManager)
     {
-        return $this->render('lists/dossier.html.twig', [
-            'listDossier' => $entityManager->getRepository(Dossier::class)->findAll()
+        return $this->render('lists/projects.html.twig', [
+            'projects' => $entityManager->getRepository(Project::class)->findAll()
         ]);
     }
     
     /**
-     * @Route(path="/list_taches", name="listtache", methods={"GET"})
+     * @Route(path="/list-tasks", name="listtasks", methods={"GET"})
      * @Security("has_role('ROLE_SUPER_ADMIN')")
      */
-    public function listTacheAction(EntityManagerInterface $entityManager)
+    public function listTasks(EntityManagerInterface $entityManager)
     {        
-        return $this->render('lists/tache.html.twig', [
-            'listTache' => $entityManager->getRepository(Tache::class)->findAll()
+        return $this->render('lists/tasks.html.twig', [
+            'tasks' => $entityManager->getRepository(Task::class)->findAll()
         ]);
     }
 
     /**
-     * @Route(path="/list_temps", name="listtemps", methods={"GET"})
+     * @Route(path="/list-times", name="listtimes", methods={"GET"})
      * @Security("has_role('ROLE_SUPER_ADMIN')")
      */
-    public function listTempsAction(EntityManagerInterface $entityManager)
+    public function listTimes(EntityManagerInterface $entityManager)
     {
-        return $this->render('lists/temps.html.twig', [
-            'listTemps' => $entityManager->getRepository(Temps::class)->findAll()
+        return $this->render('times.html.twig', [
+            'times' => $entityManager->getRepository(Time::class)->findAll()
         ]);
     }
 
@@ -64,8 +64,8 @@ class DefaultController extends Controller
      */
     public function listTempsCollaborateurAction(EntityManagerInterface $entityManager, SecurityUser $security)
     {
-        return $this->render('lists/temps.html.twig', [
-            'listTemps' => $entityManager->getRepository(Temps::class)->findByCollaborateur($security->getUser())
+        return $this->render('times.html.twig', [
+            'times' => $entityManager->getRepository(Time::class)->findByCollaborateur($security->getUser())
         ]);
     }
 
@@ -76,12 +76,12 @@ class DefaultController extends Controller
     public function listToutTempsCollaborateurAction(EntityManagerInterface $entityManager, SecurityUser $security)
     {
         if (false === $security->isGranted('ROLE_SUPER_ADMIN')) {
-            $listTempsQuery = $entityManager->getRepository(Temps::class)->findByCollaborateur($security->getUser());
+            $listTempsQuery = $entityManager->getRepository(Time::class)->findByCollaborateur($security->getUser());
         } else {
-            $listTempsQuery = $entityManager->getRepository(Temps::class)->findAll();
+            $listTempsQuery = $entityManager->getRepository(Time::class)->findAll();
         }
 
-        return $this->render('lists/touttemps.html.twig', [
+        return $this->render('alltimes.html.twig', [
             'listTemps' => $listTempsQuery
         ]);
     }
@@ -93,7 +93,7 @@ class DefaultController extends Controller
     public function RecapAction(Request $request, EntityManagerInterface $entityManager)
     {
         /* there are 2 filters available, each one is a form: recap1Type, recap2Type */
-        $repoTemps = $entityManager->getRepository(Temps::class);
+        $repoTemps = $entityManager->getRepository(Time::class);
 
         $form1 = $this->createForm(Recap1Type::class);
         $form1->handleRequest($request);
@@ -103,7 +103,7 @@ class DefaultController extends Controller
 
         /* TODO: split forms handle in other functions */
 
-        /*filter 1 : show total Tempspassé for a Dossier, a Exercice and for each Tache */
+        /*filter 1 : show total Tempspassé for a Project, a Exercice and for each Task */
         if ($form1->isSubmitted() && $form1->isValid()) {
             $data = $form1->getData();
             $idDossier = $data["dossier"]->getId();
@@ -124,7 +124,7 @@ class DefaultController extends Controller
                ));
         }
 
-        /*filter 2 : show total Tempspassé for a Exercice, a Worker and for each Dossier */
+        /*filter 2 : show total Tempspassé for a Exercice, a Worker and for each Project */
 
         elseif ($form2->isSubmitted() && $form2->isValid()) {
             $data = $form2->getData();

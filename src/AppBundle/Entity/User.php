@@ -11,6 +11,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class User extends BaseUser
 {
+    const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
+    const ROLE_USER = 'ROLE_USER';
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -23,14 +26,13 @@ class User extends BaseUser
         parent::__construct();
         // your own logic
     }
-    
+
+    // Useful with more than 2 roles
     public function getHigherRole()
     {
-        $rolesSortedByImportance = ['ROLE_SUPER_ADMIN', 'ROLE_USER']; /*add roles here */
-        foreach ($rolesSortedByImportance as $role)
-        {
-            if (in_array($role, $this->roles))
-            {
+        $rolesSortedByImportance = [self::ROLE_SUPER_ADMIN, self::ROLE_USER]; /*form roles here */
+        foreach ($rolesSortedByImportance as $role) {
+            if (in_array($role, $this->roles)) {
                 return $role;
             }
         }
@@ -38,29 +40,11 @@ class User extends BaseUser
     
     public function upRole()
     {
-        $currentRole = $this->getHigherRole();
-        /*Conditions are here if we like to to add roles */
-        if ($currentRole == 'ROLE_SUPER_ADMIN')
-        {
-            return $currentRole;
-        }
-        else
-        {
-            return $newRole = 'ROLE_SUPER_ADMIN';
-        }
+        return $newRole = 'ROLE_SUPER_ADMIN';
     }
     
     public function downRole()
     {
-        $currentRole = $this->getHigherRole();
-        
-        if ($currentRole == 'ROLE_SUPER_ADMIN')
-        {
-            return $newRole = 'ROLE_USER';
-        }
-        else
-        {
-            return $newRole = 'ROLE_USER';
-        }
+        return $newRole = 'ROLE_USER';
     }
 }

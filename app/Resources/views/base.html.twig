@@ -1,80 +1,70 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="UTF-8" />
         <title>{% block title %}Tempo{% endblock %}</title>
 
-        <link href="https://fonts.googleapis.com/css?family=Oxygen" rel="stylesheet">
-        <link href="css/jquery-ui.css" rel="stylesheet">
-        <link href="css/jquery.dataTables.min.css" rel="stylesheet">
-        <link href="css/buttons.dataTables.min.css" rel="stylesheet">
-        <link href="css/chosen.min.css" rel="stylesheet">
-        <link href="css/temporela.css" rel="stylesheet">
-        <link href="css/temporela-usermanagement.css" rel="stylesheet">
-        <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
-
         {% block stylesheets %}
+            {{ encore_entry_link_tags('app') }}
         {% endblock %}
 
     </head>
     <body>
-        
-        <div id='main-menu'>
-                {% if is_granted('ROLE_SUPER_ADMIN') %}
-                    <ul>
-                        <li>
-                            <a href="{{ path('listusers') }}">{{ 'Gestion Utilisateurs'|trans }}</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('listdossier') }}">{{ 'Gestion des Dossiers'|trans }}</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('listtemps') }}">{{ 'Gestion du Temps'|trans }}</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('recap') }}">{{ 'Récapitulatif'|trans }}</a>
-                        </li>
-                    </ul>
-                {% elseif is_granted('ROLE_USER') %}
-                    <ul>
-                        <li>
-                            <a href="{{ path('listtempscollaborateur') }}">{{ 'Gestion du temps'|trans }}</a>
-                        </li>
-                    </ul>
-                {% else %}
-                    <ul>
-                        <li>
-                            <a href="{{ path('fos_user_security_login') }}">{{ 'Se connecter'|trans }}</a>
-                        </li>
-                    </ul>
-                {% endif %}            
+        <nav class="navbar" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="{{ path('index') }}" class="pure-menu-heading pure-menu-link">Tempo</a>
+                <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="main-navbar">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>
             </div>
-            
-        <div id="contentAll">      
-                {% if app.user is not null %}  
-                    <div id='current-user'>
-                        <a href="{{ path('fos_user_profile_show') }}">{{ app.user.username }}</a> | <a href="{{ path('fos_user_security_logout') }}">X</a>
+            <div class="navbar-menu" id="main-navbar">
+                <div class="navbar-start">
+                    {% if is_granted('ROLE_SUPER_ADMIN') %}
+                        <a class="navbar-item" href="{{ path('listusers') }}">{{ 'Users'|trans }}</a>
+                        <a class="navbar-item" href="{{ path('listprojects') }}">{{ 'Projects'|trans }}</a>
+                        <a class="navbar-item" href="{{ path('listtasks') }}">{{ 'Task'|trans }}</a>
+                        <a class="navbar-item" href="{{ path('recap') }}">{{ 'Calc'|trans }}</a>
+                    {% elseif is_granted('ROLE_USER') %}
+                        <a class="navbar-item" href="{{ path('listtempscollaborateur') }}">{{ 'Time'|trans }}</a>
+                    {% else %}
+                        <a class="navbar-item" href="{{ path('fos_user_security_login') }}">{{ 'Log in'|trans }}</a>
+                    {% endif %}
+                </div>
+                <div class="navbar-end">
+                    <div class="navbar-item">
+                    {% if app.user is not null %}
+                        <a class="navbar-item" href="{{ path('fos_user_profile_show') }}">{{ app.user.username }}</a>
+                        <a class="navbar-item" href="{{ path('fos_user_security_logout') }}">{{ 'Log out'|trans }}</a>
+                    {% endif %}
                     </div>
-                {% endif %}
-            
-            {% block body %}
-            {% endblock %}
+                </div>
+            </div>
+        </nav>
 
-            <script src="js/jquery-1.12.4.js"></script>
-            <script src="js/jquery-ui.min.js"></script>
-            <script src="js/jquery.dataTables.min.js"></script>
-            <script src="js/dataTables.buttons.min.js"></script>
-            <script src="js/moment.min.js"></script>
-            <script src="js/jszip.min.js"></script>
-            <script src="js/pdfmake.min.js"></script>
-            <script src="js/vfs_fonts.js"></script>
-            <script src="js/buttons.html5.min.js"></script>
-            <script src="js/chosen.jquery.js"></script>
-            <script src="js/jquery.collection.js"></script>
-            <script src="js/temporela.js"></script>
+        {% for message in app.session.flashBag.get('success') %}
+            <div class="notification is-success">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% for message in app.session.flashBag.get('error') %}
+            <div class="notification is-danger">
+                {{ message }}
+            </div>
+        {% endfor %}
 
-            {% block javascripts %}
-            {% endblock %}    
-        </div>
+        {% block body %}
+        {% endblock %}
+
+        <footer class="footer">
+            <div class="content has-text-centered">
+                <p>Made to share</p>
+            </div>
+        </footer>
+
+        {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
     </body>
 </html>

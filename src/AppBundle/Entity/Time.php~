@@ -1,0 +1,55 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Time
+ *
+ * @ORM\Table(name="time")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\TimeRepository")
+ */
+class Time
+{
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="date", type="datetime")
+     */
+    private $date;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Project", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true,onDelete="SET NULL")
+     */
+    private $project;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true,onDelete="SET NULL")
+     */
+    private $user;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Task", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true,onDelete="SET NULL")
+     */
+    private $task;
+
+    /**
+     * @var float
+     *
+     * @ORM\Column(name="time", type="decimal", nullable=false)
+     */
+    private $time;
+}

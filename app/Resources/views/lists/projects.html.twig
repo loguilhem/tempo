@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <header  class="hero is-primary">
+        <div class="hero-body">
+            <div class="container">
+            {{ 'Projects list'|trans }}
+        </div>
+        </div>
+    </header>
+
+    <section class="section">
+        <div class="container is-fluid">
+            <a class="button is-primary" href="{{ path('addproject') }}">New project</a>
+
+            <table class="table is-hoverable is-striped is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>{{ 'Number'|trans }}</th>
+                        <th>{{ 'Name'|trans }}</th>
+                        <th>{{ 'Edit'|trans }}</th>
+                        <th>{{ 'Delete'|trans }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for project in projects %}
+                    <tr>
+                        <td>{{ project.code }}</td>
+                        <td>{{ project.name }}</td>
+                        <td><a href="{{ path('modproject', {'id': project.id}) }}">Modifier</a></td>
+                        <td><a class="confirmation" href="">Supprimer</a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+{% endblock %}

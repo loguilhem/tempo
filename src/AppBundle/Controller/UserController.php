@@ -2,9 +2,8 @@
 
 namespace AppBundle\Controller;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use FOS\UserBundle\Model\UserManagerInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use AppBundle\Entity\User;
@@ -14,23 +13,20 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends Controller
 {
     /**
-     * @Route(path="/listusers", name="listusers", methods={"GET"})
+     * @Route(path="/list-users", name="listusers", methods={"GET"})
      * @Security("has_role('ROLE_SUPER_ADMIN')")
      */
-    public function listUsersAction()
+    public function listUsersAction(EntityManagerInterface $entityManager)
     {
-        $repository = $this->getDoctrine()->getManager()->getRepository(User::class);
-        $users = $repository->findAll();
-
-        return $this->render('user/listUsers.html.twig', array(
-            'listUsers' => $users
-        ));
+        return $this->render('lists/users.html.twig', [
+            'users' => $entityManager->getRepository(User::class)->findAll()
+        ]);
     }
     /**
      * @Route(path="/promoteuser/{id}", name="promoteuser", methods={"GET"})
      * @Security("has_role('ROLE_SUPER_ADMIN')")
      */
-    public function promoteUserAction($id, EntityManager $entityManager, UserManagerInterface $userManager, FlashBagInterface $flashBag)
+    public function promoteUserAction($id, EntityManagerInterface $entityManager, UserManagerInterface $userManager, FlashBagInterface $flashBag)
     {
         $user = $entityManager->getRepository(User::class)->find($id);
         $currentRole = $user->getHigherRole();
@@ -52,7 +48,7 @@ class UserController extends Controller
      * @Route(path="/demoteuser/{id}", name="demoteuser", methods={"GET"})
      * @Security("has_role('ROLE_SUPER_ADMIN')")
      */
-    public function demoteUserAction($id, EntityManager $entityManager, UserManagerInterface $userManager, FlashBagInterface $flashBag)
+    public function demoteUserAction($id, EntityManagerInterface $entityManager, UserManagerInterface $userManager, FlashBagInterface $flashBag)
     {
         $user = $entityManager->getRepository(User::class)->find($id);
         $currentRole = $user->getHigherRole();
@@ -74,7 +70,7 @@ class UserController extends Controller
      * @Route(path="/activateuser/{id}", name="activateuser", methods={"GET"})
      * @Security("has_role('ROLE_SUPER_ADMIN')")
      */
-    public function activateUserAction($id, EntityManager $entityManager, FlashBagInterface $flashBag, UserManagerInterface $userManager)
+    public function activateUserAction($id, EntityManagerInterface $entityManager, FlashBagInterface $flashBag, UserManagerInterface $userManager)
     {
         $user = $entityManager->getRepository(User::class)->find($id);
         $locked = $user->isEnabled();

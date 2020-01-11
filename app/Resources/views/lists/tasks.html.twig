@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    
+    {% for message in app.flashes('success') %}
+        <div class="success">{{ message }}</div>
+    {% endfor %}
+    {% for message in app.flashes('error') %}
+        <div class="error">{{ message }}</div>
+    {% endfor %}
+
+    <div class="pageTitle">
+        {% trans %}Tasks list{% endtrans %}
+    </div>
+    
+    <a class="pure-button-primary" href="{{ path('addtache') }}">New Task></a>
+     
+    <table class="pure-table pure-table-striped">
+        <thead>
+            <tr>
+                <th>{{ 'name'|trans }}</th>
+                <th>Number</th>
+                <th>Belong to</th>
+                <th>Edit</th>
+                <th>Delete</th>
+                <th>Time</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for task in tasks %}
+            <tr>
+                <td>{{ task.name }}</td>
+                <td>{{ task.number }}</td>
+                <td>to do
+                <td><a href="{{ path('modtache', {'id':task.id}) }}">Edit</a></td>
+                <td><a class="confirmation" href="{{ path('deltache', {'id':task.id}) }}">Delete</a></td>
+                <td>X</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>            
+{% endblock %}

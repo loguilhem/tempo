@@ -2,12 +2,17 @@
 
 {% block body %}
        
-    <h1>Bienvenue sur Temporela</h1>
-
+    <h1>{% trans %}Welcome on Tempo{% endtrans %}</h1>
     {% if app.user is not null %}
-        Bienvenue {{ app.user.username }}. Votre dernière connexion : {{ app.user.lastLogin|date('d/m/Y') }}
+        {{ 'Welcome'|trans }} {{ app.user.username }}.
+        {% trans %}Your last connection{% endtrans %} : {{ app.user.lastLogin|date('d/m/Y') }}
         {% else %}
-        Merci de vous authentifier.
+            <p>
+        {% trans %}
+            Tempo helps you to keep track of time spent on projects and tasks by you or your co-workers.
+            It is an open source project. You can download it and host it on your own server.
+        {% endtrans %}
+            </p>
     {% endif %}
     
 {% endblock %}

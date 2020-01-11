@@ -1,57 +1,57 @@
 <?php
 
-/*This controller to add, modify et delete data from database*/
+/*This controller to form, modify et delete data from database*/
 /*function to make stats et print results are on another controller*/
 
 namespace AppBundle\Controller;
 
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use AppBundle\Entity\Worker;
-use AppBundle\Form\WorkerType;
-use AppBundle\Entity\Dossier;
-use AppBundle\Form\DossierType;
-use AppBundle\Entity\Tache;
-use AppBundle\Form\TacheType;
-use AppBundle\Entity\Temps;
-use AppBundle\Form\TempsType;
+use AppBundle\Entity\Project;
+use AppBundle\Form\ProjectType;
+use AppBundle\Entity\Task;
+use AppBundle\Form\TaskType;
+use AppBundle\Entity\Time;
+use AppBundle\Form\TimeType;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class TablesController extends Controller
 {
     /**
-     * @Route(path="/add_dossiers", name="adddossier", methods={"GET", "POST"})
+     * @Route(path="/add-project", name="addproject", methods={"GET", "POST"})
      * @Security("has_role('ROLE_SUPER_ADMIN')")
      */
-    public function addDossierAction(Request $request)
+    public function addProject(Request $request, FlashBagInterface $flashBag, TranslatorInterface $translator, EntityManagerInterface $entityManager)
     {
-        $dossier = new Dossier();
-        $form = $this->createForm(DossierType::class, $dossier);
+        $project = new Project();
+        $form = $this->createForm(ProjectType::class, $project);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $dossier = $form->getData();
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($dossier);
-            $em->flush();
-            $this->addFlash('success', 'Dossier correctement ajouté.');
-            return $this->redirectToRoute('listdossier');
+            $project = $form->getData();
+            $entityManager->persist($project);
+            $entityManager->flush();
+            $flashBag->add('success', $translator->trans('project.added'));
+            return $this->redirectToRoute('listprojects');
         }
 
-        return $this->render('add:dossier.html.twig', [
+        return $this->render('form/project.html.twig', [
             'form' => $form->createView()
         ]);
     }
     
     /**
-     * @Route(path="/add_taches", name="addtache", methods={"GET", "POST"})
+     * @Route(path="/add-task", name="addtask", methods={"GET", "POST"})
      * @Security("has_role('ROLE_SUPER_ADMIN')")
      */
-    public function addTacheAction(Request $request)
+    public function addTask(Request $request, FlashBagInterface $flashBag, TranslatorInterface $translator, EntityManager $entityManager)
     {
-        $tache = new Tache();
-        $form = $this->createForm(TacheType::class, $tache);
+        $task = new Task();
+        $form = $this->createForm(TaskType::class, $task);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $tache = $form->getData();
@@ -62,7 +62,7 @@ class TablesController extends Controller
             return $this->redirectToRoute('listtache');
         }
 
-        return $this->render('add:tache.html.twig', [
+        return $this->render('task.html.twig', [
             'form' => $form->createView()
         ]);
     }
@@ -73,8 +73,8 @@ class TablesController extends Controller
      */
     public function addTempsAction(Request $request)
     {
-        $temps = new Temps();
-        $form = $this->createForm(TempsType::class, $temps);
+        $temps = new Time();
+        $form = $this->createForm(TimeType::class, $temps);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -87,44 +87,35 @@ class TablesController extends Controller
             $temps->setCollaborateur($collaborateur);
             $em->persist($temps);
             $em->flush();
-            $this->addFlash('success', 'Temps passé correctement ajouté.');
+            $this->addFlash('success', 'Time passé correctement ajouté.');
 
             if (false === $this->get('security.authorization_checker')->isGranted('ROLE_SUPER_ADMIN')){
                 return $this->redirectToRoute('listtempscollaborateur');
             }
             return $this->redirectToRoute('listtemps');
-
         }
 
-        return $this->render('add:temps.html.twig', array('form' => $form->createView()));
+        return $this->render('time.html.twig', array('form' => $form->createView()));
     }
     
     /**
-     * @Route(path="/mod_dossier/{id}", name="moddossier", methods={"GET", "POST"})
+     * @Route(path="/{id}/project/", name="modproject", methods={"GET", "POST"})
      * @Security("has_role('ROLE_SUPER_ADMIN')")
      */
-    public function modDossierAction(Request $request, $id)
+    public function modProject(Request $request, EntityManagerInterface $entityManager, FlashBagInterface $flashBag, TranslatorInterface $translator, $id)
     {
-        $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('Dossier');
-        $dossier = $repository->find($id);
-        
-        if(null === $dossier)
-        {
-            $this->addFlash('error', 'Le dossier avec l\'ID '.$id.' n\'existe pas.');
-            return $this->redirectToRoute('listdossier');
-        }
-        
-        $form = $this->createForm(DossierType::class, $dossier);
+        $project = $entityManager->getRepository(Project::class)->find($id);
+        $form = $this->createForm(ProjectType::class, $project);
         $form->handleRequest($request);
-        
         if ($form->isSubmitted() && $form->isValid()) {
-            $em->flush();
-            $this->addFlash('success', 'Le dossier a été correctement modifé.');
-            return $this->redirectToRoute('listdossier');
+            $entityManager->flush();
+            $flashBag->add('success', $translator->trans('Le projet a été correctement modifé.'));
+            return $this->redirectToRoute('listprojects');
         }
         
-        return $this->render('mod:dossier.html.twig', array('form' => $form->createView()));        
+        return $this->render('form/project.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
     
     /**
@@ -134,7 +125,7 @@ class TablesController extends Controller
     public function modTacheAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('Tache');
+        $repository = $em->getRepository('Task');
         $tache = $repository->find($id);
         
         if(null === $tache)
@@ -143,7 +134,7 @@ class TablesController extends Controller
             return $this->redirectToRoute('listtache');
         }
         
-        $form = $this->createForm(TacheType::class, $tache);
+        $form = $this->createForm(TaskType::class, $tache);
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
@@ -152,7 +143,7 @@ class TablesController extends Controller
             return $this->redirectToRoute('listtache');
         }
         
-        return $this->render('mod:tache.html.twig', array('form' => $form->createView()));        
+        return $this->render('task.html.twig', array('form' => $form->createView()));
     }
     
     /**
@@ -162,7 +153,7 @@ class TablesController extends Controller
     public function modTempsAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('Temps');
+        $repository = $em->getRepository('Time');
         $temps = $repository->find($id);
         
         if(null === $temps)
@@ -180,7 +171,7 @@ class TablesController extends Controller
             return $this->redirectToRoute('listtempscollaborateur');
         }
         
-        $form = $this->createForm(TempsType::class, $temps);
+        $form = $this->createForm(TimeType::class, $temps);
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
@@ -189,29 +180,19 @@ class TablesController extends Controller
             return $this->redirectToRoute('listtempscollaborateur');
         }
         
-        return $this->render('mod:temps.html.twig', array('form' => $form->createView()));        
+        return $this->render('time.html.twig', array('form' => $form->createView()));
     }
     
     /**
-     * @Route(path="/del_dossier/{id}", name="deldossier", methods={"GET", "POST"})
+     * @Route(path="/del-project/", name="delproject", methods={"DELETE"})
      * @Security("has_role('ROLE_SUPER_ADMIN')")
      */
-    public function delDossierAction($id)
+    public function delProject(Request $request, TranslatorInterface $translator, FlashBagInterface $flashBag, EntityManagerInterface $entityManager)
     {
-        $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('Dossier');
-        $dossier = $repository->find($id);
-        
-        if(null === $dossier)
-        {
-            $this->addFlash('error', 'Le dossier avec l\'ID '.$id.' n\'existe pas.');
-            return $this->redirectToRoute('listdossier');
-        }
-        
-            $em->remove($dossier);
-            $em->flush();
-            $this->addFlash('success', 'Dossier correctement supprimée.');
-            return $this->redirectToRoute('listdossier');
+        $repository = $entityManager->getRepository(Project::class);
+        $entityManager->flush();
+        $this->addFlash('success', 'Project correctement supprimée.');
+        return $this->redirectToRoute('listdossier');
     }
     
     /**
@@ -221,7 +202,7 @@ class TablesController extends Controller
     public function delTacheAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('Tache');
+        $repository = $em->getRepository('Task');
         $tache = $repository->find($id);
         
         if(null === $tache)
@@ -243,7 +224,7 @@ class TablesController extends Controller
     public function delTempsAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('Temps');
+        $repository = $em->getRepository('Time');
         $temps = $repository->find($id);
         
         if(null === $temps)

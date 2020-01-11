@@ -18,7 +18,7 @@ class  Recap1Type extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('dossier', EntityType::class, array(
-                'class' => 'AppBundle:Dossier',
+                'class' => 'Project.php',
                 'expanded' => false,
                 'multiple' => false,
                 'choice_label' => function($dossier){
