@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Collaborateur
+ * Worker
  *
- * @ORM\Table(name="collaborateur")
- * @ORM\Entity(repositoryClass="AppBundle\Repository\CollaborateurRepository")
+ * @ORM\Table(name="worker")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\WorkerRepository")
  */
-class Collaborateur
+class Worker
 {
     /**
      * @var int
@@ -51,7 +51,7 @@ class Collaborateur
      *
      * @param string $nom
      *
-     * @return Collaborateur
+     * @return Worker
      */
     public function setNom($nom)
     {
@@ -75,7 +75,7 @@ class Collaborateur
      *
      * @param string $prenom
      *
-     * @return Collaborateur
+     * @return Worker
      */
     public function setPrenom($prenom)
     {

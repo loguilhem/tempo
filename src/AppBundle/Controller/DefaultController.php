@@ -2,7 +2,7 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Collaborateur;
+use AppBundle\Entity\Worker;
 use AppBundle\Entity\Dossier;
 use AppBundle\Entity\Tache;
 use AppBundle\Entity\Temps;
@@ -123,7 +123,7 @@ class DefaultController extends Controller
                ));
         }
 
-        /*filter 2 : show total Tempspassé for a Exercice, a Collaborateur and for each Dossier */
+        /*filter 2 : show total Tempspassé for a Exercice, a Worker and for each Dossier */
 
         elseif ($form2->isSubmitted() && $form2->isValid()) {
             $data = $form2->getData();

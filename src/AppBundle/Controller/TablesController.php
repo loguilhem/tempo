@@ -9,8 +9,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
-use AppBundle\Entity\Collaborateur;
-use AppBundle\Form\CollaborateurType;
+use AppBundle\Entity\Worker;
+use AppBundle\Form\WorkerType;
 use AppBundle\Entity\Dossier;
 use AppBundle\Form\DossierType;
 use AppBundle\Entity\Tache;
@@ -20,23 +20,20 @@ use AppBundle\Form\TempsType;
 
 class TablesController extends Controller
 {
-    
     /**
      * @Security("has_role('ROLE_SUPER_ADMIN')")
      */
-    public function addCollaboAction(Request $request)
+    public function addWorkerAction(Request $request)
     {
-        $collaborateur = new Collaborateur();
-
-        $form = $this->createForm(CollaborateurType::class, $collaborateur);
+        $worker = new Worker();
+        $form = $this->createForm(WorkerType::class, $worker);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $collaborateur = $form->getData();
             $em = $this->getDoctrine()->getManager();
             $em->persist($collaborateur);
             $em->flush();
-            $this->addFlash('success', 'Collaborateur correctement ajouté.');
+            $this->addFlash('success', 'Worker correctement ajouté.');
             return $this->redirectToRoute('listcollaborateur');
         }
 
@@ -100,7 +97,6 @@ class TablesController extends Controller
 
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $temps = $form->getData();
             $em = $this->getDoctrine()->getManager();
             $collaborateur = $this->get('security.token_storage')->getToken()->getUser();
@@ -128,7 +124,7 @@ class TablesController extends Controller
     public function modCollaboAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('Collaborateur');
+        $repository = $em->getRepository('Worker');
         $collaborateur = $repository->find($id);
         
         if(null === $collaborateur)
@@ -137,34 +133,7 @@ class TablesController extends Controller
             return $this->redirectToRoute('listcollaborateur');
         }
         
-        $form = $this->createForm(CollaborateurType::class, $collaborateur);
-        $form->handleRequest($request);
-        
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em->flush();
-            $this->addFlash('success', 'Le collaborateur a été correctement modifé.');
-            return $this->redirectToRoute('listcollabo');
-        }
-        
-        return $this->render('mod:collabo.html.twig', array('form' => $form->createView()));        
-    }
-    
-    /**
-     * @Security("has_role('ROLE_SUPER_ADMIN')")
-     */
-    public function modCollaboAction(Request $request, $id)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('Collaborateur');
-        $collaborateur = $repository->find($id);
-        
-        if(null === $collaborateur)
-        {
-            $this->addFlash('error', 'Le collaborateur avec l\'ID '.$id.' n\'existe pas.');
-            return $this->redirectToRoute('listcollaborateur');
-        }
-        
-        $form = $this->createForm(CollaborateurType::class, $collaborateur);
+        $form = $this->createForm(WorkerType::class, $collaborateur);
         $form->handleRequest($request);
         
         if ($form->isSubmitted() && $form->isValid()) {
@@ -272,7 +241,7 @@ class TablesController extends Controller
     public function delCollaboAction($id)
     {
         $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('Collaborateur');
+        $repository = $em->getRepository('Worker');
         $collaborateur = $repository->find($id);
         
         if(null === $collaborateur)
@@ -283,7 +252,7 @@ class TablesController extends Controller
         
             $em->remove($collaborateur);
             $em->flush();
-            $this->addFlash('success', 'Collaborateur correctement supprimée.');
+            $this->addFlash('success', 'Worker correctement supprimée.');
             return $this->redirectToRoute('listcollaborateur');
     }
     
@@ -360,4 +329,3 @@ class TablesController extends Controller
     }
     
 }
-    

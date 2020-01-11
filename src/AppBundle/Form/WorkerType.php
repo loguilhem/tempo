@@ -7,7 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-class CollaborateurType extends AbstractType
+class WorkerType extends AbstractType
 {
     /**
      * {@inheritdoc}
@@ -25,7 +25,7 @@ class CollaborateurType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Collaborateur'
+            'data_class' => 'Worker'
         ));
     }
 
