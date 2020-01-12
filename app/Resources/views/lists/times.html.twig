@@ -45,6 +45,9 @@
                 <tr>
                     <th>{{ 'Project'|trans }}</th>
                     <th>{{ 'Task'|trans }}</th>
+                    {% if is_granted('ROLE_SUPER_ADMIN') %}
+                    <th>User</th>
+                    {% endif %}
                     <th>Date</th>
                     <th>Hours</th>
                     <th>Edit</th>
@@ -56,10 +59,17 @@
                     <tr>
                         <td>{{ time.project.name }}</td>
                         <td>{{ time.task.name }}</td>
+                        {% if is_granted('ROLE_SUPER_ADMIN') %}
+                            <td>{{ time.user.username }}</td>
+                        {% endif %}
                         <td>{{ time.date|date('Y-m-d') }}</td>
                         <td>{{ time.time }}</td>
-                        <td><a href="{{ path('modtemps', {'id':time.id}) }}">Edit</a></td>
-                        <td><a href="{{ path('listtimes', {'timeToDelete': task.id}) }}">{{ 'Delete'|trans }}</a></td>
+                        <td><a class="button is-primary" href="{{ path('modtime', {'id':time.id}) }}">Edit</a></td>
+                        <td>
+                            <form action="{{ path('listtimes') }}" method="post">
+                                <input type="hidden" value="{{ time.id }}" name="timeToDelete">
+                                <button class="button is-warning" type="submit">Delete</button>
+                            </form>
                     </tr>
                 {% endfor %}
                 </tbody>

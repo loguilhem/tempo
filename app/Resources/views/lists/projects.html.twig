@@ -53,8 +53,13 @@
                     <tr>
                         <td>{{ project.code }}</td>
                         <td>{{ project.name }}</td>
-                        <td><a href="{{ path('modproject', {'id': project.id}) }}">{{ 'Edit'|trans }}</a></td>
-                        <td><a href="{{ path('listprojects', {'projectToDelete': project.id}) }}">{{ 'Delete'|trans }}</a></td>
+                        <td><a class="button is-primary" href="{{ path('modproject', {'id': project.id}) }}">{{ 'Edit'|trans }}</a></td>
+                        <td>
+                            <form action="{{ path('listprojects') }}" method="post">
+                                <input type="hidden" value="{{ project.id }}" name="projectToDelete">
+                                <button class="button is-warning" type="submit">Delete</button>
+                            </form>
+                        </td>
                     </tr>
                 {% endfor %}
                 </tbody>

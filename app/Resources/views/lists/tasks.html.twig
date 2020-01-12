@@ -60,8 +60,12 @@
                                 - {{ task.motherTask.name }}
                             {% endif %}
                         </td>
-                        <td><a href="{{ path('modtask', {'id':task.id}) }}">Edit</a></td>
-                        <td><a href="{{ path('listtasks', {'taskToDelete': task.id}) }}">{{ 'Delete'|trans }}</a></td>
+                        <td><a class="button is-primary" href="{{ path('modtask', {'id':task.id}) }}">Edit</a></td>
+                        <td>
+                            <form action="{{ path('listtasks') }}" method="post">
+                                <input type="hidden" value="{{ task.id }}" name="taskToDelete">
+                                <button class="button is-warning" type="submit">Delete</button>
+                            </form>
                     </tr>
                 {% endfor %}
                 </tbody>
