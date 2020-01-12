@@ -3,12 +3,15 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Task
  *
  * @ORM\Table(name="task")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TaskRepository")
+ * @UniqueEntity({fields={"host", "port"}})
  */
 class Task
 {
@@ -25,6 +28,7 @@ class Task
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255, unique=true)
+     * @Assert\NotBlank()
      */
     private $name;
 
@@ -32,6 +36,7 @@ class Task
      * @var int
      *
      * @ORM\Column(name="code", type="string", length=255, unique=true)
+     * @Assert\NotBlank()
      */
     private $code;
 

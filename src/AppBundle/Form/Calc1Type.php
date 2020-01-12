@@ -19,7 +19,8 @@ class  Calc1Type extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('project', EntityType::class, array(
+        $builder
+            ->add('project', EntityType::class, [
                 'class' => Project::class,
                 'expanded' => false,
                 'multiple' => false,
@@ -27,16 +28,20 @@ class  Calc1Type extends AbstractType
                     return $project->getName();
                 },
                 'placeholder' => '-- All --',
-            ))
-            ->add('task', EntityType::class, array(
+                'empty_data' => -1,
+                'required' => false
+            ])
+            ->add('task', EntityType::class, [
                 'class' => Task::class,
                 'expanded' => false,
                 'multiple' => false,
                 'choice_label' => function($task) {
                     return $task->getName();
                 },
-                'placeholder' => '-- All --'
-            ))
+                'placeholder' => '-- All --',
+                'empty_data' => -1,
+                'required' => false
+            ])
             ->add('user', EntityType::class, [
                 'class' => User::class,
                 'expanded' => false,
@@ -44,24 +49,29 @@ class  Calc1Type extends AbstractType
                 'choice_label' => function ($user) {
                     return  $user->getUsername();
                 },
-                'placeholder' => '-- All --'
+                'placeholder' => '-- All --',
+                'empty_data' => -1,
+                'required' => false
             ])
-            ->add('startDate', DateType::class, array(
+            ->add('startDate', DateType::class, [
                 'widget' => 'single_text',
                 'data' => new \DateTime(),
                 'required' => false,
                 'html5' => false,
                 'format' => 'yyyy-MM-dd',
-            ))
-            ->add('endDate', DateType::class, array(
+                'required' => false
+            ])
+            ->add('endDate', DateType::class, [
                 'widget' => 'single_text',
                 'data' => new \DateTime(),
                 'required' => false,
                 'html5' => false,
                 'format' => 'yyyy-MM-dd',
-            ))
+                'required' => false
+            ])
             ->add('forever', CheckboxType::class, [
-                'label' => 'No time limit'
+                'label' => 'No time limit',
+                'required' => false
             ])
             ->add('calculate', SubmitType::class);
     }

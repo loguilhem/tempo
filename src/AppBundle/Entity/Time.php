@@ -3,12 +3,15 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Time
  *
  * @ORM\Table(name="time")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\TimeRepository")
+ * @UniqueEntity({fields={"host", "port"}})
  */
 class Time
 {
@@ -25,24 +28,28 @@ class Time
      * @var \DateTime
      *
      * @ORM\Column(name="date", type="datetime")
+     * @Assert\NotBlank()
      */
     private $date;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Project", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true,onDelete="SET NULL")
+     * @Assert\NotBlank()
      */
     private $project;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\User", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true,onDelete="SET NULL")
+     * @Assert\NotBlank()
      */
     private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Task", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true,onDelete="SET NULL")
+     * @Assert\NotBlank()
      */
     private $task;
 
@@ -50,6 +57,8 @@ class Time
      * @var float
      *
      * @ORM\Column(name="time", type="decimal", nullable=false)
+     * @Assert\NotBlank()
+     * @Assert\Positive()
      */
     private $time;
 

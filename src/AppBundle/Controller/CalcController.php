@@ -38,13 +38,7 @@ class CalcController extends Controller
     public function renderCalc1(Request $request, EntityManagerInterface $entityManager, FlashBagInterface $flashBag, TranslatorInterface $translator)
     {
         $form = $request->request;
-        if ($form->isSubmitted() && $form->isValid()) {
-            $project = $form->getData();
-            $entityManager->persist($project);
-            $entityManager->flush();
-            $flashBag->add('success', $translator->trans('project.added'));
-            return $this->redirectToRoute('listprojects');
-        }
+        dump($form);
         $this->redirectToRoute('calc');
     }
     
