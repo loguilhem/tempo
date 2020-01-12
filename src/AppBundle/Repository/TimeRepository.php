@@ -10,17 +10,6 @@ namespace AppBundle\Repository;
  */
 class TimeRepository extends \Doctrine\ORM\EntityRepository
 {
-    function findByCollaborateur($collaborateur)
-    {
-
-        $query = $this->createQueryBuilder('t')
-            ->where('t.collaborateur = :collaborateur')
-            ->setParameter('collaborateur', $collaborateur)
-        ;
-
-        return $query->getQuery()->getResult();
-    }
-
     function getByDossierExercice($idDossier, $exercice, $dateDebut, $dateFin, $forever)
     {
         if ($forever == false)

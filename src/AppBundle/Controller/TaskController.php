@@ -5,7 +5,6 @@
 
 namespace AppBundle\Controller;
 
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,7 +36,9 @@ class TaskController extends Controller
     public function addTask(Request $request, FlashBagInterface $flashBag, TranslatorInterface $translator, EntityManagerInterface $entityManager)
     {
         $task = new Task();
-        $form = $this->createForm(TaskType::class, $task);
+        $form = $this->createForm(TaskType::class, $task, [
+            'choices' => $entityManager->getRepository(Task::class)->findAll()
+        ]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $task = $form->getData();
@@ -53,53 +54,39 @@ class TaskController extends Controller
     }
 
     /**
-     * @Route(path="/mod_tache/{id}", name="modtache", methods={"GET", "POST"})
+     * @Route(path="/{id}/mod-task", name="modtask", methods={"GET", "POST"})
      * @Security("has_role('ROLE_SUPER_ADMIN')")
      */
-    public function modTacheAction(Request $request, $id)
+    public function modTask(Request $request, EntityManagerInterface $entityManager, FlashBagInterface $flashBag, TranslatorInterface $translator, $id)
     {
-        $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('Task');
-        $tache = $repository->find($id);
-        
-        if(null === $tache)
-        {
-            $this->addFlash('error', 'La tâche avec l\'ID '.$id.' n\'existe pas.');
-            return $this->redirectToRoute('listtache');
-        }
-        
-        $form = $this->createForm(TaskType::class, $tache);
+        $repo = $entityManager->getRepository(Task::class);
+        $task = $repo->find($id);
+        $choices = $repo->findExceptItself($id);
+        $form = $this->createForm(TaskType::class, $task, [
+            'choices' => $choices
+        ]);
         $form->handleRequest($request);
-        
         if ($form->isSubmitted() && $form->isValid()) {
-            $em->flush();
-            $this->addFlash('success', 'La tâche a été correctement modifée.');
-            return $this->redirectToRoute('listtache');
+            $entityManager->flush();
+            $flashBag->add('success', $translator->trans('La tâche a été correctement modifée.'));
+            return $this->redirectToRoute('listtasks');
         }
         
-        return $this->render('task.html.twig', array('form' => $form->createView()));
+        return $this->render('form/task.html.twig', array('form' => $form->createView()));
     }
     
 
     /**
-     * @Route(path="/del_tache/{id}", name="deltache", methods={"GET", "POST"})
+     * @Route(path="/delete-taks", name="deltask", methods={"POST"})
      * @Security("has_role('ROLE_SUPER_ADMIN')")
      */
-    public function delTacheAction($id)
+    public function delTask(Request $request, TranslatorInterface $translator, FlashBagInterface $flashBag, EntityManagerInterface $entityManager)
     {
-        $em = $this->getDoctrine()->getManager();
-        $repository = $em->getRepository('Task');
-        $tache = $repository->find($id);
-        
-        if(null === $tache)
-        {
-            $this->addFlash('error', 'La tâche avec l\'ID '.$id.' n\'existe pas.');
-            return $this->redirectToRoute('listtache');
-        }
-        
-            $em->remove($tache);
-            $em->flush();
-            $this->addFlash('success', 'Tâche correctement supprimée.');
-            return $this->redirectToRoute('listtache');
+        $idTask = $request->request->get('id');
+        $task = $entityManager->getRepository(Task::class)->find($idTask);
+        $entityManager->remove($task);
+        $entityManager->flush();
+        $flashBag->add('success', $translator->trans('Task deleted.'));
+        return $this->redirectToRoute('listtasks');
     }
 }

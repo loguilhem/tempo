@@ -1,67 +1,70 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Tempo - Times{% endblock %}
+
 {% block body %}
-    
-    {% for message in app.flashes('success') %}
-        <div class="success">{{ message }}</div>
-    {% endfor %}
-    {% for message in app.flashes('error') %}
-        <div class="error">{{ message }}</div>
-    {% endfor %}
 
-    <div class="pageTitle">
-        Gestion du temps passé
-    </div>
-    
-    <a href="{{ path('addtemps') }}"><input type="button" value="Enregistrer un temps passé"></a>
-    <br><br><br><br>
-    Tableau des temps pour aujourd'hui :
-    <br>
-    <table id="" cellspacing="0" width="100%" class="display list_table">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Date</th>
-            <th>Exercice</th>
-            <th>Dossier</th>
-            <th>Tâche</th>
-            <th>Collaborateur</th>
-            <th>Temps passé</th>
-            <th>Modifier</th>
-            <th>Supprimer</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for Temps in listTemps %}
-            {% if Temps.date|date('Ymd') == "now"|date('Ymd') %}
+    <header  class="hero is-primary">
+        <div class="hero-body">
+            <div class="container">
+                {{ 'Times list'|trans }}
+            </div>
+        </div>
+    </header>
+
+    {% if timeToDelete is not null %}
+        <div class="modal is-active">
+            <div class="modal-background"></div>
+            <div class="modal-content">
+                <div class="notification is-warning">
+                    <p>
+                        {% trans %}
+                            Are you sure to delete this time ?
+                            You cannot reverse this action.
+                        {% endtrans %}
+                    </p>
+                    <div class="buttons">
+                        <form method="POST" action="{{ path('deltask') }}">
+                            <input type="hidden" value="{{ timeToDelete }}" name="id">
+                            <button type="submit" class="button is-danger">Yes I am sure !</button>
+                        </form>
+                        <a href="{{ path('listtimes') }}" class="button is-success is-light">No, please cancel.</a>
+                    </div>
+                </div>
+            </div>
+            <a href="{{ path('listtimes') }}" class="modal-close is-large" aria-label="close"></a>
+        </div>
+    {% endif %}
+
+    <section class="section">
+        <div class="container is-fluid">
+            <a class="button is-primary" href="{{ path('addtime') }}">New Time</a>
+
+            <table class="table is-hoverable is-striped is-fullwidth">
+                <thead>
                 <tr>
-                    <td>{{ Temps.id }}</td>
-                    <td>{{ Temps.date|date('d/m/Y') }}</td>
-                    <td>{{ Temps.exercice }}</td>
-                    <td>{% if Temps.dossier != null %}
-                            {{ Temps.dossier.numero }} - {{ Temps.dossier.nom }}
-                        {% else %}
-                            Dossier inexistant
-                        {% endif %}</td>
-                    <td>{% if Temps.tache != null %}
-                            {{ Temps.tache.numero }} - {{ Temps.tache.intitule }}{% else %}
-                            Tâche inexistante
-                        {% endif %}</td>
-                    <td>{% if Temps.collaborateur != null %}
-                            {{ Temps.collaborateur.username }}
-                        {% else %}
-                            Collaborateur inexistant
-                        {% endif %}</td>
-                    <td>{{ Temps.tempspasse }}</td>
-                    <td><a href="{{ path('modtemps', {'id':Temps.id}) }}">Modifier</a></td>
-                    <td><a class="confirmation" href="{{ path('deltemps', {'id':Temps.id}) }}">Supprimer</a></td>
+                    <th>{{ 'Project'|trans }}</th>
+                    <th>{{ 'Task'|trans }}</th>
+                    <th>Date</th>
+                    <th>Hours</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
                 </tr>
-            {% endif %}
-        {% endfor %}
-        </tbody>
-    </table>
+                </thead>
+                <tbody>
+                {% for time in times %}
+                    <tr>
+                        <td>{{ time.project.name }}</td>
+                        <td>{{ time.task.name }}</td>
+                        <td>{{ time.date|date('Y-m-d') }}</td>
+                        <td>{{ time.time }}</td>
+                        <td><a href="{{ path('modtemps', {'id':time.id}) }}">Edit</a></td>
+                        <td><a href="{{ path('listtimes', {'timeToDelete': task.id}) }}">{{ 'Delete'|trans }}</a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
 
-    <a href="{{ path('listalltempscollaborateur') }}"><input type="button" value="Voir tous les temps"></a>
-                 
 {% endblock %}
-    

@@ -2,7 +2,11 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Entity\Project;
+use AppBundle\Entity\Task;
+use AppBundle\Entity\Time;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -18,56 +22,34 @@ class TimeType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {        
-        $builder->add('date', DateType::class, array(
-                        'widget' => 'single_text',
-                        'data' => new \DateTime(),
-                        'required' => true,
-                        'html5' => false,
-                        'format' => 'dd-MM-yyyy',
-                        'attr' => array(
-                            'class' => 'datePick')
+        $builder
+            ->add('date', DateType::class, array(
+                    'widget' => 'single_text',
+                    'data' => new \DateTime(),
+                    'required' => true,
+                    'html5' => false,
+                    'format' => 'dd-MM-yyyy',
                 ))
-                ->add('exercice', ChoiceType::class, array(
-                        'choices' => array(
-                            '2016' => 2016,
-                            '2017' => 2017,
-                            '2018' => 2018,
-                            '2019' => 2019,
-                            '2020' => 2020,
-                        ),
-                        'attr' => array(
-                            'class' => 'chosen-select'
-                        )
+            ->add('project', EntityType::class, array(
+                    'class' => Project::class,
+                    'expanded' => false,
+                    'multiple' => false,
+                    'choice_label' => function($project) {
+                        return $project->getName();
+                    },
                 ))
-                ->add('dossier', EntityType::class, array(
-                        'class' => 'Project.php',
-                        'expanded' => false,
-                        'multiple' => false,
-                        'choice_label' => function($dossier){
-                                        $nomDossier = $dossier->getNom();
-                                        $numDossier = $dossier->getNumero();
-                                        return $numDossier.' '.$nomDossier;
-                        },
-                        'attr' => array(
-                            'class' => 'chosen-select'
-                        )
+            ->add('task', EntityType::class, array(
+                    'class' => Task::class,
+                    'expanded' => false,
+                    'multiple' => false,
+                    'choice_label' => function($task) {
+                        return $task->getName();
+                    },
                 ))
-                ->add('tache', EntityType::class, array(
-                        'class' => 'Task.php',
-                        'expanded' => false,
-                        'multiple' => false,
-                        'choice_label' => function($tache){
-                                        $int_tache = $tache->getIntitule();
-                                        $num_tache = $tache->getNumero();
-                                        $tache_full = $num_tache . ' ' . $int_tache;
-                                        return $tache_full;
-                        },
-                        'attr' => array(
-                            'class' => 'chosen-select'
-                        )
-                ))
-                ->add('tempspasse')                
-                ->add('Enregistrer', SubmitType::class);
+            ->add('time', NumberType::class, [
+
+            ])
+            ->add('save', SubmitType::class);
     }
     
     /**
@@ -76,7 +58,7 @@ class TimeType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Time'
+            'data_class' => Time::class
         ));
     }
 
@@ -85,7 +67,7 @@ class TimeType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'appbundle_temps';
+        return 'appbundle_time';
     }
 
 

@@ -82,7 +82,7 @@ class ProjectController extends Controller
         $project = $entityManager->getRepository(Project::class)->find($idProject);
         $entityManager->remove($project);
         $entityManager->flush();
-        $this->addFlash('success', 'Project deleted.');
+        $flashBag->add('success', $translator->trans('Project deleted.'));
         return $this->redirectToRoute('listprojects');
     }
 }

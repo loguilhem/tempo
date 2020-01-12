@@ -10,4 +10,12 @@ namespace AppBundle\Repository;
  */
 class TaskRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findExceptItself($id)
+    {
+        return $this->createQueryBuilder('t')
+            ->where('t.id != :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult();
+    }
 }

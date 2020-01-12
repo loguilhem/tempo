@@ -2,8 +2,6 @@
 
 namespace AppBundle\Controller;
 
-use AppBundle\Entity\Project;
-use AppBundle\Entity\Task;
 use AppBundle\Entity\Time;
 use AppBundle\Form\Recap2Type;
 use Doctrine\ORM\EntityManagerInterface;
@@ -23,17 +21,6 @@ class DefaultController extends Controller
     public function indexAction()
     {        
         return $this->render('index.html.twig');
-    }
-
-    /**
-     * @Route(path="/list-times", name="listtimes", methods={"GET"})
-     * @Security("has_role('ROLE_SUPER_ADMIN')")
-     */
-    public function listTimes(EntityManagerInterface $entityManager)
-    {
-        return $this->render('times.html.twig', [
-            'times' => $entityManager->getRepository(Time::class)->findAll()
-        ]);
     }
 
     /**

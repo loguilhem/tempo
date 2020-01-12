@@ -26,6 +26,7 @@ class TaskType extends AbstractType
             ])
             ->add('motherTask', EntityType::class, array(
                     'class' => Task::class,
+                    'choices' => $options['choices'],
                     'expanded' => false,
                     'multiple' => false,
                     'choice_label' => function($task) {
@@ -44,7 +45,8 @@ class TaskType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => Task::class
+            'data_class' => Task::class,
+            'choices' => [],
         ));
     }
 

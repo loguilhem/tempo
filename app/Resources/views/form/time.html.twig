@@ -1,18 +1,45 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="pageTitle">
-        Enregistrer un temps passé
-    </div>
-    
-    {{ form_start(form) }}
-    {{ form_errors(form) }}
-    {{ form(form) }}
-    {{ form_end(form) }}
-            
-                 
+    <header  class="hero is-primary">
+        <div class="hero-body">
+            <div class="container">
+                {{ 'Time.add'|trans }}
+            </div>
+        </div>
+    </header>
+    <section class="section">
+        <div class="container is-fluid">
+            {{ form_start(form) }}
+            <div class="field">
+                <label class="label">{{ form_label(form.project) }}</label>
+                <div class="control">
+                    {{ form_widget(form.project) }}
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">{{ form_label(form.task) }}</label>
+                <div class="control">
+                    {{ form_widget(form.task) }}
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">{{ form_label(form.date) }}</label>
+                <div class="control">
+                    {{ form_widget(form.date) }}
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">{{ form_label(form.time) }}</label>
+                <div class="control">
+                    {{ form_widget(form.time) }}
+                </div>
+            </div>
+            <div class="control">
+                {{ form_widget(form.save) }}
+            </div>
+            {{ form_errors(form) }}
+            {{ form_end(form) }}
+        </div>
+    </section>
 {% endblock %}
-
-{% block javascripts %}
-{% endblock %} 
-    
