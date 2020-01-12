@@ -2,7 +2,9 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Entity\Task;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -15,26 +17,25 @@ class TaskType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name')
-                ->add('numero')
-                ->add('tachemere', EntityType::class, array(
-                        'class' => 'Task.php',
-                        'expanded' => false,
-                        'multiple' => false,
-                        'choice_label' => function($tache){
-                                        $int_tache = $tache->getIntitule();
-                                        $num_tache = $tache->getNumero();
-                                        $tache_full = $num_tache . ' ' . $int_tache;
-                                        return $tache_full;
-                        },
-                        'placeholder' => 'pas de tâche mère',
-                        'required' => false,
-                        'attr' => array(
-                            'class' => 'chosen-select'
-                        )
-                                
-                ))               
-                ->add('Enregistrer', SubmitType::class);;
+        $builder
+            ->add('name', TextType::class, [
+                'label' => 'Name'
+            ])
+            ->add('code', TextType::class, [
+                'label' => 'code'
+            ])
+            ->add('motherTask', EntityType::class, array(
+                    'class' => Task::class,
+                    'expanded' => false,
+                    'multiple' => false,
+                    'choice_label' => function($task) {
+                        return $task->getCode().' '.$task->getName();
+                    },
+                    'placeholder' => 'none',
+                    'required' => false
+
+            ))
+            ->add('save', SubmitType::class);;
     }
     
     /**
@@ -43,7 +44,7 @@ class TaskType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Task'
+            'data_class' => Task::class
         ));
     }
 
@@ -52,7 +53,7 @@ class TaskType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'appbundle_tache';
+        return 'appbundle_task';
     }
 
 

@@ -1,42 +1,71 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-    
-    {% for message in app.flashes('success') %}
-        <div class="success">{{ message }}</div>
-    {% endfor %}
-    {% for message in app.flashes('error') %}
-        <div class="error">{{ message }}</div>
-    {% endfor %}
+{% block title %}Tempo - tasks{% endblock %}
 
-    <div class="pageTitle">
-        {% trans %}Tasks list{% endtrans %}
-    </div>
-    
-    <a class="pure-button-primary" href="{{ path('addtache') }}">New Task></a>
-     
-    <table class="pure-table pure-table-striped">
-        <thead>
-            <tr>
-                <th>{{ 'name'|trans }}</th>
-                <th>Number</th>
-                <th>Belong to</th>
-                <th>Edit</th>
-                <th>Delete</th>
-                <th>Time</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for task in tasks %}
-            <tr>
-                <td>{{ task.name }}</td>
-                <td>{{ task.number }}</td>
-                <td>to do
-                <td><a href="{{ path('modtache', {'id':task.id}) }}">Edit</a></td>
-                <td><a class="confirmation" href="{{ path('deltache', {'id':task.id}) }}">Delete</a></td>
-                <td>X</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>            
+{% block body %}
+    <header  class="hero is-primary">
+        <div class="hero-body">
+            <div class="container">
+                {{ 'Tasks list'|trans }}
+            </div>
+        </div>
+    </header>
+
+    {% if taskToDelete is not null %}
+        <div class="modal is-active">
+            <div class="modal-background"></div>
+            <div class="modal-content">
+                <div class="notification is-warning">
+                    <p>
+                        {% trans %}
+                            Are you sure to delete this project ? Times recorded to this project will also be lost.
+                            You cannot reverse this action.
+                        {% endtrans %}
+                    </p>
+                    <div class="buttons">
+                        <form method="POST" action="{{ path('delproject') }}">
+                            <input type="hidden" value="{{ taskToDelete }}" name="id">
+                            <button type="submit" class="button is-danger">Yes I am sure !</button>
+                        </form>
+                        <a href="{{ path('listtasks') }}" class="button is-success is-light">No, please cancel.</a>
+                    </div>
+                </div>
+            </div>
+            <a href="{{ path('listtasks') }}" class="modal-close is-large" aria-label="close"></a>
+        </div>
+    {% endif %}
+
+    <section class="section">
+        <div class="container is-fluid">
+            <a class="button is-primary" href="{{ path('addtask') }}">New Task</a>
+
+            <table class="table is-hoverable is-striped is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>{{ 'Code'|trans }}</th>
+                        <th>{{ 'Name'|trans }}</th>
+                        <th>Belong to</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for task in tasks %}
+                    <tr>
+                        <td>{{ task.name }}</td>
+                        <td>{{ task.code }}</td>
+                        <td>
+                            {% if task.motherTask is not null %}
+                                {% if task.motherTask.code is not null %} {{ task.motherTask.code }} {% endif %}
+                                - {{ task.motherTask.name }}
+                            {% endif %}
+                        </td>
+                        <td><a href="{{ path('modtache', {'id':task.id}) }}">Edit</a></td>
+                        <td><a href="{{ path('deltache', {'id':task.id}) }}">Delete</a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
 {% endblock %}

@@ -44,14 +44,14 @@
         </nav>
 
         {% for message in app.session.flashBag.get('success') %}
-            <div class="notification is-success">
+            <p class="notification is-success">
                 {{ message }}
-            </div>
+            </p>
         {% endfor %}
         {% for message in app.session.flashBag.get('error') %}
-            <div class="notification is-danger">
+            <p class="notification is-danger">
                 {{ message }}
-            </div>
+            </p>
         {% endfor %}
 
         {% block body %}

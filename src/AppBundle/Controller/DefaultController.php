@@ -24,28 +24,6 @@ class DefaultController extends Controller
     {        
         return $this->render('index.html.twig');
     }
-    
-    /**
-     * @Route(path="list-projects", name="listprojects", methods={"GET"})
-     * @Security("has_role('ROLE_SUPER_ADMIN')")
-     */
-    public function listProjects(EntityManagerInterface $entityManager)
-    {
-        return $this->render('lists/projects.html.twig', [
-            'projects' => $entityManager->getRepository(Project::class)->findAll()
-        ]);
-    }
-    
-    /**
-     * @Route(path="/list-tasks", name="listtasks", methods={"GET"})
-     * @Security("has_role('ROLE_SUPER_ADMIN')")
-     */
-    public function listTasks(EntityManagerInterface $entityManager)
-    {        
-        return $this->render('lists/tasks.html.twig', [
-            'tasks' => $entityManager->getRepository(Task::class)->findAll()
-        ]);
-    }
 
     /**
      * @Route(path="/list-times", name="listtimes", methods={"GET"})

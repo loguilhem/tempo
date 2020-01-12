@@ -31,9 +31,9 @@ class Task
     /**
      * @var int
      *
-     * @ORM\Column(name="number", type="integer", unique=true)
+     * @ORM\Column(name="code", type="string", length=255, unique=true)
      */
-    private $number;
+    private $code;
 
     /**
      * @ORM\ManyToOne(targetEntity="Task", inversedBy="daughterTasks", cascade={"persist"})
@@ -46,6 +46,7 @@ class Task
      * @ORM\JoinColumn(nullable=true, unique=false)
      */
     private $daughterTasks;
+
     /**
      * Constructor
      */
@@ -89,27 +90,27 @@ class Task
     }
 
     /**
-     * Set number.
+     * Set code.
      *
-     * @param int $number
+     * @param string $code
      *
      * @return Task
      */
-    public function setNumber($number)
+    public function setCode($code)
     {
-        $this->number = $number;
+        $this->code = $code;
 
         return $this;
     }
 
     /**
-     * Get number.
+     * Get code.
      *
-     * @return int
+     * @return string
      */
-    public function getNumber()
+    public function getCode()
     {
-        return $this->number;
+        return $this->code;
     }
 
     /**
@@ -137,10 +138,13 @@ class Task
     }
 
     /**
-     * @param Task $daughterTask
-     * @return $this
+     * Add daughterTask.
+     *
+     * @param \AppBundle\Entity\Task $daughterTask
+     *
+     * @return Task
      */
-    public function addDaughterTask(Task $daughterTask)
+    public function addDaughterTask(\AppBundle\Entity\Task $daughterTask)
     {
         $this->daughterTasks[] = $daughterTask;
 
@@ -148,10 +152,13 @@ class Task
     }
 
     /**
-     * @param Task $daughterTask
-     * @return bool
+     * Remove daughterTask.
+     *
+     * @param \AppBundle\Entity\Task $daughterTask
+     *
+     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
      */
-    public function removeDaughterTask(Task $daughterTask)
+    public function removeDaughterTask(\AppBundle\Entity\Task $daughterTask)
     {
         return $this->daughterTasks->removeElement($daughterTask);
     }
