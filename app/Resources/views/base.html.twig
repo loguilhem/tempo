@@ -25,7 +25,7 @@
                         <a class="navbar-item" href="{{ path('listusers') }}">{{ 'Users'|trans }}</a>
                         <a class="navbar-item" href="{{ path('listprojects') }}">{{ 'Projects'|trans }}</a>
                         <a class="navbar-item" href="{{ path('listtasks') }}">{{ 'Task'|trans }}</a>
-                        <a class="navbar-item" href="{{ path('recap') }}">{{ 'Calc'|trans }}</a>
+                        <a class="navbar-item" href="{{ path('calc') }}">{{ 'Calc'|trans }}</a>
                     {% endif %}
                     {% if is_granted('ROLE_USER') or is_granted('ROLE_SUPER_ADMIN') %}
                         <a class="navbar-item" href="{{ path('listtimes') }}">{{ 'Time'|trans }}</a>

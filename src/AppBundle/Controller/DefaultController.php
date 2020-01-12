@@ -9,7 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Security\Core\Security as SecurityUser;
-use AppBundle\Form\Recap1Type;
+use AppBundle\Form\Calc1Type;
 use Symfony\Component\Routing\Annotation\Route;
 
 class DefaultController extends Controller
@@ -22,34 +22,6 @@ class DefaultController extends Controller
     {        
         return $this->render('index.html.twig');
     }
-
-    /**
-     * @Route(path="list_temps_collaborateur", name="listtempscollaborateur", methods={"GET"})
-     * @Security("has_role('ROLE_USER')")
-     */
-    public function listTempsCollaborateurAction(EntityManagerInterface $entityManager, SecurityUser $security)
-    {
-        return $this->render('times.html.twig', [
-            'times' => $entityManager->getRepository(Time::class)->findByCollaborateur($security->getUser())
-        ]);
-    }
-
-    /**
-     * @Route(path="list_tout_temps_collaborateur", name="listalltempscollaborateur", methods={"GET"})
-     * @Security("has_role('ROLE_USER')")
-     */
-    public function listToutTempsCollaborateurAction(EntityManagerInterface $entityManager, SecurityUser $security)
-    {
-        if (false === $security->isGranted('ROLE_SUPER_ADMIN')) {
-            $listTempsQuery = $entityManager->getRepository(Time::class)->findByCollaborateur($security->getUser());
-        } else {
-            $listTempsQuery = $entityManager->getRepository(Time::class)->findAll();
-        }
-
-        return $this->render('alltimes.html.twig', [
-            'listTemps' => $listTempsQuery
-        ]);
-    }
     
     /**
      * @Route(path="/recap", name="recap", methods={"GET", "POST"})
@@ -60,7 +32,7 @@ class DefaultController extends Controller
         /* there are 2 filters available, each one is a form: recap1Type, recap2Type */
         $repoTemps = $entityManager->getRepository(Time::class);
 
-        $form1 = $this->createForm(Recap1Type::class);
+        $form1 = $this->createForm(Calc1Type::class);
         $form1->handleRequest($request);
 
         $form2 = $this->createForm(Recap2Type::class);

@@ -18,14 +18,14 @@ use Symfony\Component\Translation\TranslatorInterface;
 class TaskController extends Controller
 {
     /**
-     * @Route(path="/list-tasks", name="listtasks", methods={"GET"})
+     * @Route(path="/list-tasks", name="listtasks", methods={"GET", "POST"})
      * @Security("has_role('ROLE_SUPER_ADMIN')")
      */
     public function listTasks(EntityManagerInterface $entityManager, Request $request)
     {
         return $this->render('lists/tasks.html.twig', [
             'tasks' => $entityManager->getRepository(Task::class)->findAll(),
-            'taskToDelete' => $request->query->get('taskToDelete')
+            'taskToDelete' => $request->request->get('taskToDelete')
         ]);
     }
 
@@ -77,16 +77,16 @@ class TaskController extends Controller
     
 
     /**
-     * @Route(path="/delete-taks", name="deltask", methods={"POST"})
+     * @Route(path="/delete-task", name="deltask", methods={"POST"})
      * @Security("has_role('ROLE_SUPER_ADMIN')")
      */
     public function delTask(Request $request, TranslatorInterface $translator, FlashBagInterface $flashBag, EntityManagerInterface $entityManager)
     {
-        $idTask = $request->request->get('id');
-        $task = $entityManager->getRepository(Task::class)->find($idTask);
+        $task = $entityManager->getRepository(Task::class)->find($request->request->get('id'));
         $entityManager->remove($task);
         $entityManager->flush();
         $flashBag->add('success', $translator->trans('Task deleted.'));
+
         return $this->redirectToRoute('listtasks');
     }
 }

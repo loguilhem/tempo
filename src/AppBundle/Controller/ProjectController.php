@@ -18,14 +18,14 @@ use Symfony\Component\Translation\TranslatorInterface;
 class ProjectController extends Controller
 {
     /**
-     * @Route(path="list-projects", name="listprojects", methods={"GET"})
+     * @Route(path="list-projects", name="listprojects", methods={"GET", "POST"})
      * @Security("has_role('ROLE_SUPER_ADMIN')")
      */
     public function listProjects(EntityManagerInterface $entityManager, Request $request)
     {
         return $this->render('lists/projects.html.twig', [
             'projects' => $entityManager->getRepository(Project::class)->findAll(),
-            'projectToDelete' => $request->query->get('projectToDelete')
+            'projectToDelete' => $request->request->get('projectToDelete')
         ]);
     }
 
@@ -78,11 +78,11 @@ class ProjectController extends Controller
      */
     public function delProject(Request $request, TranslatorInterface $translator, FlashBagInterface $flashBag, EntityManagerInterface $entityManager)
     {
-        $idProject = $request->request->get('id');
-        $project = $entityManager->getRepository(Project::class)->find($idProject);
+        $project = $entityManager->getRepository(Project::class)->find($request->request->get('id'));
         $entityManager->remove($project);
         $entityManager->flush();
         $flashBag->add('success', $translator->trans('Project deleted.'));
+
         return $this->redirectToRoute('listprojects');
     }
 }
