@@ -1,9 +1,0 @@
-{% extends "@FOSUser/layout.html.twig" %}
-
-{% block fos_user_content %}
-    {% if is_granted('ROLE_SUPER_ADMIN') %}
-        {% include "@FOSUser/Registration/register_content.html.twig" %}
-    {% else %}
-        {% trans %}Vous n'avez pas le droit de créer des utilisateurs{% endtrans %}
-    {% endif %}
-{% endblock fos_user_content %}

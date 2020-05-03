@@ -10,39 +10,6 @@
 
     </head>
     <body>
-        <nav class="navbar" role="navigation" aria-label="main navigation">
-            <div class="navbar-brand">
-                <a class="navbar-item" href="{{ path('index') }}" class="pure-menu-heading pure-menu-link">Tempo</a>
-                <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="main-navbar">
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                </a>
-            </div>
-            <div class="navbar-menu" id="main-navbar">
-                <div class="navbar-start">
-                    {% if is_granted('ROLE_SUPER_ADMIN') %}
-                        <a class="navbar-item" href="{{ path('listusers') }}">{{ 'Users'|trans }}</a>
-                        <a class="navbar-item" href="{{ path('listprojects') }}">{{ 'Projects'|trans }}</a>
-                        <a class="navbar-item" href="{{ path('listtasks') }}">{{ 'Task'|trans }}</a>
-                        <a class="navbar-item" href="{{ path('calc') }}">{{ 'Calc'|trans }}</a>
-                    {% endif %}
-                    {% if is_granted('ROLE_USER') or is_granted('ROLE_SUPER_ADMIN') %}
-                        <a class="navbar-item" href="{{ path('listtimes') }}">{{ 'Time'|trans }}</a>
-                    {% endif %}
-                </div>
-                <div class="navbar-end">
-                    <div class="navbar-item">
-                    {% if app.user is not null %}
-                        <a class="navbar-item" href="{{ path('fos_user_profile_show') }}">{{ app.user.username }}</a>
-                        <a class="navbar-item" href="{{ path('fos_user_security_logout') }}">{{ 'Log out'|trans }}</a>
-                    {% else %}
-                        <a class="navbar-item" href="{{ path('fos_user_security_login') }}">{{ 'Log in'|trans }}</a>
-                    {% endif %}
-                    </div>
-                </div>
-            </div>
-        </nav>
 
         {% for message in app.session.flashBag.get('success') %}
             <p class="notification is-success">
