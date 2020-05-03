@@ -3,7 +3,6 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -39,65 +38,66 @@ class Project
     private $code;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Project", mappedBy="project")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Company", inversedBy="projects")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $times;
+    private $company;
 
     /**
-     * Get id.
-     *
-     * @return int
+     * @ORM\Column(type="text", nullable=true)
      */
-    public function getId()
+    private $description;
+
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * Set name.
-     *
-     * @param string $name
-     *
-     * @return Project
-     */
-    public function setName($name)
+    public function setName($name): self
     {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * Get name.
-     *
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * Set code.
-     *
-     * @param string|null $code
-     *
-     * @return Project
-     */
-    public function setCode($code = null)
+    public function setCode($code = null): self
     {
         $this->code = $code;
 
         return $this;
     }
 
-    /**
-     * Get code.
-     *
-     * @return string|null
-     */
-    public function getCode()
+    public function getCode(): string
     {
         return $this->code;
+    }
+
+    public function getCompany(): ?Company
+    {
+        return $this->company;
+    }
+
+    public function setCompany(?Company $company): self
+    {
+        $this->company = $company;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
     }
 }

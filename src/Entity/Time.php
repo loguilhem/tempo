@@ -25,18 +25,17 @@ class Time
 
     /**
      * @var \DateTime
-     *
      * @ORM\Column(type="datetime", nullable=false)
      * @Assert\NotBlank()
      */
-    private $date;
+    private $startTime;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Project", inversedBy="times", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=true,onDelete="SET NULL")
+     * @var \DateTime
+     * @ORM\Column(type="datetime", nullable=false)
      * @Assert\NotBlank()
      */
-    private $project;
+    private $endTime;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", cascade={"persist"})
@@ -52,141 +51,54 @@ class Time
      */
     private $task;
 
-    /**
-     * @var float
-     *
-     * @ORM\Column(name="time", type="decimal", nullable=false)
-     * @Assert\NotBlank()
-     * @Assert\Positive()
-     */
-    private $time;
-
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * Set date.
-     *
-     * @param \DateTime $date
-     *
-     * @return Time
-     */
-    public function setDate($date)
+    public function setStartTime($date): self
     {
-        $this->date = $date;
+        $this->startTime = $date;
 
         return $this;
     }
 
-    /**
-     * Get date.
-     *
-     * @return \DateTime
-     */
-    public function getDate()
+    public function getStartTime(): \DateTime
     {
-        return $this->date;
+        return $this->startTime;
     }
 
-    /**
-     * Set time.
-     *
-     * @param string $time
-     *
-     * @return Time
-     */
-    public function setTime($time)
+    public function setEndTime($time): self
     {
-        $this->time = $time;
+        $this->endTime = $time;
 
         return $this;
     }
-
-    /**
-     * Get time.
-     *
-     * @return string
-     */
-    public function getTime()
+    public function getEndTime(): \DateTime
     {
-        return $this->time;
+        return $this->endTime;
     }
 
-    /**
-     * Set project.
-     *
-     * @param \AppBundle\Entity\Project|null $project
-     *
-     * @return Time
-     */
-    public function setProject(\AppBundle\Entity\Project $project = null)
-    {
-        $this->project = $project;
-
-        return $this;
-    }
-
-    /**
-     * Get project.
-     *
-     * @return \AppBundle\Entity\Project|null
-     */
-    public function getProject()
-    {
-        return $this->project;
-    }
-
-    /**
-     * Set user.
-     *
-     * @param \AppBundle\Entity\User|null $user
-     *
-     * @return Time
-     */
-    public function setUser(\AppBundle\Entity\User $user = null)
+    public function setUser(User $user = null): self
     {
         $this->user = $user;
 
         return $this;
     }
 
-    /**
-     * Get user.
-     *
-     * @return \AppBundle\Entity\User|null
-     */
-    public function getUser()
+    public function getUser(): User
     {
         return $this->user;
     }
 
-    /**
-     * Set task.
-     *
-     * @param \AppBundle\Entity\Task|null $task
-     *
-     * @return Time
-     */
-    public function setTask(\AppBundle\Entity\Task $task = null)
+    public function setTask(Task $task = null): self
     {
         $this->task = $task;
 
         return $this;
     }
 
-    /**
-     * Get task.
-     *
-     * @return \AppBundle\Entity\Task|null
-     */
-    public function getTask()
+    public function getTask(): Task
     {
         return $this->task;
     }

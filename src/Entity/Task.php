@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -60,124 +61,72 @@ class Task
      */
     public function __construct()
     {
-        $this->daughterTasks = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->daughterTasks = new ArrayCollection();
+        $this->times = new ArrayCollection();
     }
 
-    /**
-     * Get id.
-     *
-     * @return int
-     */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * Set name.
-     *
-     * @param string $name
-     *
-     * @return Task
-     */
-    public function setName($name)
+    public function setName($name) : self
     {
         $this->name = $name;
 
         return $this;
     }
 
-    /**
-     * Get name.
-     *
-     * @return string
-     */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
 
-    /**
-     * Set code.
-     *
-     * @param string $code
-     *
-     * @return Task
-     */
-    public function setCode($code)
+    public function setCode($code): self
     {
         $this->code = $code;
 
         return $this;
     }
 
-    /**
-     * Get code.
-     *
-     * @return string
-     */
-    public function getCode()
+    public function getCode(): string
     {
         return $this->code;
     }
 
-    /**
-     * Set motherTask.
-     *
-     * @param \AppBundle\Entity\Task|null $motherTask
-     *
-     * @return Task
-     */
-    public function setMotherTask(\AppBundle\Entity\Task $motherTask = null)
+    public function setMotherTask(Task $motherTask = null): self
     {
         $this->motherTask = $motherTask;
 
         return $this;
     }
 
-    /**
-     * Get motherTask.
-     *
-     * @return \AppBundle\Entity\Task|null
-     */
-    public function getMotherTask()
+    public function getMotherTask(): Task
     {
         return $this->motherTask;
     }
 
-    /**
-     * Add daughterTask.
-     *
-     * @param \AppBundle\Entity\Task $daughterTask
-     *
-     * @return Task
-     */
-    public function addDaughterTask(\AppBundle\Entity\Task $daughterTask)
+    public function addDaughterTask(Task $daughterTask): self
     {
         $this->daughterTasks[] = $daughterTask;
 
         return $this;
     }
 
-    /**
-     * Remove daughterTask.
-     *
-     * @param \AppBundle\Entity\Task $daughterTask
-     *
-     * @return boolean TRUE if this collection contained the specified element, FALSE otherwise.
-     */
-    public function removeDaughterTask(\AppBundle\Entity\Task $daughterTask)
+    public function removeDaughterTask(Task $daughterTask): self
     {
-        return $this->daughterTasks->removeElement($daughterTask);
+        $this->daughterTasks->removeElement($daughterTask);
+
+        return $this;
     }
 
-    /**
-     * Get daughterTasks.
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getDaughterTasks()
+    public function getDaughterTasks(): ArrayCollection
     {
         return $this->daughterTasks;
+    }
+
+    public function getTimes(): ArrayCollection
+    {
+        return $this->times;
     }
 }

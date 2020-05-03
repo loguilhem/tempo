@@ -14,6 +14,10 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class User implements UserInterface, \Serializable
 {
+    const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
+    const ROLE_ADMIN = 'ROLE_ADMIN';
+    const ROLE_USER = 'ROLE_USER';
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -74,16 +78,23 @@ class User implements UserInterface, \Serializable
     protected $roles;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Company", inversedBy="members")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $company;
+
+    /**
      * User constructor.
      */
     public function __construct()
     {
         $this->enabled = false;
         $this->roles = [];
+        $this->highestRole = $this->getHighestRole();
     }
 
     /** @see \Serializable::serialize() */
-    public function serialize()
+    public function serialize(): string
     {
         return serialize(array(
             $this->id,
@@ -97,7 +108,7 @@ class User implements UserInterface, \Serializable
     }
 
     /** @see \Serializable::unserialize() */
-    public function unserialize($serialized)
+    public function unserialize($serialized): array
     {
         list (
             $this->id,
@@ -115,30 +126,33 @@ class User implements UserInterface, \Serializable
         return (string) $this->username;
     }
 
-    public function setUsername()
+    public function setUsername(): self
     {
         $username = $this->getEmail();
+
         $this->username = $username;
+
+        return $this;
     }
 
     public function getSalt()
     {
-        // you *may* need a real salt depending on your encoder
-        // see section on salt below
         return null;
     }
 
-    public function getPassword()
+    public function getPassword(): string
     {
         return $this->password;
     }
 
-    public function setPassword($password)
+    public function setPassword($password): self
     {
         $this->password = $password;
+
+        return $this;
     }
 
-    public function getRoles()
+    public function getRoles(): array
     {
         $roles = $this->roles;
         $roles[] = 'ROLE_USER';
@@ -153,7 +167,7 @@ class User implements UserInterface, \Serializable
     /**
      * @return mixed
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -161,7 +175,7 @@ class User implements UserInterface, \Serializable
     /**
      * @return mixed
      */
-    public function getEmail()
+    public function getEmail(): string
     {
         return $this->email;
     }
@@ -169,9 +183,11 @@ class User implements UserInterface, \Serializable
     /**
      * @param mixed $email
      */
-    public function setEmail($email): void
+    public function setEmail($email): self 
     {
         $this->email = $email;
+
+        return $this;
     }
 
     /**
@@ -229,4 +245,25 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
+    public function getHighestRole(): string
+    {
+        $rolesSortByImportance = [User::ROLE_SUPER_ADMIN, User::ROLE_ADMIN, User::ROLE_USER];
+        foreach ($rolesSortByImportance as $role) {
+            if (in_array($role, $this->roles)) {
+                return $role;
+            }
+        }
+    }
+
+    public function getCompany(): ?Company
+    {
+        return $this->company;
+    }
+
+    public function setCompany(?Company $company): self
+    {
+        $this->company = $company;
+
+        return $this;
+    }
 }

@@ -2,17 +2,26 @@
 
 {% block body %}
        
-    <h1>{% trans %}Welcome on Tempo{% endtrans %}</h1>
+    <h1>Tempo - Time tracker</h1>
     {% if app.user is not null %}
         {{ 'Welcome'|trans }} {{ app.user.username }}.
-        {% trans %}Your last connection{% endtrans %} : {{ app.user.lastLogin|date('d/m/Y') }}
-        {% else %}
-            <p>
-        {% trans %}
-            Tempo helps you to keep track of time spent on projects and tasks by you or your co-workers.
-            It is an open source project. You can download it and host it on your own server.
-        {% endtrans %}
-            </p>
+        {{ 'Your role is' }} : {{ app.user.highestRole }}
+        {{ 'Your last connection'|trans }} : {{ app.user.lastLogin|date('d/m/Y') }}
     {% endif %}
-    
+
+    {# Menu according to user role #}
+    Settings (day duration, company name, ...)
+    {{ 'User Management'|trans }}
+    <br>
+    {{ 'Projects Management'|trans }}
+    <br>
+    {{ 'Tasks Management'|trans }}
+    <br>
+    {{ 'Analytics'|trans }}
+    <br>
+    {% trans %}
+        Tempo helps you to keep track of time spent on projects and tasks by you or your co-workers.
+        It is an open source project. You can download it and host it on your own server or soon use our cloud :).
+    {% endtrans %}
+
 {% endblock %}
