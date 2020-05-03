@@ -3,14 +3,13 @@
 namespace App\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Entity\User;
-use FOS\UserBundle\Model\UserManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use App\Entity\User;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
-class UserController extends Controller
+class UserController extends AbstractController
 {
     /**
      * @Route(path="/list-users", name="listusers", methods={"GET"})
@@ -26,14 +25,13 @@ class UserController extends Controller
      * @Route(path="/promoteuser/{id}", name="promoteuser", methods={"GET"})
      * @Security("has_role('ROLE_SUPER_ADMIN')")
      */
-    public function promoteUserAction($id, EntityManagerInterface $entityManager, UserManagerInterface $userManager, FlashBagInterface $flashBag)
+    public function promoteUserAction($id, EntityManagerInterface $entityManager, FlashBagInterface $flashBag)
     {
         $user = $entityManager->getRepository(User::class)->find($id);
         $currentRole = $user->getHigherRole();
         $newRole = $user->upRole();
         $user->removeRole($currentRole);
         $user->addRole($newRole);
-        $userManager->updateUser($user);
 
         if($currentRole == $newRole) {
             $flashBag->add('success', 'Utilisateur a déjà tous les droits');
@@ -48,14 +46,13 @@ class UserController extends Controller
      * @Route(path="/demoteuser/{id}", name="demoteuser", methods={"GET"})
      * @Security("has_role('ROLE_SUPER_ADMIN')")
      */
-    public function demoteUserAction($id, EntityManagerInterface $entityManager, UserManagerInterface $userManager, FlashBagInterface $flashBag)
+    public function demoteUserAction($id, EntityManagerInterface $entityManager, FlashBagInterface $flashBag)
     {
         $user = $entityManager->getRepository(User::class)->find($id);
         $currentRole = $user->getHigherRole();
         $newRole = $user->downRole();
         $user->removeRole($currentRole);
         $user->addRole($newRole);
-        $userManager->updateUser($user);
 
         if($currentRole == $newRole) {
             $flashBag->add('success', 'Utilisateur est déjà au minimum de droits');
@@ -70,7 +67,7 @@ class UserController extends Controller
      * @Route(path="/activateuser/{id}", name="activateuser", methods={"GET"})
      * @Security("has_role('ROLE_SUPER_ADMIN')")
      */
-    public function activateUserAction($id, EntityManagerInterface $entityManager, FlashBagInterface $flashBag, UserManagerInterface $userManager)
+    public function activateUserAction($id, EntityManagerInterface $entityManager, FlashBagInterface $flashBag)
     {
         $user = $entityManager->getRepository(User::class)->find($id);
         $locked = $user->isEnabled();
@@ -83,7 +80,6 @@ class UserController extends Controller
             $flashBag->add('success', 'L\'utilisateur est bloqué');
         }
 
-        $userManager->updateUser($user);
 
         return $this->redirectToRoute('listusers');
     }

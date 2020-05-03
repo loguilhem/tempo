@@ -2,14 +2,17 @@
 
 namespace App\Entity;
 
-use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="fos_user")
+ * @UniqueEntity(fields={"email", "username"}, message="There is already an account with this email")
  */
-class User
+class User implements UserInterface, \Serializable
 {
     /**
      * @ORM\Id
@@ -28,19 +31,7 @@ class User
      * @var string
      * @ORM\Column(type="string", length=180, unique=true, nullable=false)
      */
-    protected $usernameCanonical;
-
-    /**
-     * @var string
-     * @ORM\Column(type="string", length=180, unique=true, nullable=false)
-     */
     protected $email;
-
-    /**
-     * @var string
-     * @ORM\Column(type="string", length=180, unique=true, nullable=false)
-     */
-    protected $emailCanonical;
 
     /**
      * @var bool
@@ -91,78 +82,136 @@ class User
         $this->roles = [];
     }
 
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->username,
+            $this->password,
+            $this->email,
+            $this->isActive
+            // see section on salt below
+            // $this->salt,
+        ));
+    }
+
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->username,
+            $this->password,
+            $this->email,
+            $this->isActive
+            // see section on salt below
+            // $this->salt
+            ) = unserialize($serialized, array('allowed_classes' => false));
+    }
+
+    public function getUsername(): string
+    {
+        return (string) $this->username;
+    }
+
+    public function setUsername()
+    {
+        $username = $this->getEmail();
+        $this->username = $username;
+    }
+
+    public function getSalt()
+    {
+        // you *may* need a real salt depending on your encoder
+        // see section on salt below
+        return null;
+    }
+
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    }
+
+    public function getRoles()
+    {
+        $roles = $this->roles;
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function eraseCredentials()
+    {
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param mixed $email
+     */
+    public function setEmail($email): void
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEnabled(): bool
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * @param bool $isEnabled
+     */
+    public function setIsEnabled(bool $isEnabled): void
+    {
+        $this->enabled = $isEnabled;
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
     /**
      * @return string
      */
-    public function __toString()
+    public function getConfirmationToken(): string
     {
-        return (string) $this->getUsername();
+        return $this->confirmationToken;
     }
 
     /**
-     * {@inheritdoc}
+     * @param string $resetToken
      */
-    public function serialize()
+    public function setConfirmationToken(?string $confirmationToken): void
     {
-        return serialize([
-            $this->password,
-            $this->salt,
-            $this->usernameCanonical,
-            $this->username,
-            $this->enabled,
-            $this->id,
-            $this->email,
-            $this->emailCanonical,
-        ]);
+        $this->confirmationToken = $confirmationToken;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function unserialize($serialized)
-    {
-        $data = unserialize($serialized);
 
-        if (13 === count($data)) {
-            // Unserializing a User object from 1.3.x
-            unset($data[4], $data[5], $data[6], $data[9], $data[10]);
-            $data = array_values($data);
-        } elseif (11 === count($data)) {
-            // Unserializing a User from a dev version somewhere between 2.0-alpha3 and 2.0-beta1
-            unset($data[4], $data[7], $data[8]);
-            $data = array_values($data);
-        }
-
-        list(
-            $this->password,
-            $this->salt,
-            $this->usernameCanonical,
-            $this->username,
-            $this->enabled,
-            $this->id,
-            $this->email,
-            $this->emailCanonical
-            ) = $data;
-    }
-
-    // Useful with more than 2 roles
-    public function getHigherRole()
-    {
-        $rolesSortedByImportance = [self::ROLE_SUPER_ADMIN, self::ROLE_USER]; /*form roles here */
-        foreach ($rolesSortedByImportance as $role) {
-            if (in_array($role, $this->roles)) {
-                return $role;
-            }
-        }
-    }
-    
-    public function upRole()
-    {
-        return $newRole = 'ROLE_SUPER_ADMIN';
-    }
-    
-    public function downRole()
-    {
-        return $newRole = 'ROLE_USER';
-    }
 }
