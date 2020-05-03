@@ -1,0 +1,12 @@
+fos_user:
+  db_driver: orm
+  firewall_name: main
+  user_class: AppBundle\Entity\User
+  service:
+    mailer: 'fos_user.mailer.twig_swift'
+  from_email:
+    address: "null@localhost.com"
+    sender_name: App Temporela
+  resetting:
+    email:
+      template: '@FOSUser/Resetting/email.txt.twig'
