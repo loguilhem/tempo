@@ -83,7 +83,7 @@ class SecurityController extends AbstractController
 
         $this->addFlash('notice', 'Email sent');
 
-        return $this->redirectToRoute('admin');
+        return $this->redirectToRoute('index');
     }
 
     /**
@@ -107,7 +107,7 @@ class SecurityController extends AbstractController
 
             $this->addFlash('succes', 'Password updated');
 
-            return $this->redirectToRoute('admin');
+            return $this->redirectToRoute('index');
         }
 
         return $this->render('security/reset_password.html.twig', [
