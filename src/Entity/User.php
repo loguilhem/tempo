@@ -2,18 +2,18 @@
 
 namespace App\Entity;
 
-use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="fos_user")
+ * @UniqueEntity(fields={"email", "username"}, message="There is already an account with this email")
  */
-class User extends BaseUser
+class User implements UserInterface, \Serializable
 {
-    const ROLE_SUPER_ADMIN = 'ROLE_SUPER_ADMIN';
-    const ROLE_USER = 'ROLE_USER';
-
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -21,30 +21,197 @@ class User extends BaseUser
      */
     protected $id;
 
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=180, unique=true, nullable=false)
+     */
+    protected $username;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=180, unique=true, nullable=false)
+     */
+    protected $email;
+
+    /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     */
+    protected $enabled;
+
+    /**
+     * Encrypted password. Must be persisted.
+     * @ORM\Column(type="string", length=255, unique=false, nullable=false)
+     *
+     * @var string
+     */
+    protected $password;
+
+    /**
+     * @var \DateTime|null
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $lastLogin;
+
+    /**
+     * Random string sent to the user email address in order to verify it.
+     *
+     * @var string|null
+     * @ORM\Column(type="string", length=180, unique=true, nullable=true)
+     */
+    protected $confirmationToken;
+
+    /**
+     * @var \DateTime|null
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $passwordRequestedAt;
+
+    /**
+     * @var array
+     * @ORM\Column(type="array")
+     */
+    protected $roles;
+
+    /**
+     * User constructor.
+     */
     public function __construct()
     {
-        parent::__construct();
-        // your own logic
+        $this->enabled = false;
+        $this->roles = [];
     }
 
-    // Useful with more than 2 roles
-    public function getHigherRole()
+    /** @see \Serializable::serialize() */
+    public function serialize()
     {
-        $rolesSortedByImportance = [self::ROLE_SUPER_ADMIN, self::ROLE_USER]; /*form roles here */
-        foreach ($rolesSortedByImportance as $role) {
-            if (in_array($role, $this->roles)) {
-                return $role;
-            }
-        }
+        return serialize(array(
+            $this->id,
+            $this->username,
+            $this->password,
+            $this->email,
+            $this->isActive
+            // see section on salt below
+            // $this->salt,
+        ));
     }
-    
-    public function upRole()
+
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
     {
-        return $newRole = 'ROLE_SUPER_ADMIN';
+        list (
+            $this->id,
+            $this->username,
+            $this->password,
+            $this->email,
+            $this->isActive
+            // see section on salt below
+            // $this->salt
+            ) = unserialize($serialized, array('allowed_classes' => false));
     }
-    
-    public function downRole()
+
+    public function getUsername(): string
     {
-        return $newRole = 'ROLE_USER';
+        return (string) $this->username;
     }
+
+    public function setUsername()
+    {
+        $username = $this->getEmail();
+        $this->username = $username;
+    }
+
+    public function getSalt()
+    {
+        // you *may* need a real salt depending on your encoder
+        // see section on salt below
+        return null;
+    }
+
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    }
+
+    public function getRoles()
+    {
+        $roles = $this->roles;
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+    public function eraseCredentials()
+    {
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param mixed $email
+     */
+    public function setEmail($email): void
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEnabled(): bool
+    {
+        return $this->enabled;
+    }
+
+    /**
+     * @param bool $isEnabled
+     */
+    public function setIsEnabled(bool $isEnabled): void
+    {
+        $this->enabled = $isEnabled;
+    }
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getConfirmationToken(): string
+    {
+        return $this->confirmationToken;
+    }
+
+    /**
+     * @param string $resetToken
+     */
+    public function setConfirmationToken(?string $confirmationToken): void
+    {
+        $this->confirmationToken = $confirmationToken;
+    }
+
+
 }
