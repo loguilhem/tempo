@@ -90,7 +90,7 @@ class User implements UserInterface, \Serializable
             $this->username,
             $this->password,
             $this->email,
-            $this->isActive
+            $this->enabled
             // see section on salt below
             // $this->salt,
         ));
@@ -104,7 +104,7 @@ class User implements UserInterface, \Serializable
             $this->username,
             $this->password,
             $this->email,
-            $this->isActive
+            $this->enabled
             // see section on salt below
             // $this->salt
             ) = unserialize($serialized, array('allowed_classes' => false));
@@ -185,9 +185,11 @@ class User implements UserInterface, \Serializable
     /**
      * @param bool $isEnabled
      */
-    public function setIsEnabled(bool $isEnabled): void
+    public function setIsEnabled(bool $isEnabled): self
     {
         $this->enabled = $isEnabled;
+
+        return $this;
     }
 
     public function setRoles(array $roles): self
@@ -208,10 +210,23 @@ class User implements UserInterface, \Serializable
     /**
      * @param string $resetToken
      */
-    public function setConfirmationToken(?string $confirmationToken): void
+    public function setConfirmationToken(?string $confirmationToken): self
     {
         $this->confirmationToken = $confirmationToken;
+
+        return $this;
     }
 
+    public function getLastLogin(): ?\DateTime
+    {
+        return $this->lastLogin;
+    }
+
+    public function setlastLogin(\DateTime $dateTime): self
+    {
+        $this->lastLogin = $dateTime;
+
+        return $this;
+    }
 
 }
