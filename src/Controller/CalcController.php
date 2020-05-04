@@ -3,11 +3,11 @@
 namespace App\Controller;
 
 use Form\Calc1Type;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Routing\Annotation\Route;
 
-class CalcController extends Controller
+class CalcController extends AbstractController
 {
     /**
      * @Route(path="/calc", name="calc", methods={"GET", "POST"})

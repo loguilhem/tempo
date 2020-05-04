@@ -8,6 +8,7 @@ namespace App\Controller;
 use Doctrine\ORM\EntityManagerInterface;
 use Entity\Time;
 use Form\TimeType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -16,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Security\Core\Security as SecurityUser;
 
-class TimeController extends Controller
+class TimeController extends AbstractController
 {
     /**
      * @Route(path="/list-times", name="listtimes", methods={"GET", "POST"})

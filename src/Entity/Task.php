@@ -57,6 +57,12 @@ class Task
     private $times;
 
     /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Company", inversedBy="projects")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $company;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -128,5 +134,17 @@ class Task
     public function getTimes(): ArrayCollection
     {
         return $this->times;
+    }
+
+    public function getCompany(): ?Company
+    {
+        return $this->company;
+    }
+
+    public function setCompany(?Company $company): self
+    {
+        $this->company = $company;
+
+        return $this;
     }
 }
