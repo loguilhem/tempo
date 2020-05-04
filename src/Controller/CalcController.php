@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use Form\Calc1Type;
+use App\Form\Calc1Type;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Routing\Annotation\Route;

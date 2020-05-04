@@ -62,55 +62,15 @@ class TimeRepository extends \Doctrine\ORM\EntityRepository
         return $query->getQuery()->getResult();
     }
 
-    function getByColExercice($idCol, $exercice, $dateDebut, $dateFin, $forever)
+    public function getByCompany($company)
     {
-        if ($forever == false)
-        {
-            $query = $this->createQueryBuilder('t')
-                ->where('t.collaborateur = ' . $idCol)
-                ->andWhere('t.exercice = ' . $exercice)
-                ->andWhere('t.date BETWEEN :debut AND :fin')
-                ->setParameter('debut', $dateDebut)
-                ->setParameter('fin', $dateFin)
+        return $this->createQueryBuilder('t')
+            ->join('t.user', 'u')
+            ->join('u.company', 'c')
+            ->where('u.company = :company')
+            ->setParameter('company', $company)
+            ->getQuery()
+            ->getResult()
             ;
-        }
-        else
-        {
-            $query = $this->createQueryBuilder('t')
-                ->where('t.collaborateur = ' . $idCol)
-                ->andWhere('t.exercice = ' . $exercice)
-            ;
-        }
-
-        return $query->getQuery()->getResult();
-    }
-
-    function getSumByColExercice($idCol, $exercice, $dateDebut, $dateFin, $forever)
-    {
-        if ($forever == false)
-        {
-            $query = $this->createQueryBuilder('t')
-                ->join('t.dossier', 'dos')
-                ->where('t.collaborateur = ' . $idCol)
-                ->andWhere('t.exercice = ' . $exercice)
-                ->andWhere('t.date BETWEEN :debut AND :fin')
-                ->setParameter('debut', $dateDebut)
-                ->setParameter('fin', $dateFin)
-                ->select('dos.nom AS dossier, dos.numero AS numdos, SUM(t.tempspasse) AS tempstotal')
-                ->groupBy('t.dossier')
-            ;
-        }
-        else
-        {
-            $query = $this->createQueryBuilder('t')
-                ->join('t.dossier', 'dos')
-                ->where('t.collaborateur = ' . $idCol)
-                ->andWhere('t.exercice = ' . $exercice)
-                ->select('dos.nom AS dossier, dos.numero AS numdos, SUM(t.tempspasse) AS tempstotal')
-                ->groupBy('t.dossier')
-            ;
-        }
-
-        return $query->getQuery()->getResult();
     }
 }

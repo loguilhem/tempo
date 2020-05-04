@@ -28,13 +28,10 @@ class CompanyVoter extends Voter
         // ... (check conditions and return true to grant permission) ...
         switch ($attribute) {
             case 'view':
-                // logic to determine if the user can EDIT
-                 return true;
+                return $user->getCompany() === $subject;
                 break;
             case 'edit':
-                // logic to determine if the user can VIEW
-                return true;
-                break;
+                return $user->getCompany() === $subject;
         }
 
         return false;

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -34,6 +35,11 @@ class Project
      * @ORM\JoinColumn(nullable=false)
      */
     private $company;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Time", mappedBy="project")
+     */
+    private $times;
 
     /**
      * @ORM\Column(type="text", nullable=true)
@@ -79,5 +85,10 @@ class Project
         $this->description = $description;
 
         return $this;
+    }
+
+    public function getTimes(): ArrayCollection
+    {
+        return $this->times;
     }
 }
