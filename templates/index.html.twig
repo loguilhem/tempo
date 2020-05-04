@@ -10,7 +10,10 @@
     {% endif %}
 
     {# Menu according to user role #}
-    Settings (day duration, company name, ...)
+    <a href="{{ path('company_index') }}">
+        {{ 'Company Management'|trans }}
+    </a>
+    <br>
     {{ 'User Management'|trans }}
     <br>
     {{ 'Projects Management'|trans }}
