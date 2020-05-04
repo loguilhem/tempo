@@ -34,7 +34,7 @@ class Task
     /**
      * @var int
      *
-     * @ORM\Column(type="string", length=255, unique=true, nullable=false)
+     * @ORM\Column(type="string", length=255, unique=false, nullable=false)
      * @Assert\NotBlank()
      */
     private $code;
@@ -83,7 +83,7 @@ class Task
         return $this;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -95,7 +95,7 @@ class Task
         return $this;
     }
 
-    public function getCode(): string
+    public function getCode(): ?string
     {
         return $this->code;
     }
@@ -107,7 +107,7 @@ class Task
         return $this;
     }
 
-    public function getMotherTask(): Task
+    public function getMotherTask(): ?Task
     {
         return $this->motherTask;
     }
@@ -126,7 +126,7 @@ class Task
         return $this;
     }
 
-    public function getDaughterTasks(): ArrayCollection
+    public function getDaughterTasks(): ?ArrayCollection
     {
         return $this->daughterTasks;
     }

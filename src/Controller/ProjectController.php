@@ -36,7 +36,7 @@ class ProjectController extends AbstractController
     }
 
     /**
-     * @Route(path="/add-project", name="addproject", methods={"GET", "POST"})
+     * @Route(path="/add", name="addproject", methods={"GET", "POST"})
      * @IsGranted("ROLE_SUPER_ADMIN")
      */
     public function addProject(
