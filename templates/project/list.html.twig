@@ -12,27 +12,19 @@
     </header>
 
     {% if projectToDelete is not null %}
-    <div class="modal is-active">
-        <div class="modal-background"></div>
-        <div class="modal-content">
-            <div class="notification is-warning">
-                <p>
-                {% trans %}
-                    Are you sure to delete this project ? Times recorded to this project will also be lost.
-                    You cannot reverse this action.
-                {% endtrans %}
-                </p>
-                <div class="buttons">
-                    <form method="POST" action="{{ path('delproject') }}">
-                        <input type="hidden" value="{{ projectToDelete }}" name="id">
-                        <button type="submit" class="button is-danger">Yes I am sure !</button>
-                    </form>
-                    <a href="{{ path('listprojects') }}" class="button is-success is-light">No, please cancel.</a>
-                </div>
+            <p>
+            {% trans %}
+                Are you sure to delete this project ? Times recorded to this project will also be lost.
+                You cannot reverse this action.
+            {% endtrans %}
+            </p>
+            <div class="modal-footer">
+                <form method="POST" action="{{ path('delete_project') }}">
+                    <input type="hidden" value="{{ projectToDelete }}" name="id">
+                    <button type="submit" class="btn btn-secondary">{{ 'Yes I am sure'|trans }}</button>
+                </form>
+                <a href="{{ path('list_projects') }}" class="btn btn-primary">No, please cancel.</a>
             </div>
-        </div>
-        <a href="{{ path('listprojects') }}" class="modal-close is-large" aria-label="close"></a>
-    </div>
     {% endif %}
 
     <section class="section">
@@ -42,8 +34,8 @@
             <table class="table is-hoverable is-striped is-fullwidth">
                 <thead>
                     <tr>
-                        <th>{{ 'Code'|trans }}</th>
                         <th>{{ 'Name'|trans }}</th>
+                        <th>{{ 'Description'|trans }}</th>
                         <th>{{ 'Edit'|trans }}</th>
                         <th>{{ 'Delete'|trans }}</th>
                     </tr>
@@ -51,11 +43,11 @@
                 <tbody>
                 {% for project in projects %}
                     <tr>
-                        <td>{{ project.code }}</td>
                         <td>{{ project.name }}</td>
-                        <td><a class="button is-primary" href="{{ path('modproject', {'id': project.id}) }}">{{ 'Edit'|trans }}</a></td>
+                        <td>{{ project.description }}</td>
+                        <td><a class="button is-primary" href="{{ path('edit_project', {'id': project.id}) }}">{{ 'Edit'|trans }}</a></td>
                         <td>
-                            <form action="{{ path('listprojects') }}" method="post">
+                            <form action="{{ path('list_projects') }}" method="POST">
                                 <input type="hidden" value="{{ project.id }}" name="projectToDelete">
                                 <button class="button is-warning" type="submit">Delete</button>
                             </form>

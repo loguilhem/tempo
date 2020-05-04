@@ -2,9 +2,8 @@
 
 namespace App\Form;
 
-use AppBundle\Entity\Project;
+use App\Entity\Project;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -21,8 +20,8 @@ class ProjectType extends AbstractType
             ->add('name', TextType::class, [
                 'label' => 'Name'
             ])
-            ->add('code', TextType::class, [
-                'label' => 'code'
+            ->add('description', TextType::class, [
+                'label' => 'Description'
             ])
             ->add('save', SubmitType::class, [
                 'attr' => [
