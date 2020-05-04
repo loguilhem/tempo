@@ -17,10 +17,10 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class UserController extends AbstractController
 {
     /**
-     * @Route(path="/team", name="user_list", methods={"GET"})
+     * @Route(path="/", name="user_list", methods={"GET"})
      * @IsGranted("ROLE_SUPER_ADMIN")
      */
-    public function listUsersAction(EntityManagerInterface $entityManager)
+    public function listUsers(EntityManagerInterface $entityManager)
     {
         return $this->render('user/list.html.twig', [
             'users' => $entityManager->getRepository(User::class)->findTeamMembersExceptMe($this->getUser())
@@ -65,7 +65,7 @@ class UserController extends AbstractController
      * @IsGranted("ROLE_SUPER_ADMIN")
      * @ParamConverter("user", class="App\Entity\User")
      */
-    public function activateUserAction(
+    public function activateUser(
         User $user,
         EntityManagerInterface $entityManager,
         FlashBagInterface $flashBag,

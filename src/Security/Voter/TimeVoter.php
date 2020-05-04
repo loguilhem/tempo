@@ -2,18 +2,19 @@
 
 namespace App\Security\Voter;
 
-use App\Entity\Task;
+use App\Entity\Time;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class TaskVoter extends Voter
+class TimeVoter extends Voter
 {
     protected function supports($attribute, $subject)
     {
+        // replace with your own logic
         // https://symfony.com/doc/current/security/voters.html
         return in_array($attribute, ['edit', 'delete'])
-            && $subject instanceof Task;
+            && $subject instanceof Time;
     }
 
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
@@ -24,11 +25,12 @@ class TaskVoter extends Voter
             return false;
         }
 
+        // ... (check conditions and return true to grant permission) ...
         switch ($attribute) {
             case 'edit':
-                return $user->getCompany() === $subject->getCompany();
+                return $user === $subject->getUser();
             case 'delete':
-                return $user->getCompany() === $subject->getCompany();
+                return $user === $subject->getUser();
         }
 
         return false;

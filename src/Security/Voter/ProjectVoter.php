@@ -27,10 +27,8 @@ class ProjectVoter extends Voter
         switch ($attribute) {
             case 'edit':
                 return $user->getCompany() === $subject->getCompany();
-                break;
             case 'delete':
                 return $user->getCompany() === $subject->getCompany();
-                break;
         }
 
         return false;

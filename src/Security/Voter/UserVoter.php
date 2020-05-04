@@ -26,9 +26,8 @@ class UserVoter extends Voter
         switch ($attribute) {
             case 'setRole':
                 return $user->getCompany() === $subject->getCompany();
-                break;
             case 'edit':
-                break;
+                return $user->getCompany() === $subject->getCompany();
         }
 
         return false;

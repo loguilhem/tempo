@@ -40,7 +40,6 @@ class Time
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true,onDelete="SET NULL")
-     * @Assert\NotBlank()
      */
     private $user;
 
@@ -50,6 +49,13 @@ class Time
      * @Assert\NotBlank()
      */
     private $task;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Project", inversedBy="times", cascade={"persist"})
+     * @ORM\JoinColumn(nullable=true,onDelete="SET NULL")
+     * @Assert\NotBlank()
+     */
+    private $project;
 
     public function getId(): int
     {
@@ -63,7 +69,7 @@ class Time
         return $this;
     }
 
-    public function getStartTime(): \DateTime
+    public function getStartTime(): ?\DateTime
     {
         return $this->startTime;
     }
@@ -74,7 +80,7 @@ class Time
 
         return $this;
     }
-    public function getEndTime(): \DateTime
+    public function getEndTime(): ?\DateTime
     {
         return $this->endTime;
     }
@@ -86,7 +92,7 @@ class Time
         return $this;
     }
 
-    public function getUser(): User
+    public function getUser(): ?User
     {
         return $this->user;
     }
@@ -98,8 +104,20 @@ class Time
         return $this;
     }
 
-    public function getTask(): Task
+    public function getTask(): ?Task
     {
         return $this->task;
+    }
+
+    public function setProject(Project $project = null): self
+    {
+        $this->project = $project;
+
+        return $this;
+    }
+
+    public function getProject(): ?Project
+    {
+        return $this->project;
     }
 }

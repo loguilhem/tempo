@@ -3,8 +3,6 @@
 namespace App\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Entity\Time;
-use Form\Calc1Type;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -16,7 +14,7 @@ class MainController extends AbstractController
      * @Route(path="/", name="index", methods={"GET"})
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function indexAction()
+    public function index()
     {
         dump($this->getUser());
 
@@ -29,7 +27,7 @@ class MainController extends AbstractController
      * @Route(path="/recap", name="recap", methods={"GET", "POST"})
      * @Security("has_role('ROLE_SUPER_ADMIN')")
      */
-    public function RecapAction(Request $request, EntityManagerInterface $entityManager)
+    public function Recap(Request $request, EntityManagerInterface $entityManager)
     {
         /* there are 2 filters available, each one is a form: recap1Type, recap2Type */
         $repoTemps = $entityManager->getRepository(Time::class);
