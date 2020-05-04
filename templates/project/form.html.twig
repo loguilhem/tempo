@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <header  class="hero is-primary">
+        <div class="hero-body">
+            <div class="container">
+                {{ 'Add project'|trans }}
+            </div>
+        </div>
+    </header>
+    <section class="section">
+        <div class="container is-fluid">
+        {{ form(form) }}
+        </div>
+    </section>
+{% endblock %}

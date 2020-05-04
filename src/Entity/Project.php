@@ -30,14 +30,6 @@ class Project
     private $name;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=255, nullable=false, unique=true)
-     * @Assert\NotBlank()
-     */
-    private $code;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Company", inversedBy="projects")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -60,21 +52,9 @@ class Project
         return $this;
     }
 
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
-    }
-
-    public function setCode($code = null): self
-    {
-        $this->code = $code;
-
-        return $this;
-    }
-
-    public function getCode(): string
-    {
-        return $this->code;
     }
 
     public function getCompany(): ?Company
