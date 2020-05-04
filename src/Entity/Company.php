@@ -20,32 +20,38 @@ class Company
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=false, unique=true)
+     * @Assert\NotBlank()
      */
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=false)
+     * @Assert\NotBlank()
      */
     private $address;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", nullable=false)
+     * @Assert\NotBlank()
      */
     private $zipCode;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=false)
+     * @Assert\NotBlank()
      */
     private $city;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=false)
+     * @Assert\NotBlank()
      */
     private $Country;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=false)
+     * @Assert\NotBlank()
      */
     private $email;
 
@@ -63,6 +69,11 @@ class Company
      * @ORM\OneToMany(targetEntity="App\Entity\Project", mappedBy="company", orphanRemoval=true)
      */
     private $projects;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Task", mappedBy="company", orphanRemoval=true)
+     */
+    private $tasks;
 
     /**
      * @ORM\Column(type="float")
@@ -225,6 +236,37 @@ class Company
             // set the owning side to null (unless already changed)
             if ($project->getCompany() === $this) {
                 $project->setCompany(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Task[]
+     */
+    public function getTasks(): Collection
+    {
+        return $this->tasks;
+    }
+
+    public function addTask(Task $task): self
+    {
+        if (!$this->tasks->contains($task)) {
+            $this->tasks[] = $task;
+            $task->setCompany($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTask(Task $task): self
+    {
+        if ($this->tasks->contains($task)) {
+            $this->tasks->removeElement($task);
+            // set the owning side to null (unless already changed)
+            if ($task->getCompany() === $this) {
+                $task->setCompany(null);
             }
         }
 

@@ -8,6 +8,7 @@ namespace App\Controller;
 use Doctrine\ORM\EntityManagerInterface;
 use Entity\Task;
 use Form\TaskType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -15,7 +16,7 @@ use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Translation\TranslatorInterface;
 
-class TaskController extends Controller
+class TaskController extends AbstractController
 {
     /**
      * @Route(path="/list-tasks", name="listtasks", methods={"GET", "POST"})

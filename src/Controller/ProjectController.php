@@ -5,14 +5,14 @@ namespace App\Controller;
 use Doctrine\ORM\EntityManagerInterface;
 use Entity\Project;
 use Form\ProjectType;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Translation\TranslatorInterface;
 
-class ProjectController extends Controller
+class ProjectController extends AbstractController
 {
     /**
      * @Route(path="list-projects", name="listprojects", methods={"GET", "POST"})

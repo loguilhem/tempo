@@ -79,7 +79,7 @@ class User implements UserInterface, \Serializable
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Company", inversedBy="members")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\JoinColumn(nullable=false)
      */
     private $company;
 
@@ -94,7 +94,7 @@ class User implements UserInterface, \Serializable
     }
 
     /** @see \Serializable::serialize() */
-    public function serialize(): string
+    public function serialize()
     {
         return serialize(array(
             $this->id,
@@ -108,7 +108,7 @@ class User implements UserInterface, \Serializable
     }
 
     /** @see \Serializable::unserialize() */
-    public function unserialize($serialized): array
+    public function unserialize($serialized)
     {
         list (
             $this->id,
