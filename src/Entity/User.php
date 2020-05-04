@@ -175,7 +175,7 @@ class User implements UserInterface, \Serializable
     /**
      * @return mixed
      */
-    public function getEmail(): string
+    public function getEmail(): ?string
     {
         return $this->email;
     }
@@ -245,7 +245,7 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    public function getHighestRole(): string
+    public function getHighestRole()
     {
         $rolesSortByImportance = [User::ROLE_SUPER_ADMIN, User::ROLE_ADMIN, User::ROLE_USER];
         foreach ($rolesSortByImportance as $role) {
