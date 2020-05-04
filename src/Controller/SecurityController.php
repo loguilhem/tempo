@@ -118,13 +118,10 @@ class SecurityController extends AbstractController
 
     /**
      * @Route(name="register", path="/register", methods={"GET", "POST"})
-     * @param Request $request
-     * @param UserPasswordEncoderInterface $passwordEncoder
-     * @param GuardAuthenticatorHandler $guardHandler
-     * @param LoginFormAuthenticator $authenticator
-     * @return Response
+     * this is the first step of registration
      */
-    public function register(EntityManagerInterface $em,
+    public function register(
+        EntityManagerInterface $em,
         AuthenticationUtils $authenticationUtils,
         Request $request,
         UserPasswordEncoderInterface $passwordEncoder,
@@ -145,8 +142,6 @@ class SecurityController extends AbstractController
 
             $em->persist($user);
             $em->flush();
-
-            // do anything else you need here, like send an email
 
             return $guardHandler->authenticateUserAndHandleSuccess(
                 $user,

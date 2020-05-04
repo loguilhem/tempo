@@ -4,8 +4,11 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -17,15 +20,18 @@ class RegistrationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email')
-            ->add('plainPassword', PasswordType::class, [
-                // instead of being set onto the object directly,
-                // this is read and encoded in the controller
+            ->add('email', EmailType::class, [
+                'label' => 'Your email address'
+            ])
+            ->add('plainPassword', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'invalid_message' => 'The password fields must match.',
+                'options' => ['attr' => ['class' => 'password-field']],
+                'required' => true,
+                'first_options'  => ['label' => 'Password'],
+                'second_options' => ['label' => 'Repeat Password'],
                 'mapped' => false,
                 'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please enter a password',
-                    ]),
                     new Length([
                         'min' => 6,
                         'minMessage' => 'Your password should be at least {{ limit }} characters',
@@ -33,6 +39,17 @@ class RegistrationType extends AbstractType
                         'max' => 4096,
                     ]),
                 ],
+            ])
+            ->add('accountType', ChoiceType::class, [
+                'mapped' => false,
+                'label' => 'Account type',
+                'required' => true,
+                'choices' => [
+                    'I run a company, i will manage the team leaders and team members' => User::ROLE_SUPER_ADMIN,
+                    'I am a team leader or a team member of an existing company' => User::ROLE_USER
+                ],
+                'multiple' => false,
+                'expanded' => true
             ])
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
