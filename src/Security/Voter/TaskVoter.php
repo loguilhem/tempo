@@ -2,18 +2,18 @@
 
 namespace App\Security\Voter;
 
-use App\Entity\Project;
+use App\Entity\Task;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class ProjectVoter extends Voter
+class TaskVoter extends Voter
 {
     protected function supports($attribute, $subject)
     {
         // https://symfony.com/doc/current/security/voters.html
         return in_array($attribute, ['edit', 'delete'])
-            && $subject instanceof Project;
+            && $subject instanceof Task;
     }
 
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
