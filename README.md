@@ -1,15 +1,18 @@
 Tempo
 ==========
 
-A Symfony project created on August 27, 2017, 11:34 am.
-
 Licence: AGPL
 
-Project : a web app to register time past on projects and tasks.
+Project : a web app to register time past on projects and tasks and analyze time spent,
 
-TODO :
-- translate entities and variables in EN.
-- Get rid of FOSUser
-- Redo delete project and tasks management
-- choose a lib to render stats
-- make pagination with doctrine instead of JS
+Stack : 
+Symfony 4.4
+Bootstrap 4
+PHP 7.4
+MySQL 5.7
+
+ROLES :
+- ROLE_USER: record his own time, analytics of his own time
+- ROLE_ADMIN: + manage files, tasks, analytics of all ROLE_USER and his own analytics 
+- ROLE_SUPER_ADMIN : + manage roles of other users, analytics of all, manage firm account
+

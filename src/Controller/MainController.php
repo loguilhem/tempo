@@ -5,12 +5,12 @@ namespace App\Controller;
 use Doctrine\ORM\EntityManagerInterface;
 use Entity\Time;
 use Form\Calc1Type;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\Routing\Annotation\Route;
 
-class DefaultController extends Controller
+class MainController extends AbstractController
 {
     /**
      * @Route(path="/", name="index", methods={"GET"})

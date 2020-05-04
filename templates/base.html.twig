@@ -25,11 +25,9 @@
         {% block body %}
         {% endblock %}
 
-        <footer class="footer">
-            <div class="content has-text-centered">
-                <p>Made to share</p>
-            </div>
-        </footer>
+        {% block footer %}
+            <p>Made to share</p>
+        {% endblock %}
 
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
