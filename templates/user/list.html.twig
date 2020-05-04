@@ -30,8 +30,8 @@
                     {{ role }}
                     {% set break = true %}
                     {% endfor %}
-                    <a href="{{ path('promoteuser', { 'id': User.id }) }}">&uarr;</a>
-                    <a href="{{ path('demoteuser', { 'id': User.id }) }}">&darr;</a>
+                    <a href="{{ path('promote_demote_user', { 'id': User.id, 'action': 'promote' }) }}">&uarr;</a>
+                    <a href="{{ path('promote_demote_user', { 'id': User.id, 'action': 'demote' }) }}">&darr;</a>
                 </td>
                 <td>
                     <a href="{{ path('activateuser', { 'id': User.id }) }}">
@@ -46,7 +46,4 @@
         {% endfor %}
         </tbody>
     </table>
-            
-    <p><a href="{{ path('fos_user_registration_register')|trans }}"><input type="button" value="{{ 'Add a user'|trans }}"></a></p>
-                   
 {% endblock %}

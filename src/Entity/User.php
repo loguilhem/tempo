@@ -101,7 +101,7 @@ class User implements UserInterface, \Serializable
             $this->username,
             $this->password,
             $this->email,
-            $this->enabled
+            $this->enabled,
             // see section on salt below
             // $this->salt,
         ));
@@ -115,7 +115,7 @@ class User implements UserInterface, \Serializable
             $this->username,
             $this->password,
             $this->email,
-            $this->enabled
+            $this->enabled,
             // see section on salt below
             // $this->salt
             ) = unserialize($serialized, array('allowed_classes' => false));
@@ -155,7 +155,6 @@ class User implements UserInterface, \Serializable
     public function getRoles(): array
     {
         $roles = $this->roles;
-        $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
     }
@@ -201,14 +200,14 @@ class User implements UserInterface, \Serializable
     /**
      * @param bool $isEnabled
      */
-    public function setIsEnabled(bool $isEnabled): self
+    public function setEnabled(bool $isEnabled): self
     {
         $this->enabled = $isEnabled;
 
         return $this;
     }
 
-    public function setRoles(array $roles): self
+    public function setRoles($roles): self
     {
         $this->roles = $roles;
 
@@ -245,12 +244,22 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    public function getHighestRole()
+    /**
+     * @return array
+     * Return the current role, the previous role, the next role
+     */
+    public function getLowerAndHigherRole(): ?array
     {
-        $rolesSortByImportance = [User::ROLE_SUPER_ADMIN, User::ROLE_ADMIN, User::ROLE_USER];
-        foreach ($rolesSortByImportance as $role) {
+        $roles = [];
+        $rolesSortByImportance = [User::ROLE_USER, User::ROLE_ADMIN, User::ROLE_SUPER_ADMIN];
+
+        foreach ($rolesSortByImportance as $key => $role) {
             if (in_array($role, $this->roles)) {
-                return $role;
+                $roles['actual'] = $role;
+                $roles['previous'] = isset($rolesSortByImportance[$key-1]) ? $rolesSortByImportance[$key-1] : $rolesSortByImportance[$key];
+                $roles['next'] = isset($rolesSortByImportance[$key+1]) ? $rolesSortByImportance[$key+1] : $rolesSortByImportance[$key];
+
+                return $roles;
             }
         }
     }

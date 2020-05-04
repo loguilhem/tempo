@@ -11,7 +11,7 @@
         <div>
             <a href="{{ path('company_show', {'id': app.user.company.id}) }}">{{ 'Company Management'|trans }}</a>
             <br>
-            {{ 'User Management'|trans }}
+            <a href="{{ path('user_list') }}">{{ 'User Management'|trans }}</a>
             <br>
             {{ 'Projects Management'|trans }}
             <br>

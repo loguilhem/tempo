@@ -4,83 +4,86 @@ namespace App\Controller;
 
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
+/**
+ * @Route("/user")
+ */
 class UserController extends AbstractController
 {
     /**
-     * @Route(path="/list-users", name="listusers", methods={"GET"})
-     * @Security("has_role('ROLE_SUPER_ADMIN')")
+     * @Route(path="/team", name="user_list", methods={"GET"})
+     * @IsGranted("ROLE_SUPER_ADMIN")
      */
     public function listUsersAction(EntityManagerInterface $entityManager)
     {
-        return $this->render('lists/users.html.twig', [
-            'users' => $entityManager->getRepository(User::class)->findAll()
+        return $this->render('user/list.html.twig', [
+            'users' => $entityManager->getRepository(User::class)->findTeamMembersExceptMe($this->getUser())
         ]);
     }
     /**
-     * @Route(path="/promoteuser/{id}", name="promoteuser", methods={"GET"})
-     * @Security("has_role('ROLE_SUPER_ADMIN')")
+     * @Route(path="/{id}/{action}", name="promote_demote_user", methods={"GET"})
+     * @IsGranted("ROLE_SUPER_ADMIN")
+     * @ParamConverter("user", class="App\Entity\User")
      */
-    public function promoteUserAction($id, EntityManagerInterface $entityManager, FlashBagInterface $flashBag)
+    public function promoteUserAction(
+        User $user,
+        string $action,
+        EntityManagerInterface $entityManager,
+        FlashBagInterface $flashBag,
+        TranslatorInterface $translator
+    )
     {
-        $user = $entityManager->getRepository(User::class)->find($id);
-        $currentRole = $user->getHigherRole();
-        $newRole = $user->upRole();
-        $user->removeRole($currentRole);
-        $user->addRole($newRole);
+        $this->denyAccessUnlessGranted('setRole', $user);
 
-        if($currentRole == $newRole) {
-            $flashBag->add('success', 'Utilisateur a déjà tous les droits');
+        $roles = $user->getLowerAndHigherRole();
+
+        if ($action === 'promote' && $roles['actual'] !== User::ROLE_ADMIN) {
+            $user->setRoles([$roles['next']]);
+            $entityManager->flush();
+
+            $flashBag->add('success', $translator->trans('User is '. $roles['next']));
+        } elseif ($action === 'demote' && $roles['actual'] !== User::ROLE_USER) {
+            $user->setRoles([$roles['previous']]);
+            $entityManager->flush();
+
+            $flashBag->add('success', $translator->trans('User is '. $roles['previous']));
         } else {
-            $flashBag->add('success', 'Utilisateur promu');
+            $flashBag->add('success', $translator->trans('User role cannot be modified'));
         }
 
-        Return $this->redirectToRoute('listusers');
+        Return $this->redirectToRoute('user_list');
     }
 
     /**
-     * @Route(path="/demoteuser/{id}", name="demoteuser", methods={"GET"})
-     * @Security("has_role('ROLE_SUPER_ADMIN')")
+     * @Route(path="{id}/activate", name="activateuser", methods={"GET"})
+     * @IsGranted("ROLE_SUPER_ADMIN")
+     * @ParamConverter("user", class="App\Entity\User")
      */
-    public function demoteUserAction($id, EntityManagerInterface $entityManager, FlashBagInterface $flashBag)
+    public function activateUserAction(
+        User $user,
+        EntityManagerInterface $entityManager,
+        FlashBagInterface $flashBag,
+        TranslatorInterface $translator
+    )
     {
-        $user = $entityManager->getRepository(User::class)->find($id);
-        $currentRole = $user->getHigherRole();
-        $newRole = $user->downRole();
-        $user->removeRole($currentRole);
-        $user->addRole($newRole);
-
-        if($currentRole == $newRole) {
-            $flashBag->add('success', 'Utilisateur est déjà au minimum de droits');
-        } else {
-            $flashBag->add('success', 'Utilisateur destitué');
-        }
-
-        Return $this->redirectToRoute('listusers');
-    }
-
-    /**
-     * @Route(path="/activateuser/{id}", name="activateuser", methods={"GET"})
-     * @Security("has_role('ROLE_SUPER_ADMIN')")
-     */
-    public function activateUserAction($id, EntityManagerInterface $entityManager, FlashBagInterface $flashBag)
-    {
-        $user = $entityManager->getRepository(User::class)->find($id);
         $locked = $user->isEnabled();
 
         if($locked == 0) {
             $user->setEnabled(1);
-            $flashBag->add('success', 'L\'utilisateur est actif');
+            $flashBag->add('success', $translator->trans('User is enabled'));
         } else {
             $user->setEnabled(0);
-            $flashBag->add('success', 'L\'utilisateur est bloqué');
+            $flashBag->add('success', $translator->trans('User is disabled'));
         }
+        $entityManager->flush();
 
-
-        return $this->redirectToRoute('listusers');
+        return $this->redirectToRoute('user_list');
     }
 }

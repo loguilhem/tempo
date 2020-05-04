@@ -3,8 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Mapping;
 use Symfony\Bridge\Doctrine\Security\User\UserLoaderInterface;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * Class UserRepository
@@ -20,5 +23,17 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
             ->setParameter('email', $username)
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    public function findTeamMembersExceptMe($user)
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.company = :company')
+            ->andWhere('u.id != :me')
+            ->setParameter('company', $user->getCompany())
+            ->setParameter('me', $user)
+            ->getQuery()
+            ->getResult()
+            ;
     }
 }
