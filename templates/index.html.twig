@@ -7,18 +7,27 @@
         {{ 'Welcome'|trans }} {{ app.user.username }}.
         {{ 'Your role is' }} : {{ app.user.highestRole }}
         {{ 'Your last connection'|trans }} : {{ app.user.lastLogin|date('d/m/Y') }}
+
+        <div>
+            <a href="{{ path('company_show', {'id': app.user.company.id}) }}">{{ 'Company Management'|trans }}</a>
+            <br>
+            {{ 'User Management'|trans }}
+            <br>
+            {{ 'Projects Management'|trans }}
+            <br>
+            {{ 'Tasks Management'|trans }}
+            <br>
+            {{ 'Analytics'|trans }}
+        </div>
+
+        {% else %}
+        <a href="{{ path('login') }}">{{ 'login'|trans }}</a>
+        <br>
+        <a href="{{ path('register') }}">{{ 'register' }}</a>
     {% endif %}
 
     {# Menu according to user role #}
-    {{ 'Company Management'|trans }}
-    <br>
-    {{ 'User Management'|trans }}
-    <br>
-    {{ 'Projects Management'|trans }}
-    <br>
-    {{ 'Tasks Management'|trans }}
-    <br>
-    {{ 'Analytics'|trans }}
+
     <br>
     {% trans %}
         Tempo helps you to keep track of time spent on projects and tasks by you or your co-workers.

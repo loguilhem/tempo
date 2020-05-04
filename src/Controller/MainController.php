@@ -17,7 +17,11 @@ class MainController extends AbstractController
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function indexAction()
-    {        
+    {
+        dump($this->getUser());
+
+        $company = $this->getUser();
+
         return $this->render('index.html.twig');
     }
     

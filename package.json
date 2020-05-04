@@ -8,7 +8,5 @@
     "sass-loader": "^7.0.1"
   },
   "dependencies": {
-    "bulma": "^0.8.0",
-    "purecss": "^1.0.1"
   }
 }

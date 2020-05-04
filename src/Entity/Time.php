@@ -45,7 +45,7 @@ class Time
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Task", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="App\Entity\Task", inversedBy="times", cascade={"persist"})
      * @ORM\JoinColumn(nullable=true,onDelete="SET NULL")
      * @Assert\NotBlank()
      */

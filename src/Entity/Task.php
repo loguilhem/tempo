@@ -57,7 +57,7 @@ class Task
     private $times;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Company", inversedBy="projects")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Company", inversedBy="tasks")
      * @ORM\JoinColumn(nullable=false)
      */
     private $company;
