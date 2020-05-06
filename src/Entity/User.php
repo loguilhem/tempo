@@ -90,7 +90,6 @@ class User implements UserInterface, \Serializable
     {
         $this->enabled = false;
         $this->roles = [];
-        $this->highestRole = $this->getHighestRole();
     }
 
     /** @see \Serializable::serialize() */
