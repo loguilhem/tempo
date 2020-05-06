@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tempo - projects{% endblock %}
+
+{% block body %}
+    <header  class="hero is-primary">
+        <div class="hero-body">
+            <div class="container">
+            {{ 'Projects list'|trans }}
+        </div>
+        </div>
+    </header>
+
+    {% if projectToDelete is not null %}
+            <p>
+            {% trans %}
+                Are you sure to delete this project ? Times recorded to this project will also be lost.
+                You cannot reverse this action.
+            {% endtrans %}
+            </p>
+            <div class="modal-footer">
+                <form method="POST" action="{{ path('delete_project') }}">
+                    <input type="hidden" value="{{ projectToDelete }}" name="id">
+                    <button type="submit" class="btn btn-secondary">{{ 'Yes I am sure'|trans }}</button>
+                </form>
+                <a href="{{ path('list_projects') }}" class="btn btn-primary">No, please cancel.</a>
+            </div>
+    {% endif %}
+
+    <section class="section">
+        <div class="container is-fluid">
+            <a class="button is-primary" href="{{ path('addproject') }}">New project</a>
+
+            <table class="table is-hoverable is-striped is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>{{ 'Name'|trans }}</th>
+                        <th>{{ 'Description'|trans }}</th>
+                        <th>{{ 'Edit'|trans }}</th>
+                        <th>{{ 'Delete'|trans }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for project in projects %}
+                    <tr>
+                        <td>{{ project.name }}</td>
+                        <td>{{ project.description }}</td>
+                        <td><a class="button is-primary" href="{{ path('edit_project', {'id': project.id}) }}">{{ 'Edit'|trans }}</a></td>
+                        <td>
+                            <form action="{{ path('list_projects') }}" method="POST">
+                                <input type="hidden" value="{{ project.id }}" name="projectToDelete">
+                                <button class="button is-warning" type="submit">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}
