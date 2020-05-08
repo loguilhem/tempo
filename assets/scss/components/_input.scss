@@ -1,0 +1,17 @@
+.input-group {
+    input {
+        display: none;
+        visibility: hidden;
+    }
+
+    label {
+        cursor: pointer;
+        padding: 1rem;
+        border: 1px solid $primary-color;
+    }
+
+    input:checked ~ label{
+        color: white;
+        background-color: $primary-color;
+    }
+}

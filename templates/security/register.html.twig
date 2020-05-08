@@ -1,24 +1,56 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Register
+{% endblock %}
 
 {% block body %}
-
-<div class="container">
-    <div class="row">
-        <div class="col s12">
-            <h1>Register</h1>
-
-            {{ form_start(registrationForm) }}
-                {{ form_row(registrationForm.email) }}
-                {{ form_row(registrationForm.plainPassword.first) }}
-                {{ form_row(registrationForm.plainPassword.second) }}
-                {{ form_row(registrationForm.agreeTerms) }}
-
-                <button class="btn">Register</button>
-            {{ form_end(registrationForm) }}
-        </div>
-    </div>
-</div>
-
+	<div class="container">
+		<section class="login-content">
+			<div class="login-box">
+				{{ form_start(registrationForm, {'attr': {'class' : 'login-form'}}) }}
+				<div class="form-header">
+					<h2 class="login-title">
+						<i class="fa fa-lg fa-fw fa-user"></i>Register
+					</h2>
+				</div>
+				<div class="form-body">
+					<div class="row">
+						<div class="col col-6">
+							<div class="form-group">
+								{{ form_row(registrationForm.email, {'attr': {'class': 'form-control'}, 'label_attr': {'class': 'control-label'}}) }}
+							</div>
+							<div class="form-group">
+								{{ form_row(registrationForm.plainPassword.first, {'attr': {'class': 'form-control'}, 'label_attr': {'class': 'control-label'}}) }}
+							</div>
+							<div class="form-group">
+								{{ form_row(registrationForm.plainPassword.second, {'attr': {'class': 'form-control'}, 'label_attr': {'class': 'control-label'}}) }}
+							</div>
+						</div>
+						<div class="col col-6">
+                {{ form_label(registrationForm.accountType)}}
+								<div class="input-group">
+                {% for accountType in registrationForm.accountType %}
+                  <div class="input-control">
+                    {{ form_widget(accountType)}}
+                    {{ form_label(accountType)}}
+                  </div>
+                {% endfor %}
+								</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-footer">
+        			<div class="form-group">
+                  {{ form_widget(registrationForm.agreeTerms) }}
+									{{ form_label(registrationForm.agreeTerms) }}
+              </div>
+					<div class="form-group btn-container">
+						<button type="submit" class="btn btn-primary btn-block">
+							<i class="fa fa-sign-in fa-lg fa-fw"></i>Register</button>
+					</div>
+				</div>
+				{{ form_end(registrationForm) }}
+			</div>
+		</section>
+	</div>
 {% endblock %}
