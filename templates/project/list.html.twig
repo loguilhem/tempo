@@ -61,4 +61,6 @@
 {% endblock %}
 
 {% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_js_files('projects-list') }}
 {% endblock %}

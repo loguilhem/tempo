@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <header  class="hero is-primary">
+        <div class="hero-body">
+            <div class="container">
+                {{ 'Results'|trans }}
+            </div>
+        </div>
+    </header>
+    <section class="section">
+        <div class="container is-fluid">
+{#            TODO: stats par projet, tache, user#}
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container is-fluid">
+            {{ 'All the records'|trans }}
+            <table>
+                <thead>
+                <tr>
+                    <th>{{ 'Project'|trans }}</th>
+                    <th>{{ 'Task'|trans }}</th>
+                    <th>{{ 'User'|trans }}</th>
+                    <th>{{ 'StartTime'|trans }}</th>
+                    <th>{{ 'EndTime'|trans }}</th>
+                    <th>{{ 'Time Spent'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for time in times %}
+                    {% set difference = date(time.endTime).diff(date(time.startTime)) %}
+                    <tr>
+                        <td>{{ time.project.name }}</td>
+                        <td>{{ time.task.name }}</td>
+                        <td>{{ time.user.username }}</td>
+                        <td>{{ time.startTime|date('Y-m-d H:i') }}</td>
+                        <td>{{ time.endTime|date('Y-m-d H:i') }}</td>
+                        <td>{{ difference.days }} day {{ difference.h }} hours {{ difference.m }} minutes</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+{% endblock %}

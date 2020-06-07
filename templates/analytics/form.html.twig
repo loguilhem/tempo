@@ -30,15 +30,15 @@
                 </div>
             </div>
             <div class="field">
-                <label class="label">{{ form_label(form.startDate) }}</label>
+                <label class="label">{{ form_label(form.startTime) }}</label>
                 <div class="control">
-                    {{ form_widget(form.startDate) }}
+                    {{ form_widget(form.startTime) }}
                 </div>
             </div>
             <div class="field">
-                <label class="label">{{ form_label(form.endDate) }}</label>
+                <label class="label">{{ form_label(form.endTime) }}</label>
                 <div class="control">
-                    {{ form_widget(form.endDate) }}
+                    {{ form_widget(form.endTime) }}
                 </div>
             </div>
             <div class="field">
@@ -54,4 +54,9 @@
             {{ form_end(form) }}
         </div>
     </section>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('analytics-form') }}
 {% endblock %}
