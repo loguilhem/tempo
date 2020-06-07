@@ -22,7 +22,7 @@ class TimeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {        
         $builder
-            ->add('project', EntityType::class, array(
+            ->add('project', EntityType::class, [
                 'class' => Project::class,
                 'choices' => $options['projects'],
                 'expanded' => false,
@@ -30,8 +30,8 @@ class TimeType extends AbstractType
                 'choice_label' => function($project) {
                     return $project->getName();
                 },
-            ))
-            ->add('task', EntityType::class, array(
+            ])
+            ->add('task', EntityType::class, [
                 'class' => Task::class,
                 'choices' => $options['tasks'],
                 'expanded' => false,
@@ -39,21 +39,21 @@ class TimeType extends AbstractType
                 'choice_label' => function($task) {
                     return $task->getName();
                 },
-            ))
-            ->add('startTime', DateType::class, array(
+            ])
+            ->add('startTime', DateType::class, [
                     'widget' => 'single_text',
                     'data' => new \DateTime(),
                     'required' => true,
                     'html5' => false,
                     'format' => 'dd-MM-yyyy HH:ss',
-                ))
-            ->add('endTime', DateType::class, array(
+            ])
+            ->add('endTime', DateType::class, [
                 'widget' => 'single_text',
                 'data' => new \DateTime(),
                 'required' => true,
                 'html5' => false,
                 'format' => 'dd-MM-yyyy HH:ss',
-            ))
+            ])
             ->add('save', SubmitType::class);
     }
     
