@@ -44,14 +44,14 @@ class TimeType extends AbstractType
                     'widget' => 'single_text',
                     'data' => new \DateTime(),
                     'required' => true,
-                    'html5' => false,
+                    'html5' => true,
                     'format' => 'dd-MM-yyyy HH:ss',
             ])
             ->add('endTime', DateType::class, [
                 'widget' => 'single_text',
                 'data' => new \DateTime(),
                 'required' => true,
-                'html5' => false,
+                'html5' => true,
                 'format' => 'dd-MM-yyyy HH:ss',
             ])
             ->add('save', SubmitType::class);

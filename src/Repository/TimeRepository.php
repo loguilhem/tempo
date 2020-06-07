@@ -2,6 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\Project;
+use App\Entity\Task;
+use App\Entity\User;
+
 /**
  * TimeRepository
  *
@@ -10,6 +14,45 @@ namespace App\Repository;
  */
 class TimeRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getTimes(Project $project = null, Task $task = null, User $user = null, \DateTime $start = null, \DateTime $end = null)
+    {
+        $qb = $this->createQueryBuilder('time');
+
+        if ($project) {
+            $qb->join('time.project', 'project')
+                ->andWhere('time.project = :project')
+                ->setParameter('project', $project)
+                ->addSelect('project')
+            ;
+        }
+
+        if ($task) {
+            $qb->join('time.task', 'task')
+                ->andWhere('time.task = :task')
+                ->setParameter('task', $task)
+                ->addSelect('task')
+            ;
+        }
+
+        if ($user) {
+            $qb->join('time.user', 'user')
+                ->andWhere('time.user = :user')
+                ->setParameter('user', $user)
+                ->addSelect('user')
+            ;
+        }
+
+        if ($start && $end) {
+            $qb->andWhere('time.startTime >= :start')
+                ->andWhere('time.endTime <= :end')
+                ->setParameter('start', $start)
+                ->setParameter('end', $end)
+            ;
+        }
+
+        return $qb->getQuery()->getResult();
+    }
+
     function getByDossierExercice($idDossier, $exercice, $dateDebut, $dateFin, $forever)
     {
         if ($forever == false)

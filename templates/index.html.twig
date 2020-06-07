@@ -21,7 +21,7 @@
             <br>
             <a href="{{ path('list_times') }}">{{ 'Times Management'|trans }}</a>
             <br>
-            {{ 'Analytics'|trans }}
+            <a href="{{ path('analytics') }}">{{ 'Analytics'|trans }}</a>
         </div>
 
         {% else %}
@@ -30,12 +30,14 @@
         <a href="{{ path('register') }}">{{ 'register' }}</a>
     {% endif %}
 
-    {# Menu according to user role #}
-
     <br>
     {% trans %}
         Tempo helps you to keep track of time spent on projects and tasks by you or your co-workers.
         It is an open source project. You can download it and host it on your own server or soon use our cloud :).
     {% endtrans %}
 
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
 {% endblock %}
