@@ -2,8 +2,8 @@
 
 namespace App\Entity;
 
+use App\Validator\Constraints\ValidateDatesTime;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -11,6 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  *
  * @ORM\Table(name="time")
  * @ORM\Entity(repositoryClass="App\Repository\TimeRepository")
+ * @ValidateDatesTime()
  */
 class Time
 {

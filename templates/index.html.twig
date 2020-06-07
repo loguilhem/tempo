@@ -9,10 +9,12 @@
         {{ 'Your last connection'|trans }} : {{ app.user.lastLogin|date('d/m/Y') }}
 
         <div>
+            {% if is_granted('ROLE_SUPER_ADMIN') %}
             <a href="{{ path('company_show', {'id': app.user.company.id}) }}">{{ 'Company Management'|trans }}</a>
             <br>
             <a href="{{ path('user_list') }}">{{ 'User Management'|trans }}</a>
             <br>
+            {% endif %}
             <a href="{{ path('list_projects') }}">{{ 'Projects Management'|trans }}</a>
             <br>
             <a href="{{ path('list_tasks') }}">{{ 'Tasks Management'|trans }}</a>
