@@ -14,30 +14,30 @@ use App\Entity\User;
  */
 class TimeRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function getTimes(Project $project = null, Task $task = null, User $user = null, \DateTime $start = null, \DateTime $end = null)
+    public function getTimes(array $projects = null, array $tasks = null, array $users = null, \DateTime $start = null, \DateTime $end = null)
     {
         $qb = $this->createQueryBuilder('time');
 
-        if ($project) {
+        if ($projects) {
             $qb->join('time.project', 'project')
-                ->andWhere('time.project = :project')
-                ->setParameter('project', $project)
+                ->andWhere('time.project IN (:projects)')
+                ->setParameter('projects', $projects)
                 ->addSelect('project')
             ;
         }
 
-        if ($task) {
+        if ($tasks) {
             $qb->join('time.task', 'task')
-                ->andWhere('time.task = :task')
-                ->setParameter('task', $task)
+                ->andWhere('time.task IN (:tasks)')
+                ->setParameter('tasks', $tasks)
                 ->addSelect('task')
             ;
         }
 
-        if ($user) {
+        if ($users) {
             $qb->join('time.user', 'user')
-                ->andWhere('time.user = :user')
-                ->setParameter('user', $user)
+                ->andWhere('time.user IN (:users)')
+                ->setParameter('users', $users)
                 ->addSelect('user')
             ;
         }

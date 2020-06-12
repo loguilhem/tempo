@@ -4,19 +4,73 @@
     <header  class="hero is-primary">
         <div class="hero-body">
             <div class="container">
-                {{ 'Results'|trans }}
+                <h1>{{ 'Results'|trans }}</h1>
             </div>
         </div>
     </header>
-    <section class="section">
-        <div class="container is-fluid">
-{#            TODO: stats par projet, tache, user#}
-        </div>
-    </section>
 
     <section class="section">
         <div class="container is-fluid">
-            {{ 'All the records'|trans }}
+            <div class="row justify-content-center">
+                <div class="col-5">
+                    <h2>{{ 'Total By Projects' }}</h2>
+                    {% for project in projects %}
+                        <h3>{{ project.name }}</h3>
+                        <table>
+                            <thead>
+                            <tr>
+                                {% for task in project.tasks %}
+                                    <th>{{ task.name }}</th>
+                                {% endfor %}
+                                <th>{{ 'Total'|trans }}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                {% set total = 0 %}
+                                {% for task in project.tasks %}
+                                    {% set total = task.total + total %}
+                                    <td>{{ task.total }}</td>
+                                {% endfor %}
+                                <td>{{ total }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-5">
+                    <h2>{{ 'Total By Tasks' }}</h2>
+                    {% for task in tasks %}
+                        <h3>{{ task.name }}</h3>
+                        <table>
+                            <thead>
+                            <tr>
+                                {% for project in task.projects %}
+                                    <th>{{ project.name }}</th>
+                                {% endfor %}
+                                <th>{{ 'Total'|trans }}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                {% set total = 0 %}
+                                {% for project in task.projects %}
+                                    {% set total = project.total + total %}
+                                    <td>{{ project.total }}</td>
+                                {% endfor %}
+                                <td>{{ total }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <hr>
+
+            <h2>{{ 'All the records'|trans }}</h2>
             <table>
                 <thead>
                 <tr>
@@ -37,11 +91,12 @@
                         <td>{{ time.user.username }}</td>
                         <td>{{ time.startTime|date('Y-m-d H:i') }}</td>
                         <td>{{ time.endTime|date('Y-m-d H:i') }}</td>
-                        <td>{{ difference.days }} day {{ difference.h }} hours {{ difference.m }} minutes</td>
+                        <td>{{ time.diff }} hour(s)</td>
                     </tr>
                 {% endfor %}
                 </tbody>
             </table>
+            <hr>
         </div>
     </section>
 {% endblock %}
