@@ -10,15 +10,6 @@ use Symfony\Component\Form\FormEvents;
 
 class AccountTypeListener implements EventSubscriberInterface
 {
-
-    /**
-     * __construct
-     *
-     * @return void
-     */
-    public function __construct()
-    {}
-
     /**
      * getSubscribedEvents
      *
