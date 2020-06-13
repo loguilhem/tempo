@@ -128,7 +128,14 @@ class SecurityController extends AbstractController
         GuardAuthenticatorHandler $guardHandler,
         LoginFormAuthenticator $authenticator): Response
     {
+        
         $user = new User();
+        
+        $role = $request->request->get('accountType');
+
+        if($role)
+            $user->addRole($role);
+
         $form = $this->createForm(RegistrationType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
