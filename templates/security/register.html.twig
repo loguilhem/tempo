@@ -14,11 +14,13 @@
                 {{ form_row(registrationForm.plainPassword.first) }}
                 {{ form_row(registrationForm.plainPassword.second) }}
                 {{ form_row(registrationForm.agreeTerms) }}
+                {{ form_row(registrationForm.accountType) }}
+                <div id="accoutTypeForm">
+                <div>
 
                 <button class="btn">Register</button>
             {{ form_end(registrationForm) }}
         </div>
     </div>
 </div>
-
 {% endblock %}

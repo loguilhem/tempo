@@ -1,0 +1,72 @@
+<?php
+// src/AppBundle/Form/EventListener/AddEmailFieldListener.php
+namespace App\Form\EventListener;
+
+use App\Form\CompanyType;
+use App\Form\CompanyKeyType;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+
+class AccountTypeListener implements EventSubscriberInterface
+{
+    private $roles;
+
+    public function __construct(string $role = null)
+    {
+        $this->roles[] = $role;
+    }
+    /**
+     * getSubscribedEvents
+     *
+     * @return array
+     */
+    public static function getSubscribedEvents(): array
+    {
+        return [
+            FormEvents::PRE_SET_DATA => 'onPreSetData',
+        ];
+    }
+
+
+    /**
+     * onPreSetData
+     *
+     * @param  FormEvent $event
+     *
+     * @return void
+     */
+    public function onPreSetData(FormEvent $event): void
+    {
+        $user = $event->getData();
+
+        $this->formRoleModifier($event->getForm(), $this->roles);
+    }
+
+
+    /**
+     * formRoleModifier
+     *
+     * @param  FormInterface $form
+     * @param  array $roles
+     * 
+     * @return void
+     */
+    private function formRoleModifier(FormInterface $form, array $roles = []): void
+    {
+        if(in_array('ROLE_SUPER_ADMIN', $roles))
+        {
+            $form
+                ->add('Company', CompanyType::class);
+        }
+
+        if(in_array('ROLE_USER', $roles)) 
+        {
+            $form
+                ->add('CompanyKey', CompanyKeyType::class, [
+                    'mapped' => false,
+                ]);
+        }
+    }
+}
