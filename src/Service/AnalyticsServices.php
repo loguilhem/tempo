@@ -15,10 +15,10 @@ class AnalyticsServices
     {
         $stats = [];
 
-
         /** @var Project $project */
         foreach ($projects as $project) {
             $stats[$project->getId()]['name'] = $project->getName();
+            $stats[$project->getId()]['id'] = $project->getId();
 
             // Per projects and tasks
             /** @var Task $task */
@@ -56,6 +56,7 @@ class AnalyticsServices
         /** @var Task $task */
         foreach ($tasks as $task) {
             $stats[$task->getId()]['name'] = $task->getName();
+            $stats[$task->getId()]['id'] = $task->getId();
 
             // Per tasks and projects
             /** @var Project $project */
@@ -92,6 +93,7 @@ class AnalyticsServices
         /** @var User $user */
         foreach ($users as $user) {
             $stats[$user->getId()]['username'] = $user->getUsername();
+            $stats[$user->getId()]['id'] = $user->getId();
 
             // Per users and projects
             /** @var Project $project */
