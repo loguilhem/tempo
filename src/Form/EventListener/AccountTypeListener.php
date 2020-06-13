@@ -4,25 +4,32 @@ namespace App\Form\EventListener;
 
 use App\Form\CompanyType;
 use App\Form\CompanyKeyType;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 
 class AccountTypeListener implements EventSubscriberInterface
 {
+    private $roles;
+
+    public function __construct(string $role = null)
+    {
+        $this->roles[] = $role;
+    }
     /**
      * getSubscribedEvents
      *
      * @return array
      */
-    public static function getSubscribedEvents() :array
+    public static function getSubscribedEvents(): array
     {
         return [
             FormEvents::PRE_SET_DATA => 'onPreSetData',
-            FormEvents::PRE_SUBMIT => 'onPreSubmit',
         ];
     }
 
+
     /**
      * onPreSetData
      *
@@ -30,49 +37,33 @@ class AccountTypeListener implements EventSubscriberInterface
      *
      * @return void
      */
-    public function onPreSetData(FormEvent $event) :void
+    public function onPreSetData(FormEvent $event): void
     {
         $user = $event->getData();
 
-        if(in_array('ROLE_SUPER_ADMIN',$user->getRoles()))
-        {
-            $event
-                ->getForm()
-                ->add('Company', CompanyType::class);
-        }
-
-        if(in_array('ROLE_USER',$user->getRoles())) 
-        {
-            $event
-                ->getForm()
-                ->add('CompanyKey', CompanyKeyType::class, [
-                    'mapped' => false,
-                ]);
-        }
+        $this->formRoleModifier($event->getForm(), $this->roles);
     }
 
+
     /**
-     * onPreSetData
+     * formRoleModifier
      *
-     * @param  FormEvent $event
-     *
+     * @param  FormInterface $form
+     * @param  array $roles
+     * 
      * @return void
      */
-    public function onPreSubmit(FormEvent $event) :void
+    private function formRoleModifier(FormInterface $form, array $roles = []): void
     {
-        $data = $event->getData();
-
-        if('ROLE_SUPER_ADMIN' === $data['accountType'])
+        if(in_array('ROLE_SUPER_ADMIN', $roles))
         {
-            $event
-                ->getForm()
+            $form
                 ->add('Company', CompanyType::class);
         }
 
-        if('ROLE_USER' === $data['accountType'] ) 
+        if(in_array('ROLE_USER', $roles)) 
         {
-            $event
-                ->getForm()
+            $form
                 ->add('CompanyKey', CompanyKeyType::class, [
                     'mapped' => false,
                 ]);
