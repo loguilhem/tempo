@@ -12,10 +12,11 @@
     <section class="section">
         <div class="container is-fluid">
             <div class="row justify-content-center">
+                <div class="col-10"><h2>{{ 'Total per Projects' }}</h2></div>
                 <div class="col-5">
-                    <h2>{{ 'Total By Projects' }}</h2>
+                    <h3>{{ 'tasks'|trans }}</h3>
                     {% for project in projects %}
-                        <h3>{{ project.name }}</h3>
+                        <h4>{{ project.name }}</h4>
                         <table>
                             <thead>
                             <tr>
@@ -38,12 +39,65 @@
                         </table>
                     {% endfor %}
                 </div>
+                <div class="col-5">
+                    <h3>{{ 'users'|trans }}</h3>
+                    {% for project in projects %}
+                        <h4>{{ project.name }}</h4>
+                        <table>
+                            <thead>
+                            <tr>
+                                {% for user in project.users %}
+                                    <th>{{ user.username }}</th>
+                                {% endfor %}
+                                <th>{{ 'Total'|trans }}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                {% set total = 0 %}
+                                {% for user in project.users %}
+                                    {% set total = user.total + total %}
+                                    <td>{{ user.total }}</td>
+                                {% endfor %}
+                                <td>{{ total }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    {% endfor %}
+                </div>
             </div>
             <div class="row justify-content-center">
+                <div class="col-10"><h2>{{ 'Total per Tasks' }}</h2></div>
                 <div class="col-5">
-                    <h2>{{ 'Total By Tasks' }}</h2>
+                    <h3>{{ 'projects'|trans }}</h3>
                     {% for task in tasks %}
-                        <h3>{{ task.name }}</h3>
+                        <h4>{{ task.name }}</h4>
+                        <table>
+                            <thead>
+                            <tr>
+                                {% for project in task.projects %}
+                                    <th>{{ project.name }}</th>
+                                {% endfor %}
+                                <th>{{ 'Total'|trans }}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                {% set total = 0 %}
+                                {% for project in task.projects %}
+                                    {% set total = project.total + total %}
+                                    <td>{{ project.total }}</td>
+                                {% endfor %}
+                                <td>{{ total }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    {% endfor %}
+                </div>
+                <div class="col-5">
+                    <h3>{{ 'tasks'|trans }}</h3>
+                    {% for task in tasks %}
+                        <h4>{{ task.name }}</h4>
                         <table>
                             <thead>
                             <tr>
@@ -67,6 +121,62 @@
                     {% endfor %}
                 </div>
             </div>
+            
+            <div class="row justify-content-center">
+                <div class="col-10"><h2>{{ 'Total per Users'|trans }}</h2></div>
+                <div class="col-5">
+                    <h3>{{ 'projects'|trans }}</h3>
+                    {% for user in users %}
+                        <h4>{{ user.username }}</h4>
+                        <table>
+                            <thead>
+                            <tr>
+                                {% for project in user.projects %}
+                                    <th>{{ project.name }}</th>
+                                {% endfor %}
+                                <th>{{ 'Total'|trans }}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                {% set total = 0 %}
+                                {% for project in user.projects %}
+                                    {% set total = project.total + total %}
+                                    <td>{{ project.total }}</td>
+                                {% endfor %}
+                                <td>{{ total }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    {% endfor %}
+                </div>
+                <div class="col-5">
+                    <h3>{{ 'tasks'|trans }}</h3>
+                    {% for user in users %}
+                        <h4>{{ user.username }}</h4>
+                        <table>
+                            <thead>
+                            <tr>
+                                {% for task in user.tasks %}
+                                    <th>{{ task.name }}</th>
+                                {% endfor %}
+                                <th>{{ 'Total'|trans }}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                {% set total = 0 %}
+                                {% for task in user.tasks %}
+                                    {% set total = task.total + total %}
+                                    <td>{{ task.total }}</td>
+                                {% endfor %}
+                                <td>{{ total }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    {% endfor %}
+                </div>
+            </div>
 
             <hr>
 
@@ -79,7 +189,7 @@
                     <th>{{ 'User'|trans }}</th>
                     <th>{{ 'StartTime'|trans }}</th>
                     <th>{{ 'EndTime'|trans }}</th>
-                    <th>{{ 'Time Spent'|trans }}</th>
+{#                    <th>{{ 'Time Spent'|trans }}</th>#}
                 </tr>
                 </thead>
                 <tbody>
@@ -91,7 +201,7 @@
                         <td>{{ time.user.username }}</td>
                         <td>{{ time.startTime|date('Y-m-d H:i') }}</td>
                         <td>{{ time.endTime|date('Y-m-d H:i') }}</td>
-                        <td>{{ time.diff }} hour(s)</td>
+{#                        <td>{{ time.diff }} hour(s)</td>#}
                     </tr>
                 {% endfor %}
                 </tbody>
