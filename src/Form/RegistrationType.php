@@ -19,7 +19,6 @@ class RegistrationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $role = $options['role'];
 
         $builder
             ->add('email', EmailType::class, [
@@ -62,16 +61,15 @@ class RegistrationType extends AbstractType
                 ],
             ]);
 
-        
         $builder
-            ->addEventSubscriber(new EventListener\AccountTypeListener($role));
+            ->addEventSubscriber(new EventListener\AccountTypeListener($options['role']));
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
             'data_class' => User::class,
-            'role' => 'create'
+            'role' => null
         ]);
     }
 }
