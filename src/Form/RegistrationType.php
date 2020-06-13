@@ -59,6 +59,7 @@ class RegistrationType extends AbstractType
                     ]),
                 ],
             ])
+            ->addEventSubscriber(new EventListener\AccountTypeListener())
         ;
     }
 
