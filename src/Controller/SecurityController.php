@@ -129,23 +129,29 @@ class SecurityController extends AbstractController
         LoginFormAuthenticator $authenticator): Response
     {
         
-        $user = new User();
-        
-        $role = $request->request->get('accountType');
+        $user           = new User();
+        $registration   = $request->request->get('registration');
+        $role           = null === $registration ? null : $registration['accountType'];
 
-        if($role)
-            $user->addRole($role);
-
-        $form = $this->createForm(RegistrationType::class, $user);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $user->setPassword(
-                $passwordEncoder->encodePassword(
-                    $user,
-                    $form->get('plainPassword')->getData()
-                )
+        $form = $this->createForm(
+                RegistrationType::class,
+                $user,
+                ['role' => $role]
             );
-            $user->setUsername();
+
+        $form->handleRequest($request);
+        
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $user
+                ->setPassword(
+                    $passwordEncoder->encodePassword(
+                        $user,
+                        $form->get('plainPassword')->getData()
+                    )
+                )
+                ->addRole($role)
+                ->generateUsername();
 
             $em->persist($user);
             $em->flush();

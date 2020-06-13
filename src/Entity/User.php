@@ -78,7 +78,7 @@ class User implements UserInterface, \Serializable
     protected $roles;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Company", inversedBy="members")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Company", inversedBy="members" ,cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $company;
@@ -119,16 +119,25 @@ class User implements UserInterface, \Serializable
             // $this->salt
             ) = unserialize($serialized, array('allowed_classes' => false));
     }
-
+    
+    /**
+     * getUsername
+     *
+     * @return string
+     */
     public function getUsername(): string
     {
         return (string) $this->username;
     }
-
-    public function setUsername(): self
+    
+    /**
+     * Auto generate Username from email user's 
+     *
+     * @return self
+     */
+    public function generateUsername() :self
     {
         $username = $this->getEmail();
-
         $this->username = $username;
 
         return $this;
@@ -199,7 +208,7 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
-    
+
     /**
     * @return array
     */
