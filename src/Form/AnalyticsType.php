@@ -2,15 +2,11 @@
 
 namespace App\Form;
 
-use App\Entity\Project;
-use App\Entity\Task;
-use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -29,7 +25,7 @@ class AnalyticsType extends AbstractType
                 'choices' => $options['projects'],
                 'choice_value' => 'id',
                 'expanded' => false,
-                'multiple' => false,
+                'multiple' => true,
                 'choice_label' => 'name',
                 'placeholder' => self::all,
                 'required' => false,
@@ -38,7 +34,7 @@ class AnalyticsType extends AbstractType
             ->add('task', ChoiceType::class, [
                 'choices' => $options['tasks'],
                 'expanded' => false,
-                'multiple' => false,
+                'multiple' => true,
                 'choice_label' => 'name',
                 'placeholder' => self::all,
                 'required' => false,
@@ -47,7 +43,7 @@ class AnalyticsType extends AbstractType
             ->add('user', ChoiceType::class, [
                 'choices' => $options['users'],
                 'expanded' => false,
-                'multiple' => false,
+                'multiple' => true,
                 'choice_label' => 'username',
                 'placeholder' => self::all,
                 'required' => false,
