@@ -155,6 +155,7 @@ class SecurityController extends AbstractController
                     )
                 )
                 ->addRole($role)
+                ->setEnabled(true)
                 ->generateUsername();
 
             if ('ROLE_USER' === $role) {

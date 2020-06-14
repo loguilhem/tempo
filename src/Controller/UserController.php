@@ -75,10 +75,10 @@ class UserController extends AbstractController
         $locked = $user->isEnabled();
 
         if($locked == 0) {
-            $user->setEnabled(1);
+            $user->setEnabled(true);
             $flashBag->add('success', $translator->trans('User is enabled'));
         } else {
-            $user->setEnabled(0);
+            $user->setEnabled(false);
             $flashBag->add('success', $translator->trans('User is disabled'));
         }
         $entityManager->flush();
