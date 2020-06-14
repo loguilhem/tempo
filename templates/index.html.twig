@@ -10,7 +10,7 @@
 
         <div>
             {% if is_granted('ROLE_SUPER_ADMIN') %}
-            <a href="{{ path('company_show', {'id': app.user.company.id}) }}">{{ 'Company Management'|trans }}</a>
+            <a href="{{ path('company_show') }}">{{ 'Company Management'|trans }}</a>
             <br>
             <a href="{{ path('user_list') }}">{{ 'User Management'|trans }}</a>
             <br>
