@@ -35,10 +35,10 @@ class CompanyType extends AbstractType
 
             ])
             ->add('tel', TelType::class, [
-
+                'required' => false
             ])
-            ->add('dayPeriod', NumberType::class, [
-                'required' => true
+            ->add('token', TextType::class, [
+                'required' => false
             ])
         ;
     }
