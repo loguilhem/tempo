@@ -64,7 +64,7 @@ class AccountTypeListener implements EventSubscriberInterface
         if(in_array('ROLE_USER', $roles)) 
         {
             $form
-                ->add('CompanyKey', CompanyKeyType::class, [
+                ->add('token', CompanyKeyType::class, [
                     'mapped' => false,
                 ]);
         }

@@ -2,11 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Company;
 use App\Entity\User;
 use App\Form\RegistrationType;
 use App\Security\LoginFormAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,6 +17,7 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SecurityController extends AbstractController
 {
@@ -63,7 +66,7 @@ class SecurityController extends AbstractController
         $token = $tokenGenerator->generateToken();
 
         try {
-            $user->setResetToken($token);
+            $user->setConfirmationToken($token);
             $entityManager->flush();
         } catch (\Exception $e) {
             $this->addFlash('warning', $e->getMessage());
@@ -101,7 +104,7 @@ class SecurityController extends AbstractController
                 return $this->redirectToRoute('admin');
             }
 
-            $user->setResetToken(null);
+            $user->setConfirmationToken(null);
             $user->setPassword($passwordEncoder->encodePassword($user, $request->request->get('password')));
             $entityManager->flush();
 
@@ -126,6 +129,7 @@ class SecurityController extends AbstractController
         Request $request,
         UserPasswordEncoderInterface $passwordEncoder,
         GuardAuthenticatorHandler $guardHandler,
+        TranslatorInterface $translator,
         LoginFormAuthenticator $authenticator): Response
     {
         
@@ -152,6 +156,34 @@ class SecurityController extends AbstractController
                 )
                 ->addRole($role)
                 ->generateUsername();
+
+            if ('ROLE_USER' === $role) {
+                $tokenField = $form->get('token');
+                if (!$tokenField->getData()) {
+                    $tokenField->addError(new FormError('Token cannot be blank'));
+
+                    return $this->render('security/register.html.twig', [
+                        'registrationForm' => $form->createView(),
+                        'error' => $authenticationUtils->getLastAuthenticationError(),
+                        'last_username' => $authenticationUtils->getLastUsername()
+                    ]);
+                }
+
+                $company = $em->getRepository(Company::class)->findOneBy([
+                    'token' => $tokenField->getData()
+                ]);
+
+                if (!$company) {
+                    $tokenField->addError(new FormError('Token not available'));
+
+                    return $this->render('security/register.html.twig', [
+                        'registrationForm' => $form->createView(),
+                        'error' => $authenticationUtils->getLastAuthenticationError(),
+                        'last_username' => $authenticationUtils->getLastUsername()
+                    ]);
+                }
+                $user->setCompany($company);
+            }
 
             $em->persist($user);
             $em->flush();

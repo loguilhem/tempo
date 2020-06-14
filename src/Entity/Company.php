@@ -76,14 +76,10 @@ class Company
     private $tasks;
 
     /**
-     * @ORM\Column(type="float")
-     * @Assert\Range(
-     *     min="0", max="24",
-     *     minMessage="The day should be greater than 0 hours",
-     *     maxMessage="The day should be smaller than 24 hours"
-     * )
+     * @ORM\Column(type="string", length=12, nullable=true)
+     * @Assert\Length(min="0", max="8")
      */
-    private $dayPeriod;
+    private $token;
 
     public function __construct()
     {
@@ -180,6 +176,18 @@ class Company
         return $this;
     }
 
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    public function setToken(?string $token): self
+    {
+        $this->token = $token;
+
+        return $this;
+    }
+
     /**
      * @return Collection|User[]
      */
@@ -269,18 +277,6 @@ class Company
                 $task->setCompany(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getDayPeriod(): ?float
-    {
-        return $this->dayPeriod;
-    }
-
-    public function setDayPeriod(float $dayPeriod): self
-    {
-        $this->dayPeriod = $dayPeriod;
 
         return $this;
     }
