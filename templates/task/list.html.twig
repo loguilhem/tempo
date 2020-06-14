@@ -42,8 +42,8 @@
                 <tbody>
                 {% for task in tasks %}
                     <tr>
-                        <td>{{ task.name }}</td>
                         <td>{{ task.code }}</td>
+                        <td>{{ task.name }}</td>
                         <td>
                             {% if task.motherTask is not null %}
                                 {% if task.motherTask.code is not null %} {{ task.motherTask.code }} {% endif %}

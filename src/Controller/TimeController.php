@@ -55,19 +55,20 @@ class TimeController extends AbstractController
         TranslatorInterface $translator
     )
     {
+        $user = $this->getUser();
         $time = new Time();
         $form = $this->createForm(TimeType::class, $time, [
             'projects' => $entityManager->getRepository(Project::class)->findBy([
-                'company' => $this->getUser()->getCompany()
+                'company' => $user->getCompany()
             ]),
             'tasks' => $entityManager->getRepository(Task::class)->findBy([
-                'company' => $this->getUser()->getCompany()
+                'company' => $user->getCompany()
             ])
         ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $time->setUser($this->getUser());
+            $time->setUser($user);
             $entityManager->persist($time);
             $entityManager->flush();
             $flashBag->add('success', $translator->trans('Time added'));
