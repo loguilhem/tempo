@@ -18,27 +18,23 @@ class CompanyController extends AbstractController
 {
 
     /**
-     * @Route("/{id}", name="company_show", methods={"GET"})
+     * @Route("/", name="company_show", methods={"GET"})
      * @IsGranted("ROLE_SUPER_ADMIN")
      */
-    public function show(Company $company): Response
+    public function show(): Response
     {
-        $this->denyAccessUnlessGranted('view', $company);
-
         return $this->render('company/show.html.twig', [
-            'company' => $company,
+            'company' => $this->getUser()->getCompany(),
         ]);
     }
 
     /**
-     * @Route("/{id}/edit", name="company_edit", methods={"GET","POST"})
+     * @Route("/edit", name="company_edit", methods={"GET","POST"})
      * @IsGranted("ROLE_SUPER_ADMIN")
      */
-    public function edit(Request $request, Company $company, EntityManagerInterface $em): Response
+    public function edit(Request $request, EntityManagerInterface $em): Response
     {
-        $this->denyAccessUnlessGranted('edit', $company);
-
-        $form = $this->createForm(CompanyType::class, $company);
+        $form = $this->createForm(CompanyType::class, $this->getUser()->getCompany());
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -48,7 +44,6 @@ class CompanyController extends AbstractController
         }
 
         return $this->render('company/edit.html.twig', [
-            'company' => $company,
             'form' => $form->createView(),
         ]);
     }

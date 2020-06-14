@@ -8,12 +8,26 @@ use App\Entity\Project;
 use App\Entity\Task;
 use App\Entity\Time;
 use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Security\Core\Security;
 
 class AnalyticsServices
 {
+    private $em;
+    private $company;
+
+    public function __construct(EntityManagerInterface $em, Security $security)
+    {
+        $this->em = $em;
+        $this->company = $security->getUser()->getCompany();
+    }
+
     public function analyzePerProjects(array $projects, array $tasks, array $users, array $times): array
     {
         $stats = [];
+        $projects = $this->getProjects($projects);
+        $tasks = $this->getTasks($tasks);
+        $users = $this->getUsers($users);
 
         /** @var Project $project */
         foreach ($projects as $project) {
@@ -52,6 +66,9 @@ class AnalyticsServices
     public function analyzePerTasks(array $projects, array $tasks, array $users, array $times): array
     {
         $stats = [];
+        $projects = $this->getProjects($projects);
+        $tasks = $this->getTasks($tasks);
+        $users = $this->getUsers($users);
 
         /** @var Task $task */
         foreach ($tasks as $task) {
@@ -89,6 +106,9 @@ class AnalyticsServices
     public function analyzePerUsers(array $projects, array $tasks, array $users, array $times): array
     {
         $stats = [];
+        $projects = $this->getProjects($projects);
+        $tasks = $this->getTasks($tasks);
+        $users = $this->getUsers($users);
 
         /** @var User $user */
         foreach ($users as $user) {
@@ -139,4 +159,38 @@ class AnalyticsServices
 
         return $hours1 + $hours2 + $hours3;
     }
+
+    private function getProjects(array $projects) : array
+    {
+        if (count($projects) === 0) {
+            $projects = $this->em->getRepository(Project::class)->findBy([
+                'company' => $this->company
+            ]);
+        }
+
+        return $projects;
+    }
+
+    private function getTasks(array $tasks) : array
+    {
+        if (count($tasks) === 0) {
+            $tasks = $this->em->getRepository(Task::class)->findBy([
+                'company' => $this->company
+            ]);
+        }
+
+        return $tasks;
+    }
+
+    private function getUsers(array $users) : array
+    {
+        if (count($users) === 0) {
+            $users = $this->em->getRepository(User::class)->findBy([
+                'company' => $this->company
+            ]);
+        }
+
+        return $users;
+    }
+
 }

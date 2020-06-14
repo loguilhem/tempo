@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Company;
 use App\Entity\Project;
 use App\Entity\Task;
 use App\Entity\User;
@@ -14,9 +15,20 @@ use App\Entity\User;
  */
 class TimeRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function getTimes(array $projects = null, array $tasks = null, array $users = null, \DateTime $start = null, \DateTime $end = null)
+    public function getTimes(
+        Company $company,
+        array $projects = null,
+        array $tasks = null,
+        array $users = null,
+        \DateTime $start = null,
+        \DateTime $end = null
+    )
     {
-        $qb = $this->createQueryBuilder('time');
+        $qb = $this->createQueryBuilder('time')
+            ->join('time.user', 'u')
+            ->where('u.company = :company')
+            ->setParameter('company', $company)
+        ;
 
         if ($projects) {
             $qb->join('time.project', 'project')

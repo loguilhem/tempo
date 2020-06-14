@@ -22,10 +22,11 @@ class AnalyticsController extends AbstractController
      */
     public function index(Request $request, EntityManagerInterface $manager, AnalyticsServices $analyticsServices)
     {
+        $company = $this->getUser()->getCompany();
         $form = $this->createForm(AnalyticsType::class, null, [
-            'projects' => $manager->getRepository(Project::class)->findAll(),
-            'tasks' => $manager->getRepository(Task::class)->findAll(),
-            'users' => $manager->getRepository(User::class)->findAll(),
+            'projects' => $manager->getRepository(Project::class)->findBy(['company' => $company]),
+            'tasks' => $manager->getRepository(Task::class)->findBy(['company' => $company]),
+            'users' => $manager->getRepository(User::class)->findBy(['company' => $company]),
         ]);
 
         $form->handleRequest($request);
@@ -35,7 +36,14 @@ class AnalyticsController extends AbstractController
             $usersData = $form['user']->getData();
 
             // We get all times according to data form
-            $times = $manager->getRepository(Time::class)->getTimes($projectsData, $tasksData, $usersData, $form['startTime']->getData(), $form['endTime']->getData());
+            $times = $manager->getRepository(Time::class)->getTimes(
+                $company,
+                $projectsData,
+                $tasksData,
+                $usersData,
+                $form['startTime']->getData(),
+                $form['endTime']->getData()
+            );
 
             $projects = $analyticsServices->analyzePerProjects($projectsData, $tasksData, $usersData, $times);
             $tasks = $analyticsServices->analyzePerTasks($projectsData, $tasksData, $usersData, $times);
