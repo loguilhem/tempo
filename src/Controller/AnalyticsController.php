@@ -49,7 +49,7 @@ class AnalyticsController extends AbstractController
             $tasks = $analyticsServices->analyzePerTasks($projectsData, $tasksData, $usersData, $times);
             $users = $analyticsServices->analyzePerUsers($projectsData, $tasksData, $usersData, $times);
 
-            return $this->render('analytics/results.html.twig', [
+            return $this->render('page/analytics/results.html.twig', [
                 'times' => $times,
                 'projects' => $projects,
                 'tasks' => $tasks,
@@ -57,7 +57,7 @@ class AnalyticsController extends AbstractController
             ]);
         }
 
-        return $this->render('analytics/form.html.twig', [
+        return $this->render('page/analytics/form.html.twig', [
             'form' => $form->createView(),
         ]);
     }

@@ -1,0 +1,76 @@
+{% extends 'layout/left-side-column.html.twig' %}
+
+{% block title %}Tempo - Times{% endblock %}
+
+
+{% block page %}
+	{% embed "_page.html.twig" %}
+		{% block page_title %}
+			{{ 'Times list'|trans }}
+		{% endblock %}
+
+		{% block page_content %}
+    {% if timeToDelete is not null %}
+            <p>
+                {% trans %}
+                    Are you sure to delete this time ?
+                    You cannot reverse this action.
+                {% endtrans %}
+            </p>
+            <form method="POST" action="{{ path('delete_time') }}">
+                <input type="hidden" value="{{ timeToDelete }}" name="id">
+                <button type="submit" class="button is-danger">Yes I am sure !</button>
+            </form>
+            <a href="{{ path('list_times') }}" class="button is-success is-light">No, please cancel.</a>
+    {% endif %}
+
+    <section class="section">
+        <div class="container is-fluid">
+            <a class="button is-primary" href="{{ path('add_time') }}">New Time</a>
+
+            <table class="table is-hoverable is-striped is-fullwidth">
+                <thead>
+                <tr>
+                    <th>{{ 'Project'|trans }}</th>
+                    <th>{{ 'Task'|trans }}</th>
+                    {% if is_granted('ROLE_SUPER_ADMIN') %}
+                    <th>{{ 'User'|trans }}</th>
+                    {% endif %}
+                    <th>{{ 'startTime'|trans }}</th>
+                    <th>{{ 'endTime'|trans }}</th>
+                    <th>{{ 'Hours' }}</th>
+                    <th>{{ 'Edit'|trans }}</th>
+                    <th>{{ 'Delete'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for time in times %}
+                    <tr>
+                        <td>{{ time.project.name }}</td>
+                        <td>{{ time.task.name }}</td>
+                        {% if is_granted('ROLE_SUPER_ADMIN') %}
+                            <td>{{ time.user.username }}</td>
+                        {% endif %}
+                        <td>{{ time.startTime|date('Y-m-d H:i') }}</td>
+                        <td>{{ time.endTime|date('Y-m-d H:i') }}</td>
+                        <td></td>
+                        <td>
+                        {% if time.user == app.user %}
+                            <a class="button is-primary" href="{{ path('edit_time', {'id':time.id}) }}">Edit</a>
+                        {% endif %}
+                        </td>
+                        <td>
+                            <form action="{{ path('list_times') }}" method="post">
+                                <input type="hidden" value="{{ time.id }}" name="timeToDelete">
+                                <button class="button is-warning" type="submit">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+		{% endblock %}
+	{% endembed %}
+{% endblock %}

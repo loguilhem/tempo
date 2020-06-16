@@ -1,0 +1,231 @@
+{% extends 'layout/left-side-column.html.twig' %}
+
+{% block page %}
+    <header  class="hero is-primary">
+        <div class="hero-body">
+            <div class="container">
+                <h1>{{ 'Results'|trans }}</h1>
+            </div>
+        </div>
+    </header>
+
+    <section class="section">
+        <div class="container is-fluid">
+            <div class="row" id="projects" data-projects="{{ projects|json_encode }}">
+                <div class="col-6">
+                    <h2>{{ 'Total per Tasks in each Project' }}</h2>
+                    {% for project in projects %}
+                        <h3>{{ project.name }}</h3>
+                        <table>
+                            <thead>
+                            <tr>
+                                {% for task in project.tasks %}
+                                    <th>{{ task.name }}</th>
+                                {% endfor %}
+                                <th>{{ 'Total'|trans }}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                {% set total = 0 %}
+                                {% for task in project.tasks %}
+                                    {% set total = task.total + total %}
+                                    <td>{{ task.total }}</td>
+                                {% endfor %}
+                                <td>{{ total }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="chart">
+                            <canvas id="project-task-{{ project.id }}"></canvas>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="col-6">
+                    <h2>{{ 'Total per Users in each Project' }}</h2>
+                    {% for project in projects %}
+                        <h4>{{ project.name }}</h4>
+                        <table>
+                            <thead>
+                            <tr>
+                                {% for user in project.users %}
+                                    <th>{{ user.username }}</th>
+                                {% endfor %}
+                                <th>{{ 'Total'|trans }}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                {% set total = 0 %}
+                                {% for user in project.users %}
+                                    {% set total = user.total + total %}
+                                    <td>{{ user.total }}</td>
+                                {% endfor %}
+                                <td>{{ total }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="chart">
+                            <canvas id="project-user-{{ project.id }}"></canvas>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="row" id="tasks" data-tasks="{{ tasks|json_encode }}">
+                <div class="col-6">
+                    <h2>{{ 'Total per Projects in each Task' }}</h2>
+                    {% for task in tasks %}
+                        <h4>{{ task.name }}</h4>
+                        <table>
+                            <thead>
+                            <tr>
+                                {% for project in task.projects %}
+                                    <th>{{ project.name }}</th>
+                                {% endfor %}
+                                <th>{{ 'Total'|trans }}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                {% set total = 0 %}
+                                {% for project in task.projects %}
+                                    {% set total = project.total + total %}
+                                    <td>{{ project.total }}</td>
+                                {% endfor %}
+                                <td>{{ total }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="chart">
+                            <canvas id="task-project-{{ task.id }}"></canvas>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="col-6">
+                    <h2>{{ 'Total per Users in each Task' }}</h2>
+                    {% for task in tasks %}
+                        <h4>{{ task.name }}</h4>
+                        <table>
+                            <thead>
+                            <tr>
+                                {% for project in task.projects %}
+                                    <th>{{ project.name }}</th>
+                                {% endfor %}
+                                <th>{{ 'Total'|trans }}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                {% set total = 0 %}
+                                {% for project in task.projects %}
+                                    {% set total = project.total + total %}
+                                    <td>{{ project.total }}</td>
+                                {% endfor %}
+                                <td>{{ total }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="chart">
+                            <canvas id="task-user-{{ task.id }}"></canvas>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <div class="row" id="users" data-users="{{ users|json_encode }}">
+                <div class="col-6">
+                    <h2>{{ 'Total per Projects for each User'|trans }}</h2>
+                    {% for user in users %}
+                        <h4>{{ user.username }}</h4>
+                        <table>
+                            <thead>
+                            <tr>
+                                {% for project in user.projects %}
+                                    <th>{{ project.name }}</th>
+                                {% endfor %}
+                                <th>{{ 'Total'|trans }}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                {% set total = 0 %}
+                                {% for project in user.projects %}
+                                    {% set total = project.total + total %}
+                                    <td>{{ project.total }}</td>
+                                {% endfor %}
+                                <td>{{ total }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="chart">
+                            <canvas id="user-project-{{ user.id }}"></canvas>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="col-6">
+                    <h2>{{ 'Total per Tasks for each User'|trans }}</h2>
+                    <h3>{{ 'tasks'|trans }}</h3>
+                    {% for user in users %}
+                        <h4>{{ user.username }}</h4>
+                        <table>
+                            <thead>
+                            <tr>
+                                {% for task in user.tasks %}
+                                    <th>{{ task.name }}</th>
+                                {% endfor %}
+                                <th>{{ 'Total'|trans }}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                {% set total = 0 %}
+                                {% for task in user.tasks %}
+                                    {% set total = task.total + total %}
+                                    <td>{{ task.total }}</td>
+                                {% endfor %}
+                                <td>{{ total }}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="chart">
+                            <canvas id="user-task-{{ user.id }}"></canvas>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <hr>
+
+            <h2>{{ 'All the records'|trans }}</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>{{ 'Project'|trans }}</th>
+                    <th>{{ 'Task'|trans }}</th>
+                    <th>{{ 'User'|trans }}</th>
+                    <th>{{ 'StartTime'|trans }}</th>
+                    <th>{{ 'EndTime'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for time in times %}
+                    {% set difference = date(time.endTime).diff(date(time.startTime)) %}
+                    <tr>
+                        <td>{{ time.project.name }}</td>
+                        <td>{{ time.task.name }}</td>
+                        <td>{{ time.user.username }}</td>
+                        <td>{{ time.startTime|date('Y-m-d H:i') }}</td>
+                        <td>{{ time.endTime|date('Y-m-d H:i') }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <hr>
+        </div>
+    </section>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('analytics-results') }}
+{% endblock %}

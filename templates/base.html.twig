@@ -1,37 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <title>{% block title %}Tempo{% endblock %}</title>
-        <link rel="icon" href="{{ asset('/image/favicon.ico') }}">
-
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
-
-    </head>
-    <body>
-
-        {% for message in app.session.flashBag.get('success') %}
-            <p class="notification is-success">
-                {{ message }}
-            </p>
-        {% endfor %}
-        {% for message in app.session.flashBag.get('error') %}
-            <p class="notification is-danger">
-                {{ message }}
-            </p>
-        {% endfor %}
-
-        {% block body %}
-        {% endblock %}
-
-        {% block footer %}
-            <p>Open Source Time tracker</p>
-        {% endblock %}
-
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
+	<head>
+		{% block head %}
+			{% include '_head.html.twig' %}
+		{% endblock %}
+	</head>
+	<body class="app">
+		{% block layout %}{% endblock %}
     </body>
 </html>

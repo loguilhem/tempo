@@ -1,0 +1,62 @@
+{% extends 'layout/left-side-column.html.twig' %}
+
+{% block page %}
+    <header  class="hero is-primary">
+        <div class="hero-body">
+            <div class="container">
+                {{ 'Calc'|trans }}
+            </div>
+        </div>
+    </header>
+    <section class="section">
+        <div class="container is-fluid">
+            {{ form_start(form) }}
+            <div class="field">
+                <label class="label">{{ form_label(form.project) }}</label>
+                <div class="control">
+                    {{ form_widget(form.project) }}
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">{{ form_label(form.task) }}</label>
+                <div class="control">
+                    {{ form_widget(form.task) }}
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">{{ form_label(form.user) }}</label>
+                <div class="control">
+                    {{ form_widget(form.user) }}
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">{{ form_label(form.startTime) }}</label>
+                <div class="control">
+                    {{ form_widget(form.startTime) }}
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">{{ form_label(form.endTime) }}</label>
+                <div class="control">
+                    {{ form_widget(form.endTime) }}
+                </div>
+            </div>
+            <div class="field">
+                <label class="label">{{ form_label(form.forever) }}</label>
+                <div class="control">
+                    {{ form_widget(form.forever) }}
+                </div>
+            </div>
+            <div class="control">
+                {{ form_widget(form.calculate, {'attr': {'class': 'button is-primary' }}) }}
+            </div>
+            {{ form_errors(form) }}
+            {{ form_end(form) }}
+        </div>
+    </section>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('analytics-form') }}
+{% endblock %}

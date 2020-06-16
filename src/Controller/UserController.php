@@ -22,7 +22,7 @@ class UserController extends AbstractController
      */
     public function listUsers(EntityManagerInterface $entityManager)
     {
-        return $this->render('user/list.html.twig', [
+        return $this->render('page/user/list.html.twig', [
             'users' => $entityManager->getRepository(User::class)->findTeamMembersExceptMe($this->getUser())
         ]);
     }
