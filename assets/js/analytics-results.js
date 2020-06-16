@@ -1,4 +1,3 @@
-require('../css/analytics-results.scss');
 import Chart from 'chart.js';
 var $ = require('jquery');
 

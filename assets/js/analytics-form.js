@@ -1,4 +1,3 @@
-require('../css/analytics-form.scss');
 var $ = require('jquery');
 
 $(document).ready(function () {
