@@ -47,7 +47,7 @@
 					background: darken($sidebar-color, 10);
 					border-left-color: $primary-color;
 					@if $sidebar-accent == dark { color: $sidebar-dark-link-color }
-					@if $sidebar-accent == light { color: $primary-color }
+					@if $sidebar-accent == light { color: $primary-color-dark }
 				}
 				.app-menu__label { opacity: 1; }
 				.treeview-menu {

@@ -1,0 +1,55 @@
+{% extends 'layout/full-width.html.twig' %}
+
+{% block page %}
+	{% embed '_page.html.twig' %}
+        {% block page_title %}Temporella{% endblock %}
+		{% block page_content %}
+			<div class="row">
+				<div class="col col-12 col-md-4">
+					{% trans %}
+					    Tempo helps you to keep track of time spent on projects and tasks by you or your co-workers.
+					    It is an open source project. You can download it and host it on your own server or soon use our cloud :).
+					{% endtrans %}
+				</div>
+				<div class="col col-12 col-md-8">
+					<div class="body-content">
+						{% if app.user is not null %}
+							{{ 'Welcome'|trans }}
+							{{ app.user.username }}.
+							{{ 'Your role is' }}
+							:
+							{{ app.user.roles[0] }}
+							{{ 'Your last connection'|trans }}
+							:
+							{{ app.user.lastLogin|date('d/m/Y') }}
+
+							<div>
+								{% if is_granted('ROLE_SUPER_ADMIN') %}
+									<a href="{{ path('company_show') }}">{{ 'Company Management'|trans }}</a>
+									<br>
+									<a href="{{ path('user_list') }}">{{ 'User Management'|trans }}</a>
+									<br>
+								{% endif %}
+								<a href="{{ path('list_projects') }}">{{ 'Projects Management'|trans }}</a>
+								<br>
+								<a href="{{ path('list_tasks') }}">{{ 'Tasks Management'|trans }}</a>
+								<br>
+								<a href="{{ path('list_times') }}">{{ 'Times Management'|trans }}</a>
+								<br>
+								<a href="{{ path('analytics') }}">{{ 'Analytics'|trans }}</a>
+							</div>
+
+						{% else %}
+							<a href="{{ path('login') }}">{{ 'login'|trans }}</a>
+							<br>
+							<a href="{{ path('register') }}">{{ 'register' }}</a>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		{% endblock %}
+	{% endembed %}
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+{% endblock %}

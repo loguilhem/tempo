@@ -29,12 +29,22 @@
 	}
 }
 
+.app-header{
+	margin-bottom: 30px;
+	padding: 20px 30px;
+}
+
 .app-content {
 	min-height: calc(100vh - 50px);
 	margin-top: 50px;
 	padding: 30px;
-	background-color: #E5E5E5;
+	background-color: $primary-color-light;
 	transition: margin-left 0.3s ease;
+
+	&.content-fluid {
+		margin-right: 0;
+		margin-left: 0;
+	}
 	@media(min-width: 768px) { margin-left: $sidebar-width; }
 	@media(max-width: 767px) {
 		margin-top: 50px;

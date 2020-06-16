@@ -1,0 +1,48 @@
+{% extends 'layout/left-side-column.html.twig' %}
+
+{% block page %}
+	{% embed "_page.html.twig" %}
+		{% block page_title %}
+			{{ 'Users List'|trans }}
+		{% endblock %}
+
+		{% block page_content %}
+			<table id="listUsers-table" cellspacing="0" width="100%" class="display list_table">
+				<thead>
+					<tr>
+						<th>{{ 'name'|trans }}</th>
+						<th>Email</th>
+						<th>{{ 'role'|trans }}</th>
+						<th>{{ 'status'|trans }}</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for User in users %}
+						<tr>
+							<td>{{ User.username }}</td>
+							<td>{{ User.email }}</td>
+							<td>
+								{% set break = false %}
+								{% for role in User.roles if not break %}
+									{{ role }}
+									{% set break = true %}
+								{% endfor %}
+								<a href="{{ path('promote_demote_user', { 'id': User.id, 'action': 'promote' }) }}">&uarr;</a>
+								<a href="{{ path('promote_demote_user', { 'id': User.id, 'action': 'demote' }) }}">&darr;</a>
+							</td>
+							<td>
+								<a href="{{ path('activateuser', { 'id': User.id }) }}">
+									{% if User.enabled == 1 %}
+										Actif
+									{% else %}
+										Inactif
+									{% endif %}
+								</a>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		{% endblock %}
+	{% endembed %}
+{% endblock %}

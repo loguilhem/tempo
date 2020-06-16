@@ -23,7 +23,7 @@ class CompanyController extends AbstractController
      */
     public function show(): Response
     {
-        return $this->render('company/show.html.twig', [
+        return $this->render('page/company/show.html.twig', [
             'company' => $this->getUser()->getCompany(),
         ]);
     }
@@ -43,7 +43,7 @@ class CompanyController extends AbstractController
             return $this->redirectToRoute('index');
         }
 
-        return $this->render('company/edit.html.twig', [
+        return $this->render('page/company/edit.html.twig', [
             'form' => $form->createView(),
         ]);
     }

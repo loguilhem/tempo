@@ -26,7 +26,7 @@ class ProjectController extends AbstractController
      */
     public function listProjects(EntityManagerInterface $entityManager, Request $request)
     {
-        return $this->render('project/list.html.twig', [
+        return $this->render('page/project/list.html.twig', [
             'projects' => $entityManager->getRepository(Project::class)->findBy([
                 'company' => $this->getUser()->getCompany()
             ]),
@@ -58,7 +58,7 @@ class ProjectController extends AbstractController
             return $this->redirectToRoute('list_projects');
         }
 
-        return $this->render('project/form.html.twig', [
+        return $this->render('page/project/form.html.twig', [
             'form' => $form->createView()
         ]);
     }
@@ -82,7 +82,7 @@ class ProjectController extends AbstractController
             return $this->redirectToRoute('list_projects');
         }
         
-        return $this->render('project/form.html.twig', [
+        return $this->render('page/project/form.html.twig', [
             'form' => $form->createView()
         ]);
     }

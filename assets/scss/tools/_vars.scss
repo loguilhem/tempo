@@ -21,7 +21,11 @@ $white: #FFF;
 // Brown : #795548
 // Purple: #673AB7
 
-$primary-color: #009688;
+$primary-color: #0B1083;
+$primary-color-thin: #B8BACC;
+$primary-color-light: #E4E8F0;
+$primary-color-dark: #2C2423;
+$secondary-color: #009688;
 
 // Complementry color is used to indecate the loading bar on the top
 // of the page with pace.js plugin
@@ -33,7 +37,7 @@ $sidebar-width: 230px;
 // ------- Sidebar Colors --------
 
 // Background color of sidebar
-$sidebar-color: #222d32;
+$sidebar-color: $primary-color;
 
 // -- Suggested sidebar background colors
 // dark  : #222d32

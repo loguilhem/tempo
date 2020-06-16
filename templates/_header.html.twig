@@ -1,0 +1,13 @@
+{% block header_banner %}
+	<div class="app-title">
+		<h1 class="title">
+            {% block app_title %}
+			    Tempo - Time tracker
+            {% endblock %}
+        </h1>
+	</div>
+{% endblock %}
+
+{% block header_navigation %}
+    {% include 'component/navigation-top.html.twig' %}
+{% endblock %}
