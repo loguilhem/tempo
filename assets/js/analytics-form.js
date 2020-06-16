@@ -1,4 +1,4 @@
-var $ = require('jquery');
+import $ from 'jquery';
 
 $(document).ready(function () {
   $(document).on('click', '#appbundle_analytics_forever', function () {

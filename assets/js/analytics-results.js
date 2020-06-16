@@ -1,5 +1,5 @@
 import Chart from 'chart.js';
-var $ = require('jquery');
+import $ from 'jquery';
 
 $(document).ready(function () {
   graphProjects();
@@ -32,7 +32,7 @@ function graphProjects() {
     })
 
     let ctxPt = document.getElementById('project-task-' + iProject).getContext("2d");
-    let ptX = new Chart(ctxPt, {
+    new Chart(ctxPt, {
       type: 'pie',
       data: {
         labels: labelTasks,
@@ -54,7 +54,7 @@ function graphProjects() {
     });
 
     let ctxPu = document.getElementById('project-user-' + iProject).getContext("2d");
-    let puX = new Chart(ctxPu, {
+    new Chart(ctxPu, {
       type: 'pie',
       data: {
         labels: labelUsers,
@@ -102,7 +102,7 @@ function graphTasks() {
     })
 
     let ctxTp = document.getElementById('task-project-' + task.id).getContext("2d");
-    let ctX = new Chart(ctxTp, {
+    new Chart(ctxTp, {
       type: 'pie',
       data: {
         labels: labelProjects,
@@ -124,7 +124,7 @@ function graphTasks() {
     });
 
     let ctxTu = document.getElementById('task-user-' + task.id).getContext("2d");
-    let tuX = new Chart(ctxTu, {
+    new Chart(ctxTu, {
       type: 'pie',
       data: {
         labels: labelUsers,
@@ -172,7 +172,7 @@ function graphUsers() {
     })
 
     let ctxUp = document.getElementById('user-project-' + user.id).getContext("2d");
-    let ctX = new Chart(ctxUp, {
+    new Chart(ctxUp, {
       type: 'pie',
       data: {
         labels: labelProjects,
@@ -194,7 +194,7 @@ function graphUsers() {
     });
 
     let ctxUt = document.getElementById('user-task-' + user.id).getContext("2d");
-    let tuX = new Chart(ctxUt, {
+    new Chart(ctxUt, {
       type: 'pie',
       data: {
         labels: labelTasks,
