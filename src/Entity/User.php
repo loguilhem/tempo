@@ -239,7 +239,7 @@ class User implements UserInterface, \Serializable
     *
     * @return self
     */
-    public function addRole(string $role) :self
+    public function addRole(string $role): self
     {
         if(!in_array($role, $this->roles))
             $this->roles[] = $role;
@@ -247,6 +247,19 @@ class User implements UserInterface, \Serializable
         return $this;
     }
 
+    /**
+    * @param string $role
+    *
+    * @return self
+    */
+    public function removeRole(string $role): self
+    {
+        foreach($this->roles AS $k => $r)
+            if($r === $role)
+                unset($this->roles[$k]);
+
+        return $this;
+    }
 
     /**
      * @return string

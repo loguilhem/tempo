@@ -44,12 +44,16 @@ class UserController extends AbstractController
         $roles = $user->getLowerAndHigherRole();
 
         if ($action === 'promote' && $roles['actual'] !== User::ROLE_ADMIN) {
-            $user->setRoles([$roles['next']]);
+            $user->removeRole($roles['actual']);
+            $user->addRole($roles['next']);
+
             $entityManager->flush();
 
             $flashBag->add('success', $translator->trans('User is '. $roles['next']));
         } elseif ($action === 'demote' && $roles['actual'] !== User::ROLE_USER) {
-            $user->setRoles([$roles['previous']]);
+            $user->removeRole($roles['actual']);
+            $user->addRole($roles['previous']);
+            
             $entityManager->flush();
 
             $flashBag->add('success', $translator->trans('User is '. $roles['previous']));
@@ -57,7 +61,7 @@ class UserController extends AbstractController
             $flashBag->add('success', $translator->trans('User role cannot be modified'));
         }
 
-        Return $this->redirectToRoute('user_list');
+        return $this->redirectToRoute('user_list');
     }
 
     /**
@@ -75,10 +79,10 @@ class UserController extends AbstractController
         $locked = $user->isEnabled();
 
         if($locked == 0) {
-            $user->setEnabled(1);
+            $user->setEnabled(true);
             $flashBag->add('success', $translator->trans('User is enabled'));
         } else {
-            $user->setEnabled(0);
+            $user->setEnabled(false);
             $flashBag->add('success', $translator->trans('User is disabled'));
         }
         $entityManager->flush();
