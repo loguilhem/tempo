@@ -1,4 +1,4 @@
-var $ = require('jquery');
+import $ from 'jquery';
 
 $( document ).ready(function() {
   var $accountType = $('#registration_accountType');
