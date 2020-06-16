@@ -1,32 +1,105 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}Register
+{% endblock %}
 
 {% block body %}
+	<div class="container">
+		<section class="login-content">
+			{{ form_start(registrationForm, {'attr': {'class' : 'login-form'}}) }}
+			<div id="registration_accountType" class="input-group input-account-types">
+				{% for accountType in registrationForm.accountType %}
+					<div class="input-control" tabindex="0" data-toggle="tooltip" title="Disabled tooltip">
+						{{ form_widget(accountType)}}
+						{{ form_label(accountType)}}
+					</div>
+				{% endfor %}
+			</div>
+			<div class="login-box">
+				<div class="form-header">
+					<h2 class="login-title">
+						Register
+					</h2>
+				</div>
+				<div class="form-body">
+					<div class="row">
+						<div class="col col-12">
+							<h4 class="">Our account</h4>
+						</div>
+						<div class="col col-12 col-sm-6">
+							<div class="form-group">
+								{{ form_row(registrationForm.email, {'attr': {'class': 'form-control'}, 'label_attr': {'class': 'control-label'}}) }}
+							</div>
+						</div>
+						<div class="col col-12 col-sm-6"></div>
+						<div class="col col-6">
+							<div class="form-group">
+								{{ form_row(registrationForm.plainPassword.second, {'attr': {'class': 'form-control'}, 'label_attr': {'class': 'control-label'}}) }}
+							</div>
+						</div>
+						<div class="col col-12 col-sm-6">
+							<div class="form-group">
+								{{ form_row(registrationForm.plainPassword.first, {'attr': {'class': 'form-control'}, 'label_attr': {'class': 'control-label'}}) }}
+							</div>
+						</div>
+					</div>
+					<div id="accoutTypeForm" class="row">
+						 	<div class="col col-12">
+								<h4> Our Company</h4> 
+							</div>
+						{% if registrationForm.Company is defined %}
+							<div class="col col-12 col-md-6">
+								{{ form_row(registrationForm.Company.name)}}
+							</div>
+							<div class="col col-6">
+								{{ form_row(registrationForm.Company.token)}}
+							</div>
+							<div class="col col-12 col-md-6">
+								{{ form_row(registrationForm.Company.email)}}
+							</div>
+							<div class="col col-12 col-md-6">
+								{{ form_row(registrationForm.Company.tel)}}
+							</div>
+							<div class="col col-12 col-md-6">
+								{{ form_row(registrationForm.Company.address)}}
+							</div>
+							<div class="col col-12 col-md-6">
+								{{ form_row(registrationForm.Company.zipCode)}}
+							</div>
+							<div class="col col-12 col-md-6">
+								{{ form_row(registrationForm.Company.city)}}
+							</div>
+							<div class="col col-12 col-md-6">
+								{{ form_row(registrationForm.Company.Country)}}
+							</div>
+						{% endif %}
 
-<div class="container">
-    <div class="row">
-        <div class="col s12">
-            <h1>Register</h1>
-
-            {{ form_start(registrationForm) }}
-                {{ form_row(registrationForm.email) }}
-                {{ form_row(registrationForm.plainPassword.first) }}
-                {{ form_row(registrationForm.plainPassword.second) }}
-                {{ form_row(registrationForm.agreeTerms) }}
-                {{ form_row(registrationForm.accountType) }}
-                <div id="accoutTypeForm">
-                <div>
-
-                <button class="btn">Register</button>
-                {{ form_errors(registrationForm) }}
-            {{ form_end(registrationForm) }}
-        </div>
-    </div>
-</div>
+						{% if registrationForm.token is defined %}
+							<div class="col col-12 col-md-6">
+								{{ form_row(registrationForm.token)}}
+							</div>
+						{% endif %}
+						</h4>
+					</div>
+				</div>
+				<div class="form-footer">
+					<div class="form-group">
+						{{ form_widget(registrationForm.agreeTerms) }}
+						{{ form_label(registrationForm.agreeTerms) }}
+					</div>
+					<div class="form-group btn-container">
+						<button type="submit" class="btn btn-primary btn-block">
+							<i class="fa fa-sign-in fa-lg fa-fw"></i>Register</button>
+					</div>
+				</div>
+				<div></div>
+				{{ form_end(registrationForm) }}
+			</div>
+		</section>
+	</div>
 {% endblock %}
 
 {% block javascripts %}
-    {{ parent() }}
-    {{ encore_entry_script_tags('register-form') }}
+	{{ parent() }}
+	{{ encore_entry_script_tags('register-form') }}
 {% endblock %}

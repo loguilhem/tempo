@@ -25,9 +25,9 @@ Encore
      */
     .addEntry('app-style', './assets/scss/app.scss')
     .addEntry('app', './assets/js/app.js')
-    .addEntry('register-form', './assets/js/register-form.js')
     .addEntry('projects-list', './assets/js/projects-list.js')
     .addEntry('analytics-form', './assets/js/analytics-form.js')
+    .addEntry('register-form', './assets/js/register-form.js')
     .addEntry('analytics-results', './assets/js/analytics-results.js')
 
     // will require an extra script tag for runtime.js
