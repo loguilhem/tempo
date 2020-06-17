@@ -854,11 +854,6 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@popperjs/core@^2.4.2":
-  version "2.4.2"
-  resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.4.2.tgz#7c6dc4ecef16149fd7a736710baa1b811017fdca"
-  integrity sha512-JlGTGRYHC2QK+DDbePyXdBdooxFq2+noLfWpRqJtkxcb/oYWzOF0kcbfvvbWrwevCC1l6hLUg1wHYT+ona5BWQ==
-
 "@symfony/webpack-encore@^0.28.2":
   version "0.28.3"
   resolved "https://registry.yarnpkg.com/@symfony/webpack-encore/-/webpack-encore-0.28.3.tgz#45b590f7b86beb7bb6918a95df89f42f72b796d0"
@@ -1616,6 +1611,11 @@ boolbase@^1.0.0, boolbase@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/boolbase/-/boolbase-1.0.0.tgz#68dff5fbe60c51eb37725ea9e3ed310dcc1e776e"
   integrity sha1-aN/1++YMUes3cl6p4+0xDcwed24=
+
+bootstrap@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-4.5.0.tgz#97d9dbcb5a8972f8722c9962483543b907d9b9ec"
+  integrity sha512-Z93QoXvodoVslA+PWNdk23Hze4RBYIkpb5h8I2HY2Tu2h7A0LpAgLcyrhrSUyo2/Oxm2l1fRZPs1e5hnxnliXA==
 
 brace-expansion@^1.1.7:
   version "1.1.11"
@@ -4453,7 +4453,7 @@ isstream@~0.1.2:
   resolved "https://registry.yarnpkg.com/isstream/-/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
   integrity sha1-R+Y/evVa+m+S4VAOaQ64uFKcCZo=
 
-jquery@^3.4.1:
+jquery@^3.5.0:
   version "3.5.1"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.5.1.tgz#d7b4d08e1bfdb86ad2f1a3d039ea17304717abb5"
   integrity sha512-XwIBPqcMn57FxfT+Go5pzySnm4KWkT1Tv7gjrpT1srtf8Weynl6R273VJ5GjkRb51IzMp5nbaPjJXMWeju2MKg==
@@ -4760,6 +4760,11 @@ map-visit@^1.0.0:
   integrity sha1-7Nyo8TFE5mDxtb1B8S80edmN+48=
   dependencies:
     object-visit "^1.0.0"
+
+material-icons@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/material-icons/-/material-icons-0.3.1.tgz#425e06e2448632d6249d6e1ffe2993682c5b171e"
+  integrity sha512-5Hbj76A6xDPcDZEbM4oxTknhWuMwGWnAHVLLPCEq9eVlcHb0fn4koU9ZeyMy1wjARtDEPAHfd5ZdL2Re5hf0zQ==
 
 md5.js@^1.3.4:
   version "1.3.5"
@@ -5667,6 +5672,11 @@ pkg-up@^2.0.0:
   integrity sha1-yBmscoBZpGHKscOImivjxJoATX8=
   dependencies:
     find-up "^2.1.0"
+
+popper.js@^1.16.1:
+  version "1.16.1"
+  resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.16.1.tgz#2a223cb3dc7b6213d740e40372be40de43e65b1b"
+  integrity sha512-Wb4p1J4zyFTbM+u6WuO4XstYx4Ky9Cewe4DWrel7B0w6VVICvPwdOpotjzcf6eD8TsckVnIMNONQyPIUFOUbCQ==
 
 portal-vue@^2.1.7:
   version "2.1.7"

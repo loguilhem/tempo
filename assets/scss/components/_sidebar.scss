@@ -31,18 +31,17 @@
 
 .app-sidebar__user {
 	display: flex;
+	color: $primary-color-dark;
 	align-items: center;
 	padding: 10px;
 	margin-bottom: 20px;
-	@if $sidebar-accent == dark {
-		color: #fff;
-	}
 }
 
 .app-sidebar__user-avatar {
 	@extend .rounded-circle;
 	flex: 0 0 auto;
 	margin-right: 15px;
+	max-width: 3rem;
 }
 
 .app-sidebar__user-name {
@@ -52,10 +51,15 @@
 
 .app-sidebar__user-name,
 .app-sidebar__user-designation {
+	font-size: 0.8rem;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	margin-bottom: 0;
+}
+
+.app-sidebar__user-designation{
+	color: $primary-color-thin;
 }
 
 .app-menu {
