@@ -1,3 +1,11 @@
+
+{% if is_granted('ROLE_USER') %}
+    {% block header_sidebar_toggle %}
+        <a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"><span class="material-icons">menu</span></a>
+    {% endblock %}
+{% endif %}
+    
+
 {% block header_banner %}
 	<div class="app-title">
 		<h1 class="title">

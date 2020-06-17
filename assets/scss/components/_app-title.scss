@@ -5,7 +5,7 @@
 	align-items: center;
 	justify-content: space-between;
 	flex-direction: row;
-
+	margin-left: 0.8rem;
 	@media print { display: none; }
 	@media (max-width: 480px) {
 		margin: (-15px) -15px 15px;

@@ -2,10 +2,15 @@
 	<div class="app-sidebar__overlay" data-toggle="sidebar"></div>
 	<aside class="app-sidebar">
 
-		<div class="app-sidebar__user"><img class="app-sidebar__user-avatar" src="" alt="User Image"/>
+		<div class="app-sidebar__user">
+			{% if app.user.avatar is defined %}
+				<img class="app-sidebar__user-avatar" src="{{app.user.avatar}}" alt="User Image"/>
+			{% else %}
+				<img class="app-sidebar__user-avatar" src="{{ asset('image/no-avatar.png') }}" alt="User Image"/>
+			{% endif %}
 			<div>
-				<p class="app-sidebar__user-name"></p>
-				<p class="app-sidebar__user-designation"></p>
+				<p class="app-sidebar__user-name">{{ app.user.username }}</p>
+				<p class="app-sidebar__user-designation">{{ app.user.roles[0] }}</p>
 			</div>
 		</div>
 

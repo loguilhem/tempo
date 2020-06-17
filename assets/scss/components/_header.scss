@@ -10,7 +10,10 @@
 	background-color: $primary-color;
 	z-index: 1030;
 	padding-right: 15px;
-	@media(min-width: 768px) { padding-right: 30px }
+	@media(min-width: 768px) {
+		min-height: 3.5rem;
+		padding-right: 0 
+	}
 	@media print { display: none; }
 }
 
@@ -42,16 +45,14 @@
 }
 
 .app-sidebar__toggle {
+	display: flex;
 	padding: 0 15px;
-	font-family: fontAwesome;
 	color: #fff;
-	line-height: 2.4;
+	justify-content: center;
+	align-items: center;
+	line-height: 1;
 	transition: background-color 0.3s ease;
 	@media(max-width: 767px) { order: -1; }
-	&:before {
-		content: "\f0c9";
-		font-size: 21px;
-	}
 	&:focus,
 	&:hover {
 		color: #fff;
