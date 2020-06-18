@@ -46,8 +46,8 @@ class RegistrationType extends AbstractType
                 'label' => 'Account type',
                 'required' => true,
                 'choices' => [
-                    'Team manager\'s' => User::ROLE_SUPER_ADMIN,
-                    'Team leader\'s or member\'s' => User::ROLE_USER
+                    'Manager' => User::ROLE_SUPER_ADMIN,
+                    'Leader or Member' => User::ROLE_USER
                 ],
                 'multiple' => false,
                 'expanded' => true

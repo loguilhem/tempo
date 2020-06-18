@@ -6,7 +6,7 @@
 			{% if app.user.avatar is defined %}
 				<img class="app-sidebar__user-avatar" src="{{app.user.avatar}}" alt="User Image"/>
 			{% else %}
-				<img class="app-sidebar__user-avatar" src="{{ asset('image/no-avatar.png') }}" alt="User Image"/>
+				<img class="app-sidebar__user-avatar" src="{{ asset('build/images/no-avatar.png') }}" alt="User Image"/>
 			{% endif %}
 			<div>
 				<p class="app-sidebar__user-name">{{ app.user.username }}</p>
@@ -32,18 +32,18 @@
 					<span class="app-menu__label">{{ 'Projects Management'|trans }}</span>
 				</a>
 			</li>
-			<li class="treeview">
-				<a class="app-menu__item" href="{{ path('list_tasks') }}" data-toggle="treeview">
+			<li>
+				<a class="app-menu__item" href="{{ path('list_tasks') }}">
 					<span class="app-menu__label">{{ 'Tasks Management'|trans }}</span>
 				</a>
 			</li>
-			<li class="treeview">
-				<a class="app-menu__item" href="{{ path('list_times') }}" data-toggle="treeview">
+			<li>
+				<a class="app-menu__item" href="{{ path('list_times') }}">
 					<span class="app-menu__label">{{ 'Times Management'|trans }}</span>
 				</a>
 			</li>
-			<li class="treeview">
-				<a class="app-menu__item" href="{{ path('analytics') }}" data-toggle="treeview">
+			<li>
+				<a class="app-menu__item" href="{{ path('analytics') }}">
 					<span class="app-menu__label">{{ 'Analytics'|trans }}</span>
 				</a>
 			</li>
