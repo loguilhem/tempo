@@ -80,23 +80,26 @@
 								{{ form_row(registrationForm.token)}}
 							</div>
 						{% endif %}
-					</h4>
+
+					</div>
+					<div class="form-footer">
+						<div class="form-group">
+							{{ form_widget(registrationForm.agreeTerms) }}
+							{{ form_label(registrationForm.agreeTerms) }}
+						</div>
+						<div class="form-group btn-container">
+							<button type="submit" class="btn btn-primary btn-block">
+								<i class="fa fa-sign-in fa-lg fa-fw"></i>Register</button>
+						</div>
+					</div>
 				</div>
+				{{ form_end(registrationForm) }}
 			</div>
-			<div class="form-footer">
-				<div class="form-group">
-					{{ form_widget(registrationForm.agreeTerms) }}
-					{{ form_label(registrationForm.agreeTerms) }}
-				</div>
-				<div class="form-group btn-container">
-					<button type="submit" class="btn btn-primary btn-block">
-						<i class="fa fa-sign-in fa-lg fa-fw"></i>Register</button>
-				</div>
-			</div>
-			<div></div>
-			{{ form_end(registrationForm) }}
-		</div>
-	</section>
-</div>{% endblock %}{% block javascripts %}
-{{ parent() }}
-{{ encore_entry_script_tags('register-form') }}{% endblock %}
+		</section>
+	</div>
+{% endblock %}
+
+{% block javascripts_footer %}
+	{{ parent() }}
+	{{ encore_entry_script_tags('register-form') }}
+{% endblock %}
