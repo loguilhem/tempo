@@ -33,7 +33,7 @@ Encore
     // but, you probably want this, unless you're building a single-page app
     .enableSingleRuntimeChunk()
 
-/*
+    /*
      * FEATURE CONFIG
      *
      * Enable & configure other features below. For a full
@@ -64,17 +64,35 @@ Encore
         },
     })
 
-// uncomment if you use TypeScript
-//.enableTypeScriptLoader()
+    // uncomment if you use TypeScript
+    //.enableTypeScriptLoader()
 
-// enables VueJs support
- .enableVueLoader()
+    // enables VueJs support
+    .enableVueLoader()
 
-// uncomment if you use Sass/SCSS files
-.enableSassLoader()
+    // uncomment if you use Sass/SCSS files
+    .enableSassLoader(
+        function (options) { },
+        { resolveUrlLoaderOptions: { removeCR: true } }
+    )
 
-// uncomment if you're having problems with a jQuery plugin
-//.autoProvidejQuery()
-;
+    // uncomment if you're having problems with a jQuery plugin
+    //.autoProvidejQuery()
 
-module.exports = Encore.getWebpackConfig();
+    .copyFiles({
+        from: './assets/images',
+
+        to: 'images/[path][name].[ext]',
+
+        // if versioning is enabled, add the file hash too
+        //to: 'images/[path][name].[hash:8].[ext]',
+
+        // only copy files matching this pattern
+        //pattern: /\.(png|jpg|jpeg)$/
+    })
+    ;
+
+const webpackConfig = Encore.getWebpackConfig();
+
+
+module.exports = webpackConfig;
