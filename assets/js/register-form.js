@@ -1,6 +1,8 @@
 import $ from 'jquery';
 
-$( document ).ready(function() {
+(function () {
+  "use strict";
+
   var $accountType = $('#registration_accountType');
     
   $accountType.change(function() {
@@ -24,4 +26,5 @@ $( document ).ready(function() {
       }
     });
   });
-});
+
+})();
