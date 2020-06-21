@@ -13,7 +13,7 @@
                     {% for project in projects %}
                         <div class="tile">
                             <h3>{{ project.name }}</h3>
-                            <table>
+                            <table class="table table-hover table-striped table-bordered">
                                 <thead>
                                 <tr>
                                     {% for task in project.tasks %}
@@ -44,7 +44,7 @@
                     {% for project in projects %}
                         <div class="tile">
                             <h4>{{ project.name }}</h4>
-                            <table>
+                            <table class="table table-hover table-striped table-bordered">
                                 <thead>
                                 <tr>
                                     {% for user in project.users %}
@@ -77,7 +77,7 @@
                     {% for task in tasks %}
                         <div class="tile">
                             <h4>{{ task.name }}</h4>
-                            <table>
+                            <table class="table table-hover table-striped table-bordered">
                                 <thead>
                                 <tr>
                                     {% for project in task.projects %}
@@ -108,7 +108,7 @@
                     {% for task in tasks %}
                         <div class="tile">
                             <h4>{{ task.name }}</h4>
-                            <table>
+                            <table class="table table-hover table-striped table-bordered">
                                 <thead>
                                 <tr>
                                     {% for project in task.projects %}
@@ -142,7 +142,7 @@
                     {% for user in users %}
                         <div class="tile">
                             <h4>{{ user.username }}</h4>
-                            <table>
+                            <table class="table table-hover table-striped table-bordered">
                                 <thead>
                                 <tr>
                                     {% for project in user.projects %}
@@ -174,7 +174,7 @@
                     {% for user in users %}
                         <div class="tile">
                             <h4>{{ user.username }}</h4>
-                            <table>
+                            <table class="table table-hover table-striped table-bordered">
                                 <thead>
                                 <tr>
                                     {% for task in user.tasks %}
@@ -206,7 +206,7 @@
                 <div class="col-md-12">
                     <div class="tile">
                         <h2>{{ 'All the records'|trans }}</h2>
-                        <table class="table table-bordered table-striped table-hover">
+                        <table class="table table-hover table-striped table-bordered" class="table table-bordered table-striped table-hover">
                             <thead>
                             <tr>
                                 <th>{{ 'Project'|trans }}</th>
