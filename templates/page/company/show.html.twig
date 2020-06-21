@@ -2,47 +2,52 @@
 
 {% block page %}
 	{% embed '_page.html.twig' %}
-		{% block page_title %}Company
-        {% endblock %}
-    {% block page_content %}
-			<table class="table">
-				<tbody>
-					<tr>
-						<th>Name</th>
-						<td>{{ company.name }}</td>
-					</tr>
-					<tr>
-						<th>Address</th>
-						<td>{{ company.address }}</td>
-					</tr>
-					<tr>
-						<th>ZipCode</th>
-						<td>{{ company.zipCode }}</td>
-					</tr>
-					<tr>
-						<th>City</th>
-						<td>{{ company.city }}</td>
-					</tr>
-					<tr>
-						<th>Country</th>
-						<td>{{ company.Country }}</td>
-					</tr>
-					<tr>
-						<th>Email</th>
-						<td>{{ company.email }}</td>
-					</tr>
-					<tr>
-						<th>Tel</th>
-						<td>{{ company.tel }}</td>
-					</tr>
-					<tr>
-						<th>Token</th>
-						<td>{{ company.token }}</td>
-					</tr>
-				</tbody>
-			</table>
+		{% block page_title %}Company{% endblock %}
+    	{% block page_content %}
+			<div class="row">
+				<div class="col-md-12">
+					<div class="tile">
+						<table class="table table-bordered table-hover">
+							<tbody>
+							<tr>
+								<th>Name</th>
+								<td>{{ company.name }}</td>
+							</tr>
+							<tr>
+								<th>Address</th>
+								<td>{{ company.address }}</td>
+							</tr>
+							<tr>
+								<th>ZipCode</th>
+								<td>{{ company.zipCode }}</td>
+							</tr>
+							<tr>
+								<th>City</th>
+								<td>{{ company.city }}</td>
+							</tr>
+							<tr>
+								<th>Country</th>
+								<td>{{ company.Country }}</td>
+							</tr>
+							<tr>
+								<th>Email</th>
+								<td>{{ company.email }}</td>
+							</tr>
+							<tr>
+								<th>Tel</th>
+								<td>{{ company.tel }}</td>
+							</tr>
+							<tr>
+								<th>Token</th>
+								<td>{{ company.token }}</td>
+							</tr>
+							</tbody>
+						</table>
 
-			<a href="{{ path('company_edit', {'id': company.id}) }}">edit</a>
+						<a class="btn btn-outline-primary" href="{{ path('company_edit', {'id': company.id}) }}">edit</a>
+					</div>
+				</div>
+			</div>
 		{% endblock %}
 	{% endembed %}
 {% endblock %}

@@ -25,7 +25,7 @@ class ProjectType extends AbstractType
             ])
             ->add('save', SubmitType::class, [
                 'attr' => [
-                    'class' => 'button is-primary'
+                    'class' => 'btn btn-primary'
                 ]
             ]);
     }

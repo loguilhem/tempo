@@ -1,16 +1,18 @@
 {% extends 'layout/left-side-column.html.twig' %}
 
 {% block page %}
-    <header  class="page-header">
-        <div class="hero-body">
-            <div class="container">
-                {{ 'Add project'|trans }}
-            </div>
-        </div>
-    </header>
-    <section class="section">
-        <div class="container is-fluid">
-        {{ form(form) }}
-        </div>
-    </section>
+        {% embed "_page.html.twig" %}
+        {% block page_title %}
+                {{ 'Add/edit Project'|trans }}
+        {% endblock %}
+        {% block page_content %}
+                <div class="row">
+                        <div class="col-md-12">
+                                <div class="tile">
+                                        {{ form(form) }}
+                                </div>
+                        </div>
+                </div>
+        {% endblock %}
+        {% endembed %}
 {% endblock %}

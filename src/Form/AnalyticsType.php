@@ -67,7 +67,11 @@ class AnalyticsType extends AbstractType
                 'label' => 'No time limit',
                 'required' => false
             ])
-            ->add('calculate', SubmitType::class);
+            ->add('calculate', SubmitType::class, [
+                'attr' => [
+                    'class' => 'btn btn-primary'
+                ]
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

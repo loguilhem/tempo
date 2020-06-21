@@ -3,17 +3,16 @@
 {% block page %}
 	{% embed "_page.html.twig" %}
 		{% block page_title %}
-			{{ 'Add task'|trans }}
+			{{ 'Add/edit Task'|trans }}
 		{% endblock %}
-
 		{% block page_content %}
-			<section class="section">
-				<div class="container is-fluid">
-					{{ form_start(form) }}
-					{{ form_widget(form) }}
-					{{ form_end(form) }}
+			<div class="row">
+				<div class="col-md-12">
+					<div class="tile">
+						{{ form(form) }}
+					</div>
 				</div>
-			</section>
+			</div>
 		{% endblock %}
 	{% endembed %}
 {% endblock %}
