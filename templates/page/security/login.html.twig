@@ -22,7 +22,6 @@
 		</article>
 	{% endif %}
 	<section class="login-content">
-
 		<form method="post">
 			<div class="login-box">
 				<div class="form-header">
@@ -47,6 +46,8 @@
                             <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
                         </div>
                     </div>
+                </div>
+                <div class="form-footer">
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                     <div class="checkbox">
                         <label>
@@ -61,14 +62,14 @@
                             </button>
                         </div>
                     </div>
-                </div>
+				</div>
 			</div>
 		</form>
+        <div>
+            <a href="{{ path('app_ask_reset_password') }}">Forgotten password</a>
+        </div>
 	</section>
 
-	<div>
-		<a href="{{ path('app_ask_reset_password') }}">Forgotten password</a>
-	</div>
 {% endblock %}
 
 {% block stylesheets %}

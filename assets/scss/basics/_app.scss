@@ -19,7 +19,7 @@
 	// adding sidenav-toggled class will open sidebar
 	@media(max-width: 767px) {
 		overflow-x: hidden;
-		.app-sidebar { left: -$sidebar-width; }
+		.app-sidebar { left: - $sidebar-width; }
 		.app-sidebar__overlay { visibility: hidden; }
 		&.sidenav-toggled {
 			.app-content { margin-left: 0; }
@@ -30,8 +30,9 @@
 }
 
 .app-content {
-	min-height: calc(100vh - 50px);
-	margin-top: 48px;
+	position: relative;
+	min-height: calc(100vh - var(--header-height));
+	margin-top: var(--header-height);
 	padding: 30px;
 	background-color: $primary-color-light;
 	transition: margin-left 0.3s ease;
@@ -42,7 +43,7 @@
 	}
 	@media(min-width: 768px) { margin-left: $sidebar-width; }
 	@media(max-width: 767px) {
-		margin-top: 50px;
+		margin-top: var(--header-height);
 		min-width: 100%;
 	}
 	@media(max-width: 480px) { padding: 15px; }

@@ -1,6 +1,8 @@
 .hero {
-    margin: -30px -15px;
-    height: calc(100vh - 50px);
+    position: relative;
+    top: 0;
+    margin: -38px -15px;
+    height: calc(100vh - var(--header-height));
 
      > .row {
         height: 100%;
@@ -21,7 +23,7 @@
         color: $primary-color-dark;
         position: relative;
         max-width: 46rem;
-        top: calc(30vh - 50px );
+        top: calc(30vh - var(--header-height) );
         margin: 0 auto;
         padding: 0 3rem;
     }

@@ -56,3 +56,11 @@ $sidebar-dark-link-color: #fff;
 // and link hover color when using a light sidebar color
 $sidebar-light-color: #000;
 $sidebar-light-link-color: #333;
+
+// ------- Header --------
+
+$header-height: 3.5rem;
+
+:root {
+    --header-height: 3.5rem;
+}

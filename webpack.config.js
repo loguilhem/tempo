@@ -72,7 +72,7 @@ Encore
 
     // uncomment if you use Sass/SCSS files
     .enableSassLoader(
-        function (options) { },
+        () => {},
         { resolveUrlLoaderOptions: { removeCR: true } }
     )
 
