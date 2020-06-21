@@ -21,9 +21,6 @@
         "regenerator-runtime": "^0.13.2",
         "sass": "^1.26.3",
         "sass-loader": "^7.0",
-        "vue": "^2.6.11",
-        "vue-loader": "^15.9.2",
-        "vue-template-compiler": "^2.6.11",
         "vuetify": "^2.2.21",
         "webpack-notifier": "^1.6.0"
     },
