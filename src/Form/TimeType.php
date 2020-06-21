@@ -54,7 +54,11 @@ class TimeType extends AbstractType
                 'html5' => true,
                 'format' => 'dd-MM-yyyy HH:ss',
             ])
-            ->add('save', SubmitType::class);
+            ->add('save', SubmitType::class, [
+                'attr' => [
+                    'class' => 'btn btn-primary'
+                ]
+            ]);
     }
     
     /**

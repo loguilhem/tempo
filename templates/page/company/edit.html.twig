@@ -7,14 +7,16 @@
 		{% endblock %}
 
 		{% block page_content %}
-			<section class="section">
-				<div class="container is-fluid">
-					{{ form_start(form) }}
-					{{ form_widget(form) }}
-					<button class="btn">{{ button_label|default('Save') }}</button>
-					{{ form_end(form) }}
+			<div class="row">
+				<div class="col-md-12">
+					<div class="tile">
+						{{ form_start(form) }}
+						{{ form_widget(form) }}
+						<button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+						{{ form_end(form) }}
+					</div>
 				</div>
-			</section>
+			</div>
 		{% endblock %}
 	{% endembed %}
 {% endblock %}
