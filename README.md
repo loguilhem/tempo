@@ -11,19 +11,21 @@ Bootstrap 4
 PHP 7.4
 MySQL 5.7
 
-ROLES :
+ROLES
+--
 - ROLE_USER: record his own time, analytics of his own time
 - ROLE_ADMIN: + manage files, tasks, analytics of all ROLE_USER and his own analytics 
 - ROLE_SUPER_ADMIN : + manage roles of other users, analytics of all, manage firm account
 
-ENTITIES :
+ENTITIES
+--
 - USER : well, it is a user (see roles upthere)
 - COMPANY : a company is a group of users. A user user belong to only one company (for the moment). A company has only one super-admin (for the moment). A company has a "day perdiod" aka the length of a working day (use in analytics)
 - PROJECT : name of a project
 - TASK : can have multiple subtasks and one mother taks (subtasks and mother task are TASK)
 - TIME : it is startdate and endate for a project and task and user
 
-
-
-
-
+HOW TO ENABLE THE RESET PASSWORD FUNCTION
+--
+1. You have to modify the line 28 of the .env file to inform your mail serveur
+2. You can change the sender email line 18 in SecurityController.php

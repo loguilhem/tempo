@@ -59,9 +59,9 @@ class SecurityController extends AbstractController
         /** @var User $user */
         $user = $entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
 
-        if ($email === null) {
+        if ($user === null) {
             $this->addFlash('error', 'Email unknown');
-            return $this->redirectToRoute('admin');
+            return $this->redirectToRoute('index');
         }
         $token = $tokenGenerator->generateToken();
 
@@ -70,7 +70,7 @@ class SecurityController extends AbstractController
             $entityManager->flush();
         } catch (\Exception $e) {
             $this->addFlash('warning', $e->getMessage());
-            return $this->redirectToRoute('admin');
+            return $this->redirectToRoute('index');
         }
 
         $url = $this->generateUrl('app_reset_password', [
@@ -78,7 +78,7 @@ class SecurityController extends AbstractController
         ], UrlGeneratorInterface::ABSOLUTE_URL);
 
         $message = (new \Swift_Message('Forgot Password'))
-            ->setFrom('siteweb@alteragile.com')
+            ->setFrom('noreply@yourmailhost.com')
             ->setTo($user->getEmail())
             ->setBody("use link below to reset password : " .
                 $url, 'text/html');
@@ -97,11 +97,11 @@ class SecurityController extends AbstractController
         if ($request->isMethod('POST')) {
             /** @var User $user */
             $user = $entityManager->getRepository(User::class)->findOneBy([
-                'resetToken' => $token
+                'confirmationToken' => $token
             ]);
             if ($user === null) {
                 $this->addFlash('error', 'unknown token');
-                return $this->redirectToRoute('admin');
+                return $this->redirectToRoute('index');
             }
 
             $user->setConfirmationToken(null);
