@@ -10,18 +10,13 @@
 			<div id="registration_accountType" class="input-group input-account-types">
 				{% for accountType in registrationForm.accountType %}
 
-					<div 
-						class="input-control"
-						tabindex="0"
-						data-toggle="tooltip"
-						title="
-							{% if accountType.vars.value == 'ROLE_SUPER_ADMIN' %}
-								I will manage the team leaders and team members
-							{% elseif accountType.vars.value == 'ROLE_USER' %}
-								I am a team leader or a team member of an existing company
-							{% endif %}
-							"
-						>
+					<div class="input-control" tabindex="0" data-toggle="tooltip" title="
+														{% if accountType.vars.value == 'ROLE_SUPER_ADMIN' %}
+															I will manage the team leaders and team members
+														{% elseif accountType.vars.value == 'ROLE_USER' %}
+															I am a team leader or a team member of an existing company
+														{% endif %}
+														">
 						{{ form_widget(accountType)}}
 						{{ form_label(accountType)}}
 					</div>
@@ -110,7 +105,13 @@
 				</div>
 			</div>
 			{{ form_end(registrationForm) }}
-	</section>
-</div>{% endblock %}{% block javascripts_footer %}
-{{ parent() }}
-{{ encore_entry_script_tags('register-form') }}{% endblock %}
+		</section>
+	</div>
+{% endblock %}
+{% block footer %}
+	{{ parent() }}
+	{% block javascripts_footer %}
+		{{ encore_entry_script_tags('register-form') }}
+	{% endblock %}
+{% endblock %}
+

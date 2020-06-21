@@ -1,18 +1,26 @@
 <ul class="app-nav">
-    {% if is_granted('ROLE_USER') %}
-	<li class="dropdown">
-		<a class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Open Profile Menu" aria-expanded="false">
-			<span class="material-icons">
-				more_vert
-			</span>
-		</a>
-		<ul class="dropdown-menu settings-menu dropdown-menu-right" x-placement="bottom-end">
-				<a class="dropdown-item" href="{{ path('app_logout') }}">
-					<i class="fa fa-sign-out fa-lg"></i>
-					Logout
-                    </a>
-			</li>
-		</ul>
-	</li>
-    {% endif %}
+	{% if is_granted('ROLE_USER') %}
+		<li class="dropdown">
+			<a 	class="app-nav__item"
+				href="#"
+				data-toggle="dropdown" 
+				aria-label="Open Profile Menu"
+				aria-expanded="false"
+				>
+				<span class="material-icons">
+					more_vert
+				</span>
+			</a>
+			<ul class="dropdown-menu settings-menu dropdown-menu-right"
+				x-placement="bottom-end"
+				>
+				<li>
+					<a class="dropdown-item" href="{{ path('app_logout') }}">
+						<i class="fa fa-sign-out fa-lg"></i>
+						Logout
+					</a>
+				</li>
+			</ul>
+		</li>
+	{% endif %}
 </ul>

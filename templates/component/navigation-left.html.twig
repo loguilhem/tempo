@@ -15,18 +15,18 @@
 		</div>
 
 		<ul class="app-menu">
-            {% if is_granted('ROLE_SUPER_ADMIN') %}
-                <li>
-                    <a class="app-menu__item" href="{{ path('company_show') }}">
-                        <span class="app-menu__label">{{ 'Company Management'|trans }}</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="app-menu__item" href="{{ path('user_list') }}">
-                        <span class="app-menu__label">{{ 'User Management'|trans }}</span>
-                    </a>
-                </li>
-            {% endif %}
+			{% if is_granted('ROLE_SUPER_ADMIN') %}
+				<li>
+					<a class="app-menu__item" href="{{ path('company_show') }}">
+						<span class="app-menu__label">{{ 'Company Management'|trans }}</span>
+					</a>
+				</li>
+				<li>
+					<a class="app-menu__item" href="{{ path('user_list') }}">
+						<span class="app-menu__label">{{ 'User Management'|trans }}</span>
+					</a>
+				</li>
+			{% endif %}
 			<li>
 				<a class="app-menu__item" href="{{ path('list_projects') }}">
 					<span class="app-menu__label">{{ 'Projects Management'|trans }}</span>
@@ -48,6 +48,7 @@
 				</a>
 			</li>
 		</ul>
+
 		<div class="app-sidebar-footer">
 			<div class="app-version"></div>
 			<div class="app-version-markdown"></div>

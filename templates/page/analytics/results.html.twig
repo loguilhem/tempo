@@ -1,14 +1,12 @@
 {% extends 'layout/left-side-column.html.twig' %}
 
 {% block page %}
-    <header  class="hero is-primary">
-        <div class="hero-body">
-            <div class="container">
-                <h1>{{ 'Results'|trans }}</h1>
-            </div>
-        </div>
-    </header>
+	{% embed "_page.html.twig" %}
+		{% block page_title %}
+			{{ 'Results'|trans }}
+		{% endblock %}
 
+		{% block page_content %}
     <section class="section">
         <div class="container is-fluid">
             <div class="row" id="projects" data-projects="{{ projects|json_encode }}">
@@ -223,9 +221,15 @@
             <hr>
         </div>
     </section>
+		{% endblock %}
+	{% endembed %}
 {% endblock %}
 
-{% block javascripts %}
+
+
+{% block footer %}
     {{ parent() }}
-    {{ encore_entry_script_tags('analytics-results') }}
+	{% block javascripts_footer %}
+		{{ encore_entry_script_tags('analytics-results') }}
+	{% endblock %}
 {% endblock %}
