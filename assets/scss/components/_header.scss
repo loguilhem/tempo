@@ -11,7 +11,7 @@
 	z-index: 1030;
 	padding-right: 15px;
 	@media(min-width: 768px) {
-		min-height: 3.5rem;
+		height: $header-height;
 		padding-right: 0 
 	}
 	@media print { display: none; }
