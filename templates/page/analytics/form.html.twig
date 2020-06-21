@@ -57,7 +57,10 @@
 	{% endembed %}
 {% endblock %}
 
-{% block javascripts %}
+{% block footer %}
 	{{ parent() }}
-	{{ encore_entry_script_tags('analytics-form') }}
+	{% block javascripts_footer %}
+		{{ encore_entry_script_tags('analytics-form') }}
+	{% endblock %}
 {% endblock %}
+
