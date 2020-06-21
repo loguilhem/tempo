@@ -21,46 +21,4 @@ class MainController extends AbstractController
         else
             return $this->render('page/index.html.twig');
     }
-    
-    /**
-     * @Route(path="/recap", name="recap", methods={"GET", "POST"})
-     * @Security("has_role('ROLE_SUPER_ADMIN')")
-     */
-    public function Recap(Request $request, EntityManagerInterface $entityManager)
-    {
-        /* there are 2 filters available, each one is a form: recap1Type, recap2Type */
-        $repoTemps = $entityManager->getRepository(Time::class);
-
-        $form1 = $this->createForm(Calc1Type::class);
-        $form1->handleRequest($request);
-
-
-        /* TODO: split forms handle in other functions */
-
-        /*filter 1 : show total Tempspassé for a Project, a Exercice and for each Task */
-        if ($form1->isSubmitted() && $form1->isValid()) {
-            $data = $form1->getData();
-            $idDossier = $data["dossier"]->getId();
-            $dossier = $data["dossier"];
-            $exercice = $data["exercice"];
-            $dateDebut = $data["date_debut"];
-            $dateFin = $data["date_fin"];
-            $forever = $data["forever"];
-
-            $results = $repoTemps->getSumByDossierExercice($idDossier, $exercice, $dateDebut, $dateFin, $forever);
-
-            $details = $repoTemps->getByDossierExercice($idDossier, $exercice, $dateDebut, $dateFin, $forever);
-
-           return $this->render('page/results.html.twig',
-               array('dossier' => $dossier, 'exercice' => $exercice,
-                   'dateDebut' => $dateDebut, 'dateFin' => $dateFin,
-                   'results' => $results, 'details' => $details
-               ));
-        } else {
-            return $this->render('page/recap.html.twig', [
-                'form1' => $form1->createView(),
-            ]);
-        }
-    }
-    
 }
