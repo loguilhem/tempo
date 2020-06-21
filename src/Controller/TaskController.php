@@ -29,7 +29,7 @@ class TaskController extends AbstractController
      */
     public function listTasks(EntityManagerInterface $entityManager, Request $request)
     {
-        return $this->render('task/list.html.twig', [
+        return $this->render('page/task/list.html.twig', [
             'tasks' => $entityManager->getRepository(Task::class)->findBy([
                 'company' => $this->getUser()->getCompany()
             ]),
@@ -65,7 +65,7 @@ class TaskController extends AbstractController
             return $this->redirectToRoute('list_tasks');
         }
 
-        return $this->render('task/form.html.twig', [
+        return $this->render('page/task/form.html.twig', [
             'form' => $form->createView()
         ]);
     }
@@ -97,7 +97,7 @@ class TaskController extends AbstractController
             return $this->redirectToRoute('list_tasks');
         }
         
-        return $this->render('task/form.html.twig', array('form' => $form->createView()));
+        return $this->render('page/task/form.html.twig', array('form' => $form->createView()));
     }
     
 

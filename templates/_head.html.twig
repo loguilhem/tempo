@@ -1,0 +1,28 @@
+{% block head_charset %}
+	<meta charset="UTF-8"/>
+{% endblock %}
+
+{% block head_seo %}
+  <title>
+    {% block head_seo_title %}Temporella{% endblock %}
+  </title>
+  <meta name="description" content="{% block head_seo_description %}{% endblock %}">
+  <meta name="keywords" content="{% block head_seo_keywords %}{% endblock %}">
+{% endblock %}
+
+{% block head_viewport %}
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+{% endblock %}
+
+{% block head_icons %}
+	<link rel="icon" type="image/vnd.microsoft.icon" href="{{ asset('/image/favicon.ico') }}">
+	<link rel="shortcut icon" type="image/x-icon" href="{{ asset('/image/favicon.ico') }}">
+{% endblock %}
+
+{% block stylesheets %}
+	{{ encore_entry_link_tags('app') }}
+{% endblock %}
+
+{% block scripts %}{% endblock %}
+
+{% block head_extrat %}{% endblock %}

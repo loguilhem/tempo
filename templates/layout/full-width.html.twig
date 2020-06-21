@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block layout %}
+	<header class="app-header">
+		{% block header %}
+			{% include '_header.html.twig' %}
+		{% endblock %}
+	</header>
+	<main class="app-content content-fluid">
+		{% block notification %}
+			{% include 'component/notification.html.twig' %}
+		{% endblock %}
+		{% block page %}{% endblock %}
+	</main>
+	<footer id="app-footer">
+		{% block footer %}
+			{% include '_footer.html.twig' %}
+		{% endblock %}
+	</footer>
+{% endblock %}

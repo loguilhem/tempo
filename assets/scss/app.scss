@@ -1,0 +1,67 @@
+/*!
+ * Temporella
+ * ================================*/
+
+// TOOLS
+//---------------------------------------------------
+// This files are essential for the theme
+
+@import 'tools/fonts';
+@import 'tools/vars';
+@import 'tools/mixins';
+@import 'tools/helpers';
+
+// VENDORS
+//---------------------------------------------------
+@import 'vendors/customize-bootstrap';
+@import 'vendors/bootstrap-source/bootstrap';
+@import 'vendors/dataTables.bootstrap';
+@import 'vendors/bootstrap-datepicker';
+@import 'vendors/sweetalert';
+@import 'vendors/notify';
+@import 'vendors/pace';
+@import 'vendors/jqvmap';
+@import 'vendors/fullcalendar';
+@import 'vendors/dropzone-basic';
+@import 'vendors/dropzone';
+
+// BASICS
+//---------------------------------------------------
+// This styles are essential for theme
+@import 'basics/theme';
+@import 'basics/app';
+
+// COMPONENTS
+//---------------------------------------------------
+@import 'components/header';
+@import 'components/sidebar';
+@import 'components/sidebar-mini';
+@import 'components/form';
+@import 'components/footer';
+@import 'components/hero';
+
+// This styles are optional based on your preferance
+@import 'components/dropdown';
+@import 'components/button';
+@import 'components/app-title';
+@import 'components/tile';
+@import 'components/custom-radio-n-checkbox';
+@import 'components/toggle-button';
+@import 'components/material-half-bg';
+@import 'components/material-loader';
+@import 'components/button-spinner';
+@import 'components/widgets';
+@import 'components/chat';
+@import 'components/input';
+
+// PAGESS
+//---------------------------------------------------
+
+// This styles are optional based on your preferance
+@import 'pages/landing-page';
+@import 'pages/docs';
+@import 'pages/login-material';
+@import 'pages/lockscreen-material';
+@import 'pages/error-page';
+@import 'pages/mailbox';
+@import 'pages/user-profile';

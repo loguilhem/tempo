@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block layout %}
+    <header class="app-header">
+        {% block header %}
+            {% include '_header.html.twig' %}
+        {% endblock %}
+    </header>
+    <main class="app-content">
+        {% block notification %}
+            {% include 'component/notification.html.twig' %}
+        {% endblock %}
+        {% block navigation_left %}
+            {% include 'component/navigation-left.html.twig' %}
+        {% endblock %}
+        {% block page %}
+            {% include '_page.html.twig' %}
+        {% endblock %}
+    </main>
+    <footer id="app-footer">
+        {% block footer %}
+            {% include '_footer.html.twig' %}
+        {% endblock %}
+    </footer>
+{% endblock %}

@@ -28,7 +28,7 @@ class SecurityController extends AbstractController
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        return $this->render('security/login.html.twig', [
+        return $this->render('page/security/login.html.twig', [
             'last_username' => $authenticationUtils->getLastUsername(),
             'error' => $authenticationUtils->getLastAuthenticationError()
         ]);
@@ -47,7 +47,7 @@ class SecurityController extends AbstractController
      */
     public function askResetPassword()
     {
-        return $this->render('security/ask_reset_password.html.twig');
+        return $this->render('page/security/ask_reset_password.html.twig');
     }
 
     /**
@@ -113,7 +113,7 @@ class SecurityController extends AbstractController
             return $this->redirectToRoute('index');
         }
 
-        return $this->render('security/reset_password.html.twig', [
+        return $this->render('page/security/reset_password.html.twig', [
             'token' => $token
         ]);
     }
@@ -163,7 +163,7 @@ class SecurityController extends AbstractController
                 if (!$tokenField->getData()) {
                     $tokenField->addError(new FormError('Token cannot be blank'));
 
-                    return $this->render('security/register.html.twig', [
+                    return $this->render('page/security/register.html.twig', [
                         'registrationForm' => $form->createView(),
                         'error' => $authenticationUtils->getLastAuthenticationError(),
                         'last_username' => $authenticationUtils->getLastUsername()
@@ -177,7 +177,7 @@ class SecurityController extends AbstractController
                 if (!$company) {
                     $tokenField->addError(new FormError('Token not available'));
 
-                    return $this->render('security/register.html.twig', [
+                    return $this->render('page/security/register.html.twig', [
                         'registrationForm' => $form->createView(),
                         'error' => $authenticationUtils->getLastAuthenticationError(),
                         'last_username' => $authenticationUtils->getLastUsername()
@@ -197,7 +197,7 @@ class SecurityController extends AbstractController
             );
         }
 
-        return $this->render('security/register.html.twig', [
+        return $this->render('page/security/register.html.twig', [
             'registrationForm' => $form->createView(),
             'error' => $authenticationUtils->getLastAuthenticationError(),
             'last_username' => $authenticationUtils->getLastUsername()

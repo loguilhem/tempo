@@ -46,8 +46,8 @@ class RegistrationType extends AbstractType
                 'label' => 'Account type',
                 'required' => true,
                 'choices' => [
-                    'I run a company, i will manage the team leaders and team members' => User::ROLE_SUPER_ADMIN,
-                    'I am a team leader or a team member of an existing company' => User::ROLE_USER
+                    'Manager' => User::ROLE_SUPER_ADMIN,
+                    'Leader or Member' => User::ROLE_USER
                 ],
                 'multiple' => false,
                 'expanded' => true

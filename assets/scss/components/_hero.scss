@@ -1,0 +1,30 @@
+.hero {
+    position: relative;
+    top: 0;
+    margin: -38px -15px;
+    height: calc(100vh - var(--header-height));
+
+     > .row {
+        height: 100%;
+    }
+
+    .row .col:first-child {
+        background-image: url('/build/images/bg-index.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+    }
+    
+    .row .col:last-child {
+        background-color: white;
+    }
+
+    .content-text {
+        color: $primary-color-dark;
+        position: relative;
+        max-width: 46rem;
+        top: calc(30vh - var(--header-height) );
+        margin: 0 auto;
+        padding: 0 3rem;
+    }
+}

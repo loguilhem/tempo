@@ -17,28 +17,75 @@ class CompanyType extends AbstractType
     {
         $builder
             ->add('name', TextType::class, [
-                'required' => true
+                'required' => true,
+                'label_attr' => [
+                    'class' => 'control-label'  
+                ],
+                'attr' => [
+                    'class' => 'form-control'
+                ]
             ])
             ->add('address', TextType::class, [
-                'required' => true
+                'required' => true,
+                'label_attr' => [
+                    'class' => 'control-label'  
+                ],
+                'attr' => [
+                    'class' => 'form-control'
+                ]
             ])
             ->add('zipCode', NumberType::class, [
-                'required' => true
+                'required' => true,
+                'label_attr' => [
+                    'class' => 'control-label'  
+                ],
+                'attr' => [
+                    'class' => 'form-control'
+                ]
             ])
             ->add('city', TextType::class, [
-                'required' => true
+                'required' => true,
+                'label_attr' => [
+                    'class' => 'control-label'  
+                ],
+                'attr' => [
+                    'class' => 'form-control'
+                ]
             ])
             ->add('Country', TextType::class, [
-                'required' => true
+                'required' => true,
+                'label_attr' => [
+                    'class' => 'control-label'  
+                ],
+                'attr' => [
+                    'class' => 'form-control'
+                ]
             ])
             ->add('email', EmailType::class, [
-
+                'label_attr' => [
+                    'class' => 'control-label'  
+                ],
+                'attr' => [
+                    'class' => 'form-control'
+                ]
             ])
             ->add('tel', TelType::class, [
-                'required' => false
+                'required' => false,
+                'label_attr' => [
+                    'class' => 'control-label'  
+                ],
+                'attr' => [
+                    'class' => 'form-control'
+                ]
             ])
             ->add('token', TextType::class, [
-                'required' => false
+                'required' => false,
+                'label_attr' => [
+                    'class' => 'control-label'  
+                ],
+                'attr' => [
+                    'class' => 'form-control'
+                ]
             ])
         ;
     }

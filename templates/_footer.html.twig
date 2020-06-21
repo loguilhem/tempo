@@ -1,0 +1,14 @@
+
+<div class="footer-content">
+	{% block footer_content %}{% endblock %}
+</div>
+
+<div class="footer-copyright">
+	{% block footer_copyright %}
+		<p class="content-text">Open Source Time tracker</p>
+	{% endblock %}
+</div>
+
+{% block javascripts_footer %}
+	{{ encore_entry_script_tags('app') }}
+{% endblock %}

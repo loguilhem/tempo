@@ -39,7 +39,7 @@ class TimeController extends AbstractController
             ]);
         }
 
-        return $this->render('time/list.html.twig', [
+        return $this->render('page/time/list.html.twig', [
             'times' => $times,
             'timeToDelete' => $request->request->get('timeToDelete')
         ]);
@@ -76,7 +76,7 @@ class TimeController extends AbstractController
             return $this->redirectToRoute('list_times');
         }
 
-        return $this->render('time/form.html.twig', [
+        return $this->render('page/time/form.html.twig', [
             'form' => $form->createView()
         ]);
     }
@@ -114,7 +114,7 @@ class TimeController extends AbstractController
             return $this->redirectToRoute('list_times');
         }
 
-        return $this->render('time/form.html.twig', [
+        return $this->render('page/time/form.html.twig', [
             'form' => $form->createView()
         ]);
     }

@@ -17,7 +17,14 @@ class CompanyKeyType extends AbstractType
     {
         $builder
             ->add('token', TextType::class, [
+                'required' => true,
                 'label' => 'Activation token',
+                'label_attr' => [
+                    'class' => 'control-label'  
+                ],
+                'attr' => [
+                    'class' => 'form-control'
+                ]
             ]);
     }
     

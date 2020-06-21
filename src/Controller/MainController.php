@@ -16,7 +16,10 @@ class MainController extends AbstractController
      */
     public function index()
     {
-        return $this->render('index.html.twig');
+        if($this->isGranted('ROLE_USER'))
+            return $this->render('page/dashboard.html.twig');
+        else
+            return $this->render('page/index.html.twig');
     }
     
     /**
@@ -48,13 +51,13 @@ class MainController extends AbstractController
 
             $details = $repoTemps->getByDossierExercice($idDossier, $exercice, $dateDebut, $dateFin, $forever);
 
-           return $this->render('results.html.twig',
+           return $this->render('page/results.html.twig',
                array('dossier' => $dossier, 'exercice' => $exercice,
                    'dateDebut' => $dateDebut, 'dateFin' => $dateFin,
                    'results' => $results, 'details' => $details
                ));
         } else {
-            return $this->render('recap.html.twig', [
+            return $this->render('page/recap.html.twig', [
                 'form1' => $form1->createView(),
             ]);
         }

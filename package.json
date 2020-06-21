@@ -1,13 +1,40 @@
 {
-  "devDependencies": {
-    "@symfony/webpack-encore": "^0.28.2",
-    "bootstrap": "^4.4.1",
-    "jquery": "^3.5.0",
-    "node-sass": "^4.13.0",
-    "popper.js": "^1.16.1",
-    "sass-loader": "^7.0.1"
-  },
-  "dependencies": {
-    "chart.js": "^2.9.3"
-  }
+    "devDependencies": {
+        "@symfony/webpack-encore": "^0.28.2",
+        "axios": "^0.19.2",
+        "babel-eslint": "^10.1.0",
+        "bootstrap": "^4.5.0",
+        "chart.js": "^2.9.3",
+        "core-js": "^3.0.0",
+        "deepmerge": "^4.2.2",
+        "eslint": "^6.8.0",
+        "eslint-loader": "^3.0.3",
+        "fibers": "^4.0.2",
+        "jquery": "^3.5.0",
+        "material-icons": "^0.3.1",
+        "node-sass": "^4.13.1",
+        "popper.js": "^1.16.1",
+        "regenerator-runtime": "^0.13.2",
+        "sass": "^1.26.3",
+        "sass-loader": "^7.0",
+        "webpack-notifier": "^1.6.0"
+    },
+    "license": "MIT",
+    "private": true,
+    "scripts": {
+        "dev-server": "encore dev-server",
+        "dev": "encore dev",
+        "watch": "encore dev --watch",
+        "build": "encore production --progress",
+        "csfix": "eslint assets/vue --ext .js,.vue, --fix"
+    },
+    "browserslist": [
+        "> 1%",
+        "last 2 versions",
+        "Firefox ESR",
+        "not dead"
+    ],
+    "dependencies": {
+        "resolve-url-loader": "^3.1.1"
+    }
 }

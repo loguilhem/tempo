@@ -58,7 +58,9 @@ class AccountTypeListener implements EventSubscriberInterface
         if(in_array('ROLE_SUPER_ADMIN', $roles))
         {
             $form
-                ->add('Company', CompanyType::class);
+                ->add('Company', CompanyType::class, [
+                    'label' => false
+                ]);
         }
 
         if(in_array('ROLE_USER', $roles)) 
@@ -66,6 +68,7 @@ class AccountTypeListener implements EventSubscriberInterface
             $form
                 ->add('token', CompanyKeyType::class, [
                     'mapped' => false,
+                    'label' => false
                 ]);
         }
     }

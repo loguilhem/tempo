@@ -1,0 +1,16 @@
+{% extends 'layout/left-side-column.html.twig' %}
+
+{% block page %}
+    <header  class="page-header">
+        <div class="hero-body">
+            <div class="container">
+                {{ 'Add project'|trans }}
+            </div>
+        </div>
+    </header>
+    <section class="section">
+        <div class="container is-fluid">
+        {{ form(form) }}
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends 'layout/left-side-column.html.twig' %}
+
+{% block page %}
+	{% embed "_page.html.twig" %}
+		{% block page_title %}
+			{{ 'Tous mes temps'|trans }}
+		{% endblock %}
+
+		{% block page_content %}
+			<section class="section">
+				<div class="container is-fluid">
+					<table id="" cellspacing="0" width="100%" class="display list_table">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Date</th>
+								<th>Exercice</th>
+								<th>Dossier</th>
+								<th>Tâche</th>
+								<th>Collaborateur</th>
+								<th>Temps passé</th>
+								<th>Modifier</th>
+								<th>Supprimer</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for Temps in listTemps %}
+								<tr>
+									<td>{{ Temps.id }}</td>
+									<td>{{ Temps.date|date('d/m/Y') }}</td>
+									<td>{{ Temps.exercice }}</td>
+									<td>
+										{% if Temps.dossier != null %}
+											{{ Temps.dossier.numero }}
+											-
+											{{ Temps.dossier.nom }}
+										{% else %}
+											Dossier inexistant
+										{% endif %}
+									</td>
+									<td>
+										{% if Temps.tache != null %}
+											{{ Temps.tache.numero }}
+											-
+											{{ Temps.tache.intitule }}
+										{% else %}
+											Tâche inexistante
+										{% endif %}
+									</td>
+									<td>
+										{% if Temps.collaborateur != null %}
+											{{ Temps.collaborateur.username }}
+										{% else %}
+											Collaborateur inexistant
+										{% endif %}
+									</td>
+									<td>{{ Temps.tempspasse }}</td>
+									<td>
+										<a href="{{ path('modtemps', {'id':Temps.id}) }}">Modifier</a>
+									</td>
+									<td>
+										<a class="confirmation" href="{{ path('deltemps', {'id':Temps.id}) }}">Supprimer</a>
+									</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+					</table>
+				</div>
+			</section>
+		{% endblock %}
+	{% endembed %}
+{% endblock %}

@@ -1,0 +1,57 @@
+{% block navigation_left %}
+	<div class="app-sidebar__overlay" data-toggle="sidebar"></div>
+	<aside class="app-sidebar">
+
+		<div class="app-sidebar__user">
+			{% if app.user.avatar is defined %}
+				<img class="app-sidebar__user-avatar" src="{{app.user.avatar}}" alt="User Image"/>
+			{% else %}
+				<img class="app-sidebar__user-avatar" src="{{ asset('build/images/no-avatar.png') }}" alt="User Image"/>
+			{% endif %}
+			<div>
+				<p class="app-sidebar__user-name">{{ app.user.username }}</p>
+				<p class="app-sidebar__user-designation">{{ app.user.roles[0] }}</p>
+			</div>
+		</div>
+
+		<ul class="app-menu">
+			{% if is_granted('ROLE_SUPER_ADMIN') %}
+				<li>
+					<a class="app-menu__item" href="{{ path('company_show') }}">
+						<span class="app-menu__label">{{ 'Company Management'|trans }}</span>
+					</a>
+				</li>
+				<li>
+					<a class="app-menu__item" href="{{ path('user_list') }}">
+						<span class="app-menu__label">{{ 'User Management'|trans }}</span>
+					</a>
+				</li>
+			{% endif %}
+			<li>
+				<a class="app-menu__item" href="{{ path('list_projects') }}">
+					<span class="app-menu__label">{{ 'Projects Management'|trans }}</span>
+				</a>
+			</li>
+			<li>
+				<a class="app-menu__item" href="{{ path('list_tasks') }}">
+					<span class="app-menu__label">{{ 'Tasks Management'|trans }}</span>
+				</a>
+			</li>
+			<li>
+				<a class="app-menu__item" href="{{ path('list_times') }}">
+					<span class="app-menu__label">{{ 'Times Management'|trans }}</span>
+				</a>
+			</li>
+			<li>
+				<a class="app-menu__item" href="{{ path('analytics') }}">
+					<span class="app-menu__label">{{ 'Analytics'|trans }}</span>
+				</a>
+			</li>
+		</ul>
+
+		<div class="app-sidebar-footer">
+			<div class="app-version"></div>
+			<div class="app-version-markdown"></div>
+		</div>
+	</aside>
+{% endblock %}
