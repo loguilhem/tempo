@@ -26,7 +26,7 @@
 
     <section class="section">
         <div class="container is-fluid">
-            <a class="button is-primary" href="{{ path('add_time') }}">New Time</a>
+            <a class="btn btn-primary" href="{{ path('add_time') }}">New Time</a>
 
             <table class="table is-hoverable is-striped is-fullwidth">
                 <thead>
@@ -56,13 +56,13 @@
                         <td></td>
                         <td>
                         {% if time.user == app.user %}
-                            <a class="button is-primary" href="{{ path('edit_time', {'id':time.id}) }}">Edit</a>
+                            <a class="btn btn-info" href="{{ path('edit_time', {'id':time.id}) }}">Edit</a>
                         {% endif %}
                         </td>
                         <td>
                             <form action="{{ path('list_times') }}" method="post">
                                 <input type="hidden" value="{{ time.id }}" name="timeToDelete">
-                                <button class="button is-warning" type="submit">Delete</button>
+                                <button class="btn btn-danger" type="submit">Delete</button>
                             </form>
                         </td>
                     </tr>

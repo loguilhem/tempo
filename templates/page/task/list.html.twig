@@ -23,7 +23,7 @@
 
 			<section class="section">
 				<div class="container is-fluid">
-					<a class="button is-primary" href="{{ path('add_task') }}">New Task</a>
+					<a class="btn btn-primary" href="{{ path('add_task') }}">New Task</a>
 
 					<table class="table is-hoverable is-striped is-fullwidth">
 						<thead>
@@ -50,12 +50,12 @@
 										{% endif %}
 									</td>
 									<td>
-										<a class="button is-primary" href="{{ path('edit_task', {'id':task.id}) }}">Edit</a>
+										<a class="btn btn-info" href="{{ path('edit_task', {'id':task.id}) }}">Edit</a>
 									</td>
 									<td>
 										<form action="{{ path('list_tasks') }}" method="post">
 											<input type="hidden" value="{{ task.id }}" name="taskToDelete">
-											<button class="button is-warning" type="submit">Delete</button>
+											<button class="btn btn-danger" type="submit">Delete</button>
 										</form>
 									</td>
 								</tr>

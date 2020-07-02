@@ -28,7 +28,7 @@
 
 			<section class="section">
 				<div class="container is-fluid">
-					<a class="button is-primary" href="{{ path('addproject') }}">New project</a>
+					<a class="button btn btn-primary" href="{{ path('addproject') }}">New project</a>
 
 					<table class="table is-hoverable is-striped is-fullwidth">
 						<thead>
@@ -45,12 +45,12 @@
 									<td>{{ project.name }}</td>
 									<td>{{ project.description }}</td>
 									<td>
-										<a class="button is-primary" href="{{ path('edit_project', {'id': project.id}) }}">{{ 'Edit'|trans }}</a>
+										<a class="btn btn-info" href="{{ path('edit_project', {'id': project.id}) }}">{{ 'Edit'|trans }}</a>
 									</td>
 									<td>
 										<form action="{{ path('list_projects') }}" method="POST">
 											<input type="hidden" value="{{ project.id }}" name="projectToDelete">
-											<button class="button is-warning" type="submit">Delete</button>
+											<button class="btn btn-danger" type="submit">Delete</button>
 										</form>
 									</td>
 								</tr>

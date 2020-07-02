@@ -10,45 +10,52 @@
 			<section class="section">
 				<div class="container is-fluid">
 					{{ form_start(form) }}
-					<div class="field">
-						<label class="label">{{ form_label(form.project) }}</label>
-						<div class="control">
-							{{ form_widget(form.project) }}
+					<div class="row">
+						<div class="col-md-2 field">
+							<label class="label">{{ form_label(form.project) }}</label>
+							<div class="control">
+								{{ form_widget(form.project, {'attr': {'class': 'form-control' }}) }}
+							</div>
+						</div>
+						<div class="col-md-2 field">
+							<label class="label">{{ form_label(form.task) }}</label>
+							<div class="control">
+								{{ form_widget(form.task, {'attr': {'class': 'form-control' }}) }}
+							</div>
+						</div>
+						<div class="col-md-2 field">
+							<label class="label">{{ form_label(form.user) }}</label>
+							<div class="control">
+								{{ form_widget(form.user, {'attr': {'class': 'form-control' }}) }}
+							</div>
+						</div>
+						<div class="col-md-2 field">
+							<label class="label">{{ form_label(form.startTime) }}</label>
+							<div class="control">
+								{{ form_widget(form.startTime, {'attr': {'class': 'form-control' }}) }}
+							</div>
+						</div>
+						<div class="col-md-2 field">
+							<label class="label">{{ form_label(form.endTime) }}</label>
+							<div class="control">
+								{{ form_widget(form.endTime, {'attr': {'class': 'form-control' }}) }}
+							</div>
+						</div>
+						<div class="col-md-2 field">
+							<label class="label">{{ form_label(form.forever) }}</label>
+							<div class="control">
+								{{ form_widget(form.forever, {'attr': {'class': 'form-control' }}) }}
+							</div>
 						</div>
 					</div>
-					<div class="field">
-						<label class="label">{{ form_label(form.task) }}</label>
-						<div class="control">
-							{{ form_widget(form.task) }}
+					<div class="row mt-5">
+						<div class="col-md-12 text-center">
+							<div class="control">
+								{{ form_widget(form.calculate, {'attr': {'class': 'btn btn-primary' }}) }}
+							</div>
 						</div>
 					</div>
-					<div class="field">
-						<label class="label">{{ form_label(form.user) }}</label>
-						<div class="control">
-							{{ form_widget(form.user) }}
-						</div>
-					</div>
-					<div class="field">
-						<label class="label">{{ form_label(form.startTime) }}</label>
-						<div class="control">
-							{{ form_widget(form.startTime) }}
-						</div>
-					</div>
-					<div class="field">
-						<label class="label">{{ form_label(form.endTime) }}</label>
-						<div class="control">
-							{{ form_widget(form.endTime) }}
-						</div>
-					</div>
-					<div class="field">
-						<label class="label">{{ form_label(form.forever) }}</label>
-						<div class="control">
-							{{ form_widget(form.forever) }}
-						</div>
-					</div>
-					<div class="control">
-						{{ form_widget(form.calculate, {'attr': {'class': 'button is-primary' }}) }}
-					</div>
+					
 					{{ form_errors(form) }}
 					{{ form_end(form) }}
 				</div>
