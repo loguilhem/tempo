@@ -26,7 +26,6 @@ class AnalyticsType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        /** TODO: afficher le champ utilisateur que pour le ROLE_ADMIN ou ROLE_SUPER_ADMIN */
         $builder
             ->add('project', ChoiceType::class, [
                 'choices' => $options['projects'],
