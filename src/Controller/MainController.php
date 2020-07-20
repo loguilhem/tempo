@@ -16,9 +16,10 @@ class MainController extends AbstractController
      */
     public function index()
     {
-        if($this->isGranted('ROLE_USER'))
+        if ($this->isGranted('ROLE_USER')) {
             return $this->render('page/dashboard.html.twig');
-        else
+        } else {
             return $this->render('page/index.html.twig');
+        }
     }
 }

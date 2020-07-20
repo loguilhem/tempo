@@ -59,10 +59,12 @@
                                         {% endif %}
                                     </td>
                                     <td>
+                                        {% if time.user == app.user %}
                                         <form action="{{ path('list_times') }}" method="post">
                                             <input type="hidden" value="{{ time.id }}" name="timeToDelete">
                                             <button class="btn btn-outline-danger" type="submit">Delete</button>
                                         </form>
+                                        {% endif %}
                                     </td>
                                 </tr>
                             {% endfor %}

@@ -9,10 +9,17 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Security;
 
 class AnalyticsType extends AbstractType
 {
     const all = '-- All --';
+    private $security;
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
 
     /**
      * {@inheritdoc}
@@ -39,17 +46,21 @@ class AnalyticsType extends AbstractType
                 'placeholder' => self::all,
                 'required' => false,
                 'mapped' => false,
-            ])
-            ->add('user', ChoiceType::class, [
-                'choices' => $options['users'],
-                'expanded' => false,
-                'multiple' => true,
-                'choice_label' => 'username',
-                'placeholder' => self::all,
-                'required' => false,
-                'mapped' => false,
-            ])
-            ->add('startTime', DateType::class, [
+            ]);
+
+            if ($this->security->isGranted('ROLE_ADMIN')) {
+                $builder->add('user', ChoiceType::class, [
+                        'choices' => $options['users'],
+                        'expanded' => false,
+                        'multiple' => true,
+                        'choice_label' => 'username',
+                        'placeholder' => self::all,
+                        'required' => false,
+                        'mapped' => false,
+                ]);
+            }
+
+            $builder->add('startTime', DateType::class, [
                 'widget' => 'single_text',
                 'data' => new \DateTime(),
                 'required' => false,

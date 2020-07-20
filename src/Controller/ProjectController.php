@@ -22,7 +22,7 @@ class ProjectController extends AbstractController
 {
     /**
      * @Route(path="list", name="list_projects", methods={"GET", "POST"})
-     * @IsGranted("ROLE_SUPER_ADMIN")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function listProjects(EntityManagerInterface $entityManager, Request $request)
     {
@@ -36,7 +36,7 @@ class ProjectController extends AbstractController
 
     /**
      * @Route(path="/add", name="addproject", methods={"GET", "POST"})
-     * @IsGranted("ROLE_SUPER_ADMIN")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function addProject(
         Request $request,
@@ -66,7 +66,7 @@ class ProjectController extends AbstractController
 
     /**
      * @Route(path="/{id}/edit/", name="edit_project", methods={"GET", "POST"})
-     * @IsGranted("ROLE_SUPER_ADMIN")
+     * @IsGranted("ROLE_ADMIN")
      * @ParamConverter("project", class="App\Entity\Project")
      */
     public function edit(Project $project, Request $request, EntityManagerInterface $entityManager, FlashBagInterface $flashBag, TranslatorInterface $translator)
@@ -89,7 +89,7 @@ class ProjectController extends AbstractController
 
     /**
      * @Route(path="/delete", name="delete_project", methods={"POST"})
-     * @IsGranted("ROLE_SUPER_ADMIN")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function delete(Request $request, TranslatorInterface $translator, FlashBagInterface $flashBag, EntityManagerInterface $entityManager)
     {

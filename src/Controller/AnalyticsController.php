@@ -33,27 +33,17 @@ class AnalyticsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $projectsData = $form['project']->getData();
             $tasksData = $form['task']->getData();
-            $usersData = $form['user']->getData();
+
+            $usersData = isset($form['user']) ? $form['user']->getData() : [$this->getUser()];
 
             // We get all times according to data form
-            $times = $manager->getRepository(Time::class)->getTimes(
-                $company,
-                $projectsData,
-                $tasksData,
-                $usersData,
-                $form['startTime']->getData(),
-                $form['endTime']->getData()
-            );
-
-            $projects = $analyticsServices->analyzePerProjects($projectsData, $tasksData, $usersData, $times);
-            $tasks = $analyticsServices->analyzePerTasks($projectsData, $tasksData, $usersData, $times);
-            $users = $analyticsServices->analyzePerUsers($projectsData, $tasksData, $usersData, $times);
+            $times = $manager->getRepository(Time::class)->getTimes($company, $projectsData, $tasksData, $usersData, $form['startTime']->getData(), $form['endTime']->getData());
 
             return $this->render('page/analytics/results.html.twig', [
                 'times' => $times,
-                'projects' => $projects,
-                'tasks' => $tasks,
-                'users' => $users
+                'projects' => $analyticsServices->analyzePerProjects($projectsData, $tasksData, $usersData, $times),
+                'tasks' => $analyticsServices->analyzePerTasks($projectsData, $tasksData, $usersData, $times),
+                'users' => $analyticsServices->analyzePerUsers($projectsData, $tasksData, $usersData, $times)
             ]);
         }
 

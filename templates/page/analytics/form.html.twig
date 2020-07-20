@@ -19,10 +19,12 @@
 							{{ form_label(form.task) }}
 							{{ form_widget(form.task) }}
 						</div>
+						{% if form.user is defined %}
 						<div class="form-group">
 							{{ form_label(form.user) }}
 							{{ form_widget(form.user) }}
 						</div>
+						{% endif %}
 						<div class="form-group">
 							{{ form_label(form.startTime) }}
 							{{ form_widget(form.startTime) }}

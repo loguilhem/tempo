@@ -10,7 +10,6 @@
 			{% endif %}
 			<div>
 				<p class="app-sidebar__user-name">{{ app.user.username }}</p>
-				<p class="app-sidebar__user-designation">{{ app.user.roles[0] }}</p>
 			</div>
 		</div>
 
@@ -27,6 +26,7 @@
 					</a>
 				</li>
 			{% endif %}
+			{% if is_granted('ROLE_ADMIN') %}
 			<li>
 				<a class="app-menu__item" href="{{ path('list_projects') }}">
 					<span class="app-menu__label">{{ 'Projects Management'|trans }}</span>
@@ -37,6 +37,7 @@
 					<span class="app-menu__label">{{ 'Tasks Management'|trans }}</span>
 				</a>
 			</li>
+			{% endif %}
 			<li>
 				<a class="app-menu__item" href="{{ path('list_times') }}">
 					<span class="app-menu__label">{{ 'Times Management'|trans }}</span>
