@@ -36,7 +36,11 @@ class TaskType extends AbstractType
                     'required' => false
 
             ))
-            ->add('save', SubmitType::class);;
+            ->add('save', SubmitType::class, [
+                'attr' => [
+                    'class' => 'btn btn-primary'
+                ]
+            ]);
     }
     
     /**

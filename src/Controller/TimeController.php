@@ -31,7 +31,7 @@ class TimeController extends AbstractController
      */
     public function listTimes(Request $request, EntityManagerInterface $entityManager)
     {
-        if ($this->isGranted('ROLE_SUPER_ADMIN')) {
+        if ($this->isGranted('ROLE_ADMIN')) {
             $times = $entityManager->getRepository(Time::class)->getByCompany($this->getUser()->getCompany());
         } else {
             $times = $entityManager->getRepository(Time::class)->findBy([

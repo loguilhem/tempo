@@ -25,7 +25,7 @@ class TaskController extends AbstractController
 {
     /**
      * @Route(path="/list", name="list_tasks", methods={"GET", "POST"})
-     * @IsGranted("ROLE_SUPER_ADMIN")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function listTasks(EntityManagerInterface $entityManager, Request $request)
     {
@@ -39,7 +39,7 @@ class TaskController extends AbstractController
 
     /**
      * @Route(path="/add", name="add_task", methods={"GET", "POST"})
-     * @IsGranted("ROLE_SUPER_ADMIN")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function add(
         Request $request,
@@ -72,7 +72,7 @@ class TaskController extends AbstractController
 
     /**
      * @Route(path="/{id}/edit", name="edit_task", methods={"GET", "POST"})
-     * @IsGranted("ROLE_SUPER_ADMIN")
+     * @IsGranted("ROLE_ADMIN")
      * @ParamConverter("task", class="App\Entity\Task")
      */
     public function edit(
@@ -103,7 +103,7 @@ class TaskController extends AbstractController
 
     /**
      * @Route(path="/delete", name="delete_task", methods={"POST"})
-     * @IsGranted("ROLE_SUPER_ADMIN")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function delete(Request $request, TranslatorInterface $translator, FlashBagInterface $flashBag, EntityManagerInterface $entityManager)
     {

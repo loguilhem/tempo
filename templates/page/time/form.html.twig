@@ -1,6 +1,18 @@
 {% extends 'layout/left-side-column.html.twig' %}
 
 {% block page %}
-    {{ 'Add time'|trans }}
-    {{ form(form) }}
+    {% embed "_page.html.twig" %}
+        {% block page_title %}
+            {{ 'Add/edit Time'|trans }}
+        {% endblock %}
+        {% block page_content %}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="tile">
+                        {{ form(form) }}
+                    </div>
+                </div>
+            </div>
+        {% endblock %}
+    {% endembed %}
 {% endblock %}

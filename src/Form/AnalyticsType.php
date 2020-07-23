@@ -9,17 +9,23 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Core\Security;
 
 class AnalyticsType extends AbstractType
 {
     const all = '-- All --';
+    private $security;
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
 
     /**
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        /** TODO: afficher le champ utilisateur que pour le ROLE_ADMIN ou ROLE_SUPER_ADMIN */
         $builder
             ->add('project', ChoiceType::class, [
                 'choices' => $options['projects'],
@@ -39,17 +45,21 @@ class AnalyticsType extends AbstractType
                 'placeholder' => self::all,
                 'required' => false,
                 'mapped' => false,
-            ])
-            ->add('user', ChoiceType::class, [
-                'choices' => $options['users'],
-                'expanded' => false,
-                'multiple' => true,
-                'choice_label' => 'username',
-                'placeholder' => self::all,
-                'required' => false,
-                'mapped' => false,
-            ])
-            ->add('startTime', DateType::class, [
+            ]);
+
+            if ($this->security->isGranted('ROLE_ADMIN')) {
+                $builder->add('user', ChoiceType::class, [
+                        'choices' => $options['users'],
+                        'expanded' => false,
+                        'multiple' => true,
+                        'choice_label' => 'username',
+                        'placeholder' => self::all,
+                        'required' => false,
+                        'mapped' => false,
+                ]);
+            }
+
+            $builder->add('startTime', DateType::class, [
                 'widget' => 'single_text',
                 'data' => new \DateTime(),
                 'required' => false,
@@ -67,7 +77,11 @@ class AnalyticsType extends AbstractType
                 'label' => 'No time limit',
                 'required' => false
             ])
-            ->add('calculate', SubmitType::class);
+            ->add('calculate', SubmitType::class, [
+                'attr' => [
+                    'class' => 'btn btn-primary'
+                ]
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
