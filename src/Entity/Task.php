@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -126,12 +127,12 @@ class Task
         return $this;
     }
 
-    public function getDaughterTasks(): ?ArrayCollection
+    public function getDaughterTasks(): ?Collection
     {
         return $this->daughterTasks;
     }
 
-    public function getTimes(): ArrayCollection
+    public function getTimes(): Collection
     {
         return $this->times;
     }

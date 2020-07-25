@@ -3,12 +3,21 @@
 namespace App\Security\Voter;
 
 use App\Entity\Time;
+use App\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
+use Symfony\Component\Security\Core\Security;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class TimeVoter extends Voter
 {
+    private $security;
+
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
+
     protected function supports($attribute, $subject)
     {
         // replace with your own logic
@@ -28,9 +37,27 @@ class TimeVoter extends Voter
         // ... (check conditions and return true to grant permission) ...
         switch ($attribute) {
             case 'edit':
-                return $user === $subject->getUser();
+                return $this->canEdit($user, $subject);
             case 'delete':
-                return $user === $subject->getUser();
+                return $this->canDelete($user, $subject);
+        }
+
+        return false;
+    }
+
+    private function canEdit($user, $subject)
+    {
+        if ($user === $subject->getUser() || $this->security->isGranted('ROLE_SUPER_ADMIN')) {
+            return true;
+        }
+
+        return false;
+    }
+
+    private function canDelete($user, $subject)
+    {
+        if ($user === $subject->getUser() || $this->security->isGranted('ROLE_SUPER_ADMIN')) {
+            return true;
         }
 
         return false;

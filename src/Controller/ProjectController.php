@@ -96,9 +96,13 @@ class ProjectController extends AbstractController
         $project = $entityManager->getRepository(Project::class)->find($request->request->get('id'));
         $this->denyAccessUnlessGranted('delete', $project);
 
-        $entityManager->remove($project);
-        $entityManager->flush();
-        $flashBag->add('success', $translator->trans('Project deleted.'));
+        if (!count($project->getTimes()) > 0) {
+            $entityManager->remove($project);
+            $entityManager->flush();
+            $flashBag->add('success', $translator->trans('Project deleted.'));
+        } else {
+            $flashBag->add('error', $translator->trans('Cannot delete a project which has times recorded.'));
+        }
 
         return $this->redirectToRoute('list_projects');
     }

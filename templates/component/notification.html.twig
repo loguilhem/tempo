@@ -1,10 +1,10 @@
 {% for message in app.session.flashBag.get('success') %}
-	<p class="notification is-success">
+	<p class="alert alert-success">
 		{{ message }}
 	</p>
 {% endfor %}
 {% for message in app.session.flashBag.get('error') %}
-	<p class="notification is-danger">
+	<p class="alert alert-danger">
 		{{ message }}
 	</p>
 {% endfor %}

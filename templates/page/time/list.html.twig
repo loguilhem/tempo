@@ -14,17 +14,19 @@
                 <div class="col-md-12">
                     <div class="tile">
                         {% if timeToDelete is not null %}
-                            <p>
+                            <p class="alert alert-danger">
                                 {% trans %}
                                     Are you sure to delete this time ?
                                     You cannot reverse this action.
                                 {% endtrans %}
                             </p>
-                            <form method="POST" action="{{ path('delete_time') }}">
-                                <input type="hidden" value="{{ timeToDelete }}" name="id">
-                                <button type="submit" class="btn btn-danger">Yes I am sure !</button>
-                            </form>
-                            <a href="{{ path('list_times') }}" class="btn btn-success">No, please cancel.</a>
+                            <div class="modal-footer">
+                                <form method="POST" action="{{ path('delete_time') }}">
+                                    <input type="hidden" value="{{ timeToDelete }}" name="id">
+                                    <button type="submit" class="btn btn-secondary">Yes I am sure !</button>
+                                </form>
+                                <a href="{{ path('list_times') }}" class="btn btn-primary">No, please cancel.</a>
+                            </div>
                         {% endif %}
 
                         <a class="btn btn-outline-success" href="{{ path('add_time') }}">New Time</a>
@@ -53,19 +55,17 @@
                                     {% endif %}
                                     <td>{{ time.startTime|date('Y-m-d H:i') }}</td>
                                     <td>{{ time.endTime|date('Y-m-d H:i') }}</td>
+                                    {% if time.user == app.user or is_granted('ROLE_SUPER_ADMIN') %}
                                     <td>
-                                        {% if time.user == app.user %}
-                                            <a class="btn btn-outline-primary" href="{{ path('edit_time', {'id':time.id}) }}">Edit</a>
-                                        {% endif %}
+                                        <a class="btn btn-outline-primary" href="{{ path('edit_time', {'id':time.id}) }}">Edit</a>
                                     </td>
                                     <td>
-                                        {% if time.user == app.user %}
                                         <form action="{{ path('list_times') }}" method="post">
                                             <input type="hidden" value="{{ time.id }}" name="timeToDelete">
                                             <button class="btn btn-outline-danger" type="submit">Delete</button>
                                         </form>
-                                        {% endif %}
                                     </td>
+                                    {% endif %}
                                 </tr>
                             {% endfor %}
                             </tbody>
