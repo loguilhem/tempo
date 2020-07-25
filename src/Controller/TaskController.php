@@ -110,10 +110,13 @@ class TaskController extends AbstractController
         $task = $entityManager->getRepository(Task::class)->find($request->request->get('id'));
         $this->denyAccessUnlessGranted('delete', $task);
 
-        $entityManager->remove($task);
-        $entityManager->flush();
-
-        $flashBag->add('success', $translator->trans('Task deleted.'));
+        if (!count($task->getTimes()) > 0 && !count($task->getDaughterTasks()) > 0) {
+            $entityManager->remove($task);
+            $entityManager->flush();
+            $flashBag->add('success', $translator->trans('Task deleted.'));
+        } else {
+            $flashBag->add('error', $translator->trans('Cannot delete a task which has times recorded or subtasks.'));
+        }
 
         return $this->redirectToRoute('list_tasks');
     }

@@ -13,7 +13,7 @@
 				<div class="col-md-12">
 					<div class="tile">
 						{% if projectToDelete is not null %}
-							<p>
+							<p class="alert alert-danger">
 								{% trans %}
 									Are you sure to delete this project ? Times recorded to this project will also be lost.
 									You cannot reverse this action.
@@ -66,5 +66,4 @@
 
 {% block javascripts %}
 	{{ parent() }}
-	{{ encore_entry_script_tags('projects-list') }}
 {% endblock %}

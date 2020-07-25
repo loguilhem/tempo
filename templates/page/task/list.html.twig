@@ -11,17 +11,19 @@
 				<div class="col-md-12">
 					<div class="tile">
 						{% if taskToDelete is not null %}
-							<p>
+							<p class="alert alert-danger">
 								{% trans %}
 									Are you sure to delete this task ? Times recorded to this task will also be lost.
 									You cannot reverse this action.
 								{% endtrans %}
 							</p>
-							<form method="POST" action="{{ path('delete_task') }}">
-								<input type="hidden" value="{{ taskToDelete }}" name="id">
-								<button type="submit" class="btn btn-danger">Yes I am sure !</button>
-							</form>
-							<a href="{{ path('list_tasks') }}" class="btn btn-success">No, please cancel.</a>
+							<div class="modal-footer">
+								<form method="POST" action="{{ path('delete_task') }}">
+									<input type="hidden" value="{{ taskToDelete }}" name="id">
+									<button type="submit" class="btn btn-secondary">Yes I am sure !</button>
+								</form>
+								<a href="{{ path('list_tasks') }}" class="btn btn-primary">No, please cancel.</a>
+							</div>
 						{% endif %}
 
 						<a class="btn btn-outline-success" href="{{ path('add_task') }}">New Task</a>
@@ -68,4 +70,8 @@
 			</div>
 		{% endblock %}
 	{% endembed %}
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
 {% endblock %}
