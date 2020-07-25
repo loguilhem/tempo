@@ -7,6 +7,19 @@
 		{% endblock %}
 
 		{% block page_content %}
+            <div class="btn-group" id="analytics-submenu">
+                <a class="btn btn-secondary" href="#analytics-projects">{{ 'Projects'|trans }}</a>
+                <a class="btn btn-secondary" href="#analytics-tasks">{{ 'Tasks'|trans }}</a>
+                <a class="btn btn-secondary" href="#analytics-users">{{ 'Users'|trans }}</a>
+                <a class="btn btn-secondary" href="#all-records">{{ 'All records'|trans }}</a>
+            </div>
+
+            <div class="row" id="analytics-projects">
+                <div class="col-md-12">
+                    <h2 class="analytics-section">{{ 'Projects Analytics'|trans }}</h2>
+                </div>
+            </div>
+
             <div class="row" id="projects" data-projects="{{ projects|json_encode }}">
                 <div class="col-6">
                     <h2>{{ 'Total per Tasks in each Project' }}</h2>
@@ -14,23 +27,19 @@
                         <div class="tile">
                             <h3>{{ project.name }}</h3>
                             <table class="table table-hover table-striped table-bordered">
-                                <thead>
-                                <tr>
-                                    {% for task in project.tasks %}
-                                        <th>{{ task.name }}</th>
-                                    {% endfor %}
-                                    <th>{{ 'Total'|trans }}</th>
-                                </tr>
-                                </thead>
                                 <tbody>
-                                <tr>
                                     {% set total = 0 %}
                                     {% for task in project.tasks %}
+                                    <tr>
+                                        <th>{{ task.name }}</th>
                                         {% set total = task.total + total %}
                                         <td>{{ task.total }}</td>
+                                    </tr>
                                     {% endfor %}
-                                    <td>{{ total }}</td>
-                                </tr>
+                                    <tr class="table-success">
+                                        <td>Total</td>
+                                        <td>{{ total }}</td>
+                                    </tr>
                                 </tbody>
                             </table>
                             <div class="chart">
@@ -45,23 +54,19 @@
                         <div class="tile">
                             <h4>{{ project.name }}</h4>
                             <table class="table table-hover table-striped table-bordered">
-                                <thead>
-                                <tr>
-                                    {% for user in project.users %}
-                                        <th>{{ user.username }}</th>
-                                    {% endfor %}
-                                    <th>{{ 'Total'|trans }}</th>
-                                </tr>
-                                </thead>
                                 <tbody>
-                                <tr>
                                     {% set total = 0 %}
                                     {% for user in project.users %}
+                                    <tr>
                                         {% set total = user.total + total %}
+                                        <th>{{ user.username }}</th>
                                         <td>{{ user.total }}</td>
+                                    </tr>
                                     {% endfor %}
+                                    <tr class="table-success">
+                                    <td>Total</td>
                                     <td>{{ total }}</td>
-                                </tr>
+                                    </tr>
                                 </tbody>
                             </table>
                             <div class="chart">
@@ -71,6 +76,13 @@
                     {% endfor %}
                 </div>
             </div>
+
+            <div class="row" id="analytics-tasks">
+                <div class="col-md-12">
+                    <h2 class="analytics-section">{{ 'Tasks Analytics'|trans }}</h2>
+                </div>
+            </div>
+
             <div class="row" id="tasks" data-tasks="{{ tasks|json_encode }}">
                 <div class="col-6">
                     <h2>{{ 'Total per Projects in each Task' }}</h2>
@@ -78,23 +90,19 @@
                         <div class="tile">
                             <h4>{{ task.name }}</h4>
                             <table class="table table-hover table-striped table-bordered">
-                                <thead>
-                                <tr>
-                                    {% for project in task.projects %}
-                                        <th>{{ project.name }}</th>
-                                    {% endfor %}
-                                    <th>{{ 'Total'|trans }}</th>
-                                </tr>
-                                </thead>
                                 <tbody>
-                                <tr>
                                     {% set total = 0 %}
                                     {% for project in task.projects %}
+                                    <tr>
                                         {% set total = project.total + total %}
+                                        <td>{{ project.name }}</td>
                                         <td>{{ project.total }}</td>
+                                    </tr>
                                     {% endfor %}
-                                    <td>{{ total }}</td>
-                                </tr>
+                                    <tr class="table-success">
+                                        <td>Total</td>
+                                        <td>{{ total }}</td>
+                                    </tr>
                                 </tbody>
                             </table>
                             <div class="chart">
@@ -109,23 +117,18 @@
                         <div class="tile">
                             <h4>{{ task.name }}</h4>
                             <table class="table table-hover table-striped table-bordered">
-                                <thead>
-                                <tr>
-                                    {% for project in task.projects %}
-                                        <th>{{ project.name }}</th>
-                                    {% endfor %}
-                                    <th>{{ 'Total'|trans }}</th>
-                                </tr>
-                                </thead>
                                 <tbody>
-                                <tr>
                                     {% set total = 0 %}
-                                    {% for project in task.projects %}
-                                        {% set total = project.total + total %}
-                                        <td>{{ project.total }}</td>
+                                    {% for user in task.users %}
+                                        <tr>
+                                        <th>{{ user.username }}</th>
+                                        {% set total = user.total + total %}
+                                        <td>{{ user.total }}</td>
                                     {% endfor %}
-                                    <td>{{ total }}</td>
-                                </tr>
+                                    <tr class="table-success">
+                                        <td>Total</td>
+                                        <td>{{ total }}</td>
+                                    </tr>
                                 </tbody>
                             </table>
                             <div class="chart">
@@ -133,6 +136,12 @@
                             </div>
                         </div>
                     {% endfor %}
+                </div>
+            </div>
+
+            <div class="row" id="analytics-users">
+                <div class="col-md-12">
+                    <h2 class="analytics-section">{{ 'Users Analytics'|trans }}</h2>
                 </div>
             </div>
             
@@ -143,23 +152,19 @@
                         <div class="tile">
                             <h4>{{ user.username }}</h4>
                             <table class="table table-hover table-striped table-bordered">
-                                <thead>
-                                <tr>
-                                    {% for project in user.projects %}
-                                        <th>{{ project.name }}</th>
-                                    {% endfor %}
-                                    <th>{{ 'Total'|trans }}</th>
-                                </tr>
-                                </thead>
                                 <tbody>
-                                <tr>
                                     {% set total = 0 %}
                                     {% for project in user.projects %}
+                                    <tr>
+                                        <td>{{ project.name }}</td>
                                         {% set total = project.total + total %}
                                         <td>{{ project.total }}</td>
+                                    </tr>
                                     {% endfor %}
-                                    <td>{{ total }}</td>
-                                </tr>
+                                    <tr class="table-success">
+                                        <td>Total</td>
+                                        <td>{{ total }}</td>
+                                    </tr>
                                 </tbody>
                             </table>
                             <div class="chart">
@@ -175,23 +180,19 @@
                         <div class="tile">
                             <h4>{{ user.username }}</h4>
                             <table class="table table-hover table-striped table-bordered">
-                                <thead>
-                                <tr>
-                                    {% for task in user.tasks %}
-                                        <th>{{ task.name }}</th>
-                                    {% endfor %}
-                                    <th>{{ 'Total'|trans }}</th>
-                                </tr>
-                                </thead>
                                 <tbody>
-                                <tr>
                                     {% set total = 0 %}
                                     {% for task in user.tasks %}
+                                    <tr>
+                                        <th>{{ task.name }}</th>
                                         {% set total = task.total + total %}
                                         <td>{{ task.total }}</td>
+                                    </tr>
                                     {% endfor %}
-                                    <td>{{ total }}</td>
-                                </tr>
+                                    <tr class="table-success">
+                                        <td>Total</td>
+                                        <td>{{ total }}</td>
+                                    </tr>
                                 </tbody>
                             </table>
                             <div class="chart">
@@ -202,10 +203,15 @@
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row" id="analytics-all-records">
+                <div class="col-md-12">
+                    <h2 class="analytics-section">{{ 'All records'|trans }}</h2>
+                </div>
+            </div>
+
+            <div class="row" id="all-records">
                 <div class="col-md-12">
                     <div class="tile">
-                        <h2>{{ 'All the records'|trans }}</h2>
                         <table class="table table-hover table-striped table-bordered" class="table table-bordered table-striped table-hover">
                             <thead>
                             <tr>
@@ -235,8 +241,6 @@
 		{% endblock %}
 	{% endembed %}
 {% endblock %}
-
-
 
 {% block footer %}
     {{ parent() }}
