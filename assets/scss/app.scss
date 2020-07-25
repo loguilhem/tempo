@@ -65,3 +65,21 @@
 @import 'pages/error-page';
 @import 'pages/mailbox';
 @import 'pages/user-profile';
+
+#analytics-submenu {
+  display: block;
+  position: fixed;
+  top: 75px;
+  right: 25px;
+  z-index: 999999;
+
+  a {
+    margin: 4px;
+  }
+}
+
+.analytics-section {
+  background-color: royalblue;
+  padding: 5px;
+  color: white;
+}
