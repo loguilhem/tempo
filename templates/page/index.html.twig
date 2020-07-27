@@ -9,15 +9,12 @@
 					<div class="col col-12 col-md-6"></div>
 					<div class="col col-12 col-md-6">
 						<div class="content-text">
-							<h1>Save your time</h1>
+							<h1>{{ 'index.title'| trans }}</h1>
 							<p>
-								{% trans %}
-								Tempo helps you to keep track of time spent on projects and tasks by you or your co-workers.
-																It is an open source project. You can download it and host it on your own server or soon use our cloud :).
-								{% endtrans %}
+								{{ 'dashboard.intro_text' | trans }}
 							</p>
 							<a class="btn btn-primary" href="{{ path('login') }}">{{ 'login'|trans }}</a>
-							<a class="btn btn-outline-primary" href="{{ path('register') }}">{{ 'register' }}</a>
+							<a class="btn btn-outline-primary" href="{{ path('register') }}">{{ 'register'|trans }}</a>
 						</div>
 					</div>
 				</div>

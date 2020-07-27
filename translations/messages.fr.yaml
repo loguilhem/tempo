@@ -1,0 +1,9 @@
+index:
+  title: Enregistrez votre temps
+
+login: connexion
+register: créer un compte
+
+dashboard:
+  title: Tempo
+  intro_text: Tempo vous aide à garder trace du temps passé sur vos projets et vos tâches pour vos collaborateurs et vous. C'est un projet open source. Vous pouvez le télécharger et l'héberger sur votre propre serveur ou prochainement l'utiliser dans notre cloud :).

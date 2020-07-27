@@ -2,14 +2,15 @@
 
 {% block page %}
 	{% embed '_page.html.twig' %}
-        {% block page_title %}Tempo{% endblock %}
+        {% block page_title %}
+			{{ 'dashboard.title' | trans }}
+		{% endblock %}
 		{% block page_content %}
 			<div class="row">
 				<div class="col col-12 col-md-4">
-					{% trans %}
-					    Tempo helps you to keep track of time spent on projects and tasks by you or your co-workers.
-					    It is an open source project. You can download it and host it on your own server or soon use our cloud :).
-					{% endtrans %}
+					<p>
+						{{ 'dashboard.intro_text' | trans }}
+					</p>
 				</div>
 			</div>
 		{% endblock %}
