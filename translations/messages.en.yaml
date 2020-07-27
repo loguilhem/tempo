@@ -4,3 +4,15 @@ index:
 dashboard:
   title: Tempo
   intro_text: Tempo helps you to keep track of time spent on projects and tasks by you or your co-workers. It is an open source project. You can download it and host it on your own server or soon use our cloud :).
+
+company:
+  title: Company
+  name: Name
+  address: Address
+  zipcode: Zip code
+  city: City
+  country: Country
+  email: Email
+  tel: Tel
+  token: Token
+  edit: edit

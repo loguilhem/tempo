@@ -1,9 +1,28 @@
+# Anonymous user front page
 index:
   title: Enregistrez votre temps
 
 login: connexion
 register: créer un compte
 
+# Connected user front page
 dashboard:
   title: Tempo
   intro_text: Tempo vous aide à garder trace du temps passé sur vos projets et vos tâches pour vos collaborateurs et vous. C'est un projet open source. Vous pouvez le télécharger et l'héberger sur votre propre serveur ou prochainement l'utiliser dans notre cloud :).
+
+# Company management
+'Company Management': 'Gestion Société'
+company:
+  title: Société
+  name: Nom
+  address: Adresse
+  zipcode: Code postal
+  city: Ville
+  country: Pays
+  email: Courriel
+  tel: Tél
+  token: Jeton
+  edit: modifier
+
+'Edit Company': 'Modifier la Société'
+'Save': 'Enregistrer'

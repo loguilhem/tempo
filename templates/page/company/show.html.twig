@@ -2,7 +2,9 @@
 
 {% block page %}
 	{% embed '_page.html.twig' %}
-		{% block page_title %}Company{% endblock %}
+		{% block page_title %}
+			{{ 'company.title' | trans }}
+		{% endblock %}
     	{% block page_content %}
 			<div class="row">
 				<div class="col-md-12">
@@ -10,41 +12,41 @@
 						<table class="table table-bordered table-hover">
 							<tbody>
 							<tr>
-								<th>Name</th>
+								<th>{{ 'company.name' | trans }}</th>
 								<td>{{ company.name }}</td>
 							</tr>
 							<tr>
-								<th>Address</th>
+								<th>{{ 'company.address' | trans }}</th>
 								<td>{{ company.address }}</td>
 							</tr>
 							<tr>
-								<th>ZipCode</th>
+								<th>{{ 'company.zipcode' | trans }}</th>
 								<td>{{ company.zipCode }}</td>
 							</tr>
 							<tr>
-								<th>City</th>
+								<th>{{ 'company.city' | trans }}</th>
 								<td>{{ company.city }}</td>
 							</tr>
 							<tr>
-								<th>Country</th>
+								<th>{{ 'company.country' | trans }}</th>
 								<td>{{ company.Country }}</td>
 							</tr>
 							<tr>
-								<th>Email</th>
+								<th>{{ 'company.email' | trans }}</th>
 								<td>{{ company.email }}</td>
 							</tr>
 							<tr>
-								<th>Tel</th>
+								<th>{{ 'company.tel' | trans }}</th>
 								<td>{{ company.tel }}</td>
 							</tr>
 							<tr>
-								<th>Token</th>
+								<th>{{ 'company.token' | trans }}</th>
 								<td>{{ company.token }}</td>
 							</tr>
 							</tbody>
 						</table>
 
-						<a class="btn btn-outline-primary" href="{{ path('company_edit', {'id': company.id}) }}">edit</a>
+						<a class="btn btn-outline-primary" href="{{ path('company_edit', {'id': company.id}) }}">{{ 'company.edit' | trans }}</a>
 					</div>
 				</div>
 			</div>
