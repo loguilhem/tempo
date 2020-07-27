@@ -17,3 +17,10 @@ Save: 'Enregistrer'
 Code: Code
 Mother task: Tâche mère
 none: aucune
+
+# Times
+Project: Projet
+Task: Tâche
+Start time: Heure de début
+End time: Heure de fin
+'Start time must be inforior to End time': "'L'heure de début doit être inférieure à l'heure de fin"

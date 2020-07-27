@@ -66,3 +66,19 @@ task:
 'Task added': 'Tâche ajoutée'
 'Task edited': 'Tâche modifiée'
 'Task deleted': 'Tâche supprimée'
+
+# Times management
+'Times Management': 'Gestion Temps'
+'Times list': 'Liste des temps'
+time:
+  project: Projet
+  task: Tâche
+  user: Utilisateur
+  start_time: Heure de départ
+  end_time: Heure de fin
+  alert_msg: 'Êtes-vous sûr(e) de vouloir supprimer ce temps ? Cette action est irréversible.'
+'New Time': 'Saisir un nouveau temps'
+'Add/edit Time': 'Ajouter/modifier un temps'
+'Time added': 'Temps ajouté'
+'Time edited': 'Temps modifié'
+'Time deleted': 'Temps supprimé'

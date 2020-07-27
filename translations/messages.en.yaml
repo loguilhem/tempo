@@ -45,3 +45,12 @@ task:
   mother_task: tâche mère
   alert_msg: 'Are you sure to delete this task ? Times recorded to this task will also be lost. You cannot reverse this action.'
   cannot_msg: 'Cannot delete a task which has times recorded or subtasks.'
+
+# Times management
+time:
+  project: Project
+  task: Task
+  user: User
+  start_time: Start time
+  end_time: End time
+  alert_msg: 'Are you sure to delete this time ? You cannot reverse this action.'

@@ -71,6 +71,7 @@ class TimeType extends AbstractType
             'data_class' => Time::class,
             'projects' => [],
             'tasks' => [],
+            'translation_domain' => 'forms',
         ));
     }
 
