@@ -35,5 +35,13 @@ project:
   delete: Delete
   alert_msg: 'Are you sure to delete this project ? Times recorded to this project will also be lost.
     You cannot reverse this action.'
-  yes_msg: 'Yes I am sure'
-  no_msg: 'No, please cancel'
+yes_msg: 'Yes I am sure'
+no_msg: 'No, please cancel'
+
+# Tasks management
+task:
+  name: Nom
+  code: Code
+  mother_task: tâche mère
+  alert_msg: 'Are you sure to delete this task ? Times recorded to this task will also be lost. You cannot reverse this action.'
+  cannot_msg: 'Cannot delete a task which has times recorded or subtasks.'

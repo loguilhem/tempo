@@ -45,9 +45,24 @@ project:
   edit: Modifier
   delete: Supprimer
   alert_msg: 'Êtes-vous sûr(e) de vouloir supprimer ce projet ? Les temps enregistrés dans ce projet seront aussi supprimés.'
-  yes_msg: 'Oui je suis sûr(e)'
-  no_msg: 'Non, annuler'
+yes_msg: 'Oui je suis sûr(e)'
+no_msg: 'Non, annuler'
 'Edit': 'Modifier'
 'Delete': 'Supprimer'
 'New project': 'Créer un projet'
 'Add/edit Project': 'Ajouter/modifier un projet'
+
+# Tasks management
+'Tasks Management': 'Gestion Tâches'
+'Tasks list': 'Liste des tâches'
+task:
+  name: Nom
+  code: Code
+  mother_task: tâche mère
+  alert_msg: 'Êtes-vous sûr(e) de vouloir supprimer cette tâche ? Les temps enregistrés pour cette tâche seront aussi supprimés. Cette action est irréversible.'
+  cannot_msg: 'Vous ne pouvez pas supprimer une tâche qui contient des enregistrements de temps ou des sous-tâches.'
+'New Task': 'Créer une tâche'
+'Add/edit Task': 'Ajouter/modifier une tâche'
+'Task added': 'Tâche ajoutée'
+'Task edited': 'Tâche modifiée'
+'Task deleted': 'Tâche supprimée'

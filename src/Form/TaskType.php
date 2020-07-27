@@ -22,7 +22,7 @@ class TaskType extends AbstractType
                 'label' => 'Name'
             ])
             ->add('code', TextType::class, [
-                'label' => 'code'
+                'label' => 'Code'
             ])
             ->add('motherTask', EntityType::class, array(
                     'class' => Task::class,
@@ -51,6 +51,7 @@ class TaskType extends AbstractType
         $resolver->setDefaults(array(
             'data_class' => Task::class,
             'choices' => [],
+            'translation_domain' => 'forms',
         ));
     }
 

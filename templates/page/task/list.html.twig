@@ -12,28 +12,25 @@
 					<div class="tile">
 						{% if taskToDelete is not null %}
 							<p class="alert alert-danger">
-								{% trans %}
-									Are you sure to delete this task ? Times recorded to this task will also be lost.
-									You cannot reverse this action.
-								{% endtrans %}
+								{{ 'task.alert_msg' | trans }}
 							</p>
 							<div class="modal-footer">
 								<form method="POST" action="{{ path('delete_task') }}">
 									<input type="hidden" value="{{ taskToDelete }}" name="id">
-									<button type="submit" class="btn btn-secondary">Yes I am sure !</button>
+									<button type="submit" class="btn btn-secondary">{{ 'yes_msg' | trans }}</button>
 								</form>
-								<a href="{{ path('list_tasks') }}" class="btn btn-primary">No, please cancel.</a>
+								<a href="{{ path('list_tasks') }}" class="btn btn-primary">{{ 'no_msg' | trans }}</a>
 							</div>
 						{% endif %}
 
-						<a class="btn btn-outline-success" href="{{ path('add_task') }}">New Task</a>
+						<a class="btn btn-outline-success" href="{{ path('add_task') }}">{{ 'New Task' | trans }}</a>
 
 						<table class="table table-hover table-striped table-bordered">
 							<thead>
 							<tr>
-								<th>{{ 'Code'|trans }}</th>
-								<th>{{ 'Name'|trans }}</th>
-								<th>{{ 'Mother task'|trans }}</th>
+								<th>{{ 'task.code'|trans }}</th>
+								<th>{{ 'task.name'|trans }}</th>
+								<th>{{ 'task.mother_task'|trans }}</th>
 								<th>{{ 'Edit'|trans }}</th>
 								<th>{{ 'Delete'|trans }}</th>
 							</tr>
@@ -53,12 +50,12 @@
 										{% endif %}
 									</td>
 									<td>
-										<a class="btn btn-outline-primary" href="{{ path('edit_task', {'id':task.id}) }}">Edit</a>
+										<a class="btn btn-outline-primary" href="{{ path('edit_task', {'id':task.id}) }}">{{ 'Edit'|trans }}</a>
 									</td>
 									<td>
 										<form action="{{ path('list_tasks') }}" method="post">
 											<input type="hidden" value="{{ task.id }}" name="taskToDelete">
-											<button class="btn btn-outline-danger" type="submit">Delete</button>
+											<button class="btn btn-outline-danger" type="submit">{{ 'Delete'|trans }}</button>
 										</form>
 									</td>
 								</tr>
