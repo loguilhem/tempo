@@ -37,6 +37,7 @@ class ProjectType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => Project::class,
+            'translation_domain' => 'forms',
         ));
     }
 

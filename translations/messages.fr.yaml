@@ -35,3 +35,19 @@ user:
   email: Courriel
   role: Rôle
   status: Statut
+
+# Projects management
+'Projects Management': 'Gestion Projets'
+'Projects list': 'Liste des projets'
+project:
+  name: Nom
+  description: Description
+  edit: Modifier
+  delete: Supprimer
+  alert_msg: 'Êtes-vous sûr(e) de vouloir supprimer ce projet ? Les temps enregistrés dans ce projet seront aussi supprimés.'
+  yes_msg: 'Oui je suis sûr(e)'
+  no_msg: 'Non, annuler'
+'Edit': 'Modifier'
+'Delete': 'Supprimer'
+'New project': 'Créer un projet'
+'Add/edit Project': 'Ajouter/modifier un projet'

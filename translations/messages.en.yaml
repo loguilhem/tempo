@@ -26,3 +26,14 @@ user:
   email: Email
   role: Role
   status: Status
+
+# Projects management
+project:
+  name: Name
+  description: Description
+  edit: Edit
+  delete: Delete
+  alert_msg: 'Are you sure to delete this project ? Times recorded to this project will also be lost.
+    You cannot reverse this action.'
+  yes_msg: 'Yes I am sure'
+  no_msg: 'No, please cancel'
