@@ -26,3 +26,12 @@ company:
 
 'Edit Company': 'Modifier la Société'
 'Save': 'Enregistrer'
+
+# Users management
+'User Management': 'Gestion utilisateurs'
+'Users List': 'Liste des utilisateurs'
+user:
+  name: Nom
+  email: Courriel
+  role: Rôle
+  status: Statut
