@@ -82,3 +82,29 @@ time:
 'Time added': 'Temps ajouté'
 'Time edited': 'Temps modifié'
 'Time deleted': 'Temps supprimé'
+
+# Analytics
+Analytics: Analyse
+Calculate: Calculer
+
+Results: Résultats
+Projects: Projets
+Tasks: Tâches
+Users: Utilisateurs
+All records: Tous les enregistrements
+Projects Analytics: Analyse des projets
+Total per Tasks in each Project: Total par tâche dans chaque projet
+Total per Users in each Project: Total par utilisateur dans chaque projet
+Tasks Analytics: Analyse des tâches
+Total per Projects in each Task: Total par projet dans chaque tâche
+Total per Users in each Task: Total par utilisateur dans chaque tâche
+Users Analytics: Analyse des utilisateurs
+Total per Projects for each User: Total par projet pour chaque utilisateur
+Total per Tasks for each User: Total par tâche pour chaque utilisateur
+tasks: tâches
+analytics:
+  project: Projet
+  task: Tâche
+  user: Utilisateur
+  start_time: Heure de début
+  end_time: Heure de fin

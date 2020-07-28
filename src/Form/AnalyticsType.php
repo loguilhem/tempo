@@ -90,6 +90,7 @@ class AnalyticsType extends AbstractType
             'projects' => null,
             'users' => null,
             'tasks' => null,
+            'translation_domain' => 'forms',
         ]);
     }
 

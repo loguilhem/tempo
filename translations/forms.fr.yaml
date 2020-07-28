@@ -24,3 +24,8 @@ Task: Tâche
 Start time: Heure de début
 End time: Heure de fin
 'Start time must be inforior to End time': "'L'heure de début doit être inférieure à l'heure de fin"
+
+# Analytics
+User: Utilisateur
+No time limit: Sans limite de temps
+Calculate: Calculer

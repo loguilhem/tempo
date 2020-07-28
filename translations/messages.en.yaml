@@ -54,3 +54,11 @@ time:
   start_time: Start time
   end_time: End time
   alert_msg: 'Are you sure to delete this time ? You cannot reverse this action.'
+
+# Analytics
+analytics:
+  project: Project
+  task: Task
+  user: User
+  start_time: Start time
+  end_time: End time
