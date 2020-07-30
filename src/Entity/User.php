@@ -5,11 +5,10 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @ORM\Table(name="fos_user")
+ * @ORM\Table(name="user")
  * @UniqueEntity(fields={"email", "username"}, message="There is already an account with this email")
  */
 class User implements UserInterface, \Serializable
