@@ -6,8 +6,8 @@ Licence: AGPL
 Project : a web app to register time past on projects and tasks and analyze time spent
 
 Developed by :
-Guilhem Vilarroya (www.alteragile.com ; guilhem@alteragile.com)
-Eric Spichiger
+Guilhem Vilarroya (www.alteragile.com ; guilhem@alteragile.com) and 
+Eric Spichiger (https://hiveweb.ch/)
 
 HOW TO INSTALL TEMPO ?
 --
@@ -47,3 +47,29 @@ HOW TO ENABLE THE RESET PASSWORD FUNCTION
 --
 1. You have to modify the line 28 of the .env file to inform your mail server
 2. You can change the sender email line 18 in SecurityController.php
+
+SOME SCREENSHOTS
+--
+* Login
+![Screenshot 1](tempo-screenshots/1.png)
+* List of all projects
+![Screenshot 2](tempo-screenshots/2.png)
+* Analytics
+![Screenshot 3](tempo-screenshots/3.png)
+
+WHAT'S NEXT FOR v2.0?
+==
+* Track time in real time
+* Paginate all lists
+* Improve UI for analytics
+* Pomodoro function
+
+FEEL FREE to contribute or fork
+--
+We are developping Tempo in our free time. 
+
+Feel free to contribute with debug or new features. 
+
+If you want to improve UI and/or UX, you are also welcomed in the project.
+
+Our V1.0 "project management" was a little "borderlined" and in french. We will work only in english in the future to allow non french speaker to work with us.
