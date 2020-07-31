@@ -152,3 +152,14 @@
 .app-notification__icon { padding-right: 10px; }
 .app-notification__message { line-height: 1.2; }
 .app-notification__meta { @extend .text-muted; }
+
+.app-locale {
+	color: #dddddd;
+	margin: auto 1rem;
+	font-size: 1.2rem;
+
+	a {
+		color: white;
+		font-weight: bold;
+	}
+}
