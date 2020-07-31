@@ -7,7 +7,8 @@ Project : a web app to register time past on projects and tasks and analyze time
 
 Developed by :
 Guilhem Vilarroya (www.alteragile.com ; guilhem@alteragile.com) and 
-Eric Spichiger (https://hiveweb.ch/)
+Eric Spichiger (https://hiveweb.ch/) and
+Christophe Espiau
 
 HOW TO INSTALL TEMPO ?
 --
