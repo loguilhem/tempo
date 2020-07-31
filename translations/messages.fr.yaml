@@ -1,0 +1,110 @@
+# Anonymous user front page
+index:
+  title: Enregistrez votre temps
+
+login: connexion
+register: créer un compte
+
+# Connected user front page
+dashboard:
+  title: Tempo
+  intro_text: Tempo vous aide à garder trace du temps passé sur vos projets et vos tâches pour vos collaborateurs et vous. C'est un projet open source. Vous pouvez le télécharger et l'héberger sur votre propre serveur ou prochainement l'utiliser dans notre cloud :).
+
+# Company management
+'Company Management': 'Gestion Société'
+company:
+  title: Société
+  name: Nom
+  address: Adresse
+  zipcode: Code postal
+  city: Ville
+  country: Pays
+  email: Courriel
+  tel: Tél
+  token: Jeton
+  edit: modifier
+
+'Edit Company': 'Modifier la Société'
+'Save': 'Enregistrer'
+
+# Users management
+'User Management': 'Gestion utilisateurs'
+'Users List': 'Liste des utilisateurs'
+user:
+  name: Nom
+  email: Courriel
+  role: Rôle
+  status: Statut
+
+# Projects management
+'Projects Management': 'Gestion Projets'
+'Projects list': 'Liste des projets'
+project:
+  name: Nom
+  description: Description
+  edit: Modifier
+  delete: Supprimer
+  alert_msg: 'Êtes-vous sûr(e) de vouloir supprimer ce projet ? Les temps enregistrés dans ce projet seront aussi supprimés.'
+yes_msg: 'Oui je suis sûr(e)'
+no_msg: 'Non, annuler'
+'Edit': 'Modifier'
+'Delete': 'Supprimer'
+'New project': 'Créer un projet'
+'Add/edit Project': 'Ajouter/modifier un projet'
+
+# Tasks management
+'Tasks Management': 'Gestion Tâches'
+'Tasks list': 'Liste des tâches'
+task:
+  name: Nom
+  code: Code
+  mother_task: tâche mère
+  alert_msg: 'Êtes-vous sûr(e) de vouloir supprimer cette tâche ? Les temps enregistrés pour cette tâche seront aussi supprimés. Cette action est irréversible.'
+  cannot_msg: 'Vous ne pouvez pas supprimer une tâche qui contient des enregistrements de temps ou des sous-tâches.'
+'New Task': 'Créer une tâche'
+'Add/edit Task': 'Ajouter/modifier une tâche'
+'Task added': 'Tâche ajoutée'
+'Task edited': 'Tâche modifiée'
+'Task deleted': 'Tâche supprimée'
+
+# Times management
+'Times Management': 'Gestion Temps'
+'Times list': 'Liste des temps'
+time:
+  project: Projet
+  task: Tâche
+  user: Utilisateur
+  start_time: Heure de départ
+  end_time: Heure de fin
+  alert_msg: 'Êtes-vous sûr(e) de vouloir supprimer ce temps ? Cette action est irréversible.'
+'New Time': 'Saisir un nouveau temps'
+'Add/edit Time': 'Ajouter/modifier un temps'
+'Time added': 'Temps ajouté'
+'Time edited': 'Temps modifié'
+'Time deleted': 'Temps supprimé'
+
+# Analytics
+Analytics: Analyse
+Calculate: Calculer
+
+Results: Résultats
+Projects: Projets
+Tasks: Tâches
+Users: Utilisateurs
+All records: Tous les enregistrements
+Projects Analytics: Analyse des projets
+Total per Tasks in each Project: Total par tâche dans chaque projet
+Total per Users in each Project: Total par utilisateur dans chaque projet
+Tasks Analytics: Analyse des tâches
+Total per Projects in each Task: Total par projet dans chaque tâche
+Total per Users in each Task: Total par utilisateur dans chaque tâche
+Users Analytics: Analyse des utilisateurs
+Total per Projects for each User: Total par projet pour chaque utilisateur
+Total per Tasks for each User: Total par tâche pour chaque utilisateur
+tasks: tâches
+analytics:
+  project: Projet
+  task: Tâche
+  user: Utilisateur
+  start_time: Heure de début
+  end_time: Heure de fin

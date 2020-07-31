@@ -6,3 +6,6 @@ twig:
     number_format:
         thousands_separator: ' '
         decimal_point: ','
+    globals:
+        locales: '%app_locales%'
+    form_themes: ['bootstrap_4_layout.html.twig']

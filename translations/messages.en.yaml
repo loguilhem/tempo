@@ -1,0 +1,64 @@
+# Anonymous user front page
+index:
+  title: Save your time
+
+# Connected user front page
+dashboard:
+  title: Tempo
+  intro_text: Tempo helps you to keep track of time spent on projects and tasks by you or your co-workers. It is an open source project. You can download it and host it on your own server or soon use our cloud :).
+
+# Company management
+company:
+  title: Company
+  name: Name
+  address: Address
+  zipcode: Zip code
+  city: City
+  country: Country
+  email: Email
+  tel: Tel
+  token: Token
+  edit: edit
+
+# Users management
+user:
+  name: Name
+  email: Email
+  role: Role
+  status: Status
+
+# Projects management
+project:
+  name: Name
+  description: Description
+  edit: Edit
+  delete: Delete
+  alert_msg: 'Are you sure to delete this project ? Times recorded to this project will also be lost.
+    You cannot reverse this action.'
+yes_msg: 'Yes I am sure'
+no_msg: 'No, please cancel'
+
+# Tasks management
+task:
+  name: Nom
+  code: Code
+  mother_task: tâche mère
+  alert_msg: 'Are you sure to delete this task ? Times recorded to this task will also be lost. You cannot reverse this action.'
+  cannot_msg: 'Cannot delete a task which has times recorded or subtasks.'
+
+# Times management
+time:
+  project: Project
+  task: Task
+  user: User
+  start_time: Start time
+  end_time: End time
+  alert_msg: 'Are you sure to delete this time ? You cannot reverse this action.'
+
+# Analytics
+analytics:
+  project: Project
+  task: Task
+  user: User
+  start_time: Start time
+  end_time: End time

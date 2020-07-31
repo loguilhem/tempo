@@ -14,29 +14,26 @@
 					<div class="tile">
 						{% if projectToDelete is not null %}
 							<p class="alert alert-danger">
-								{% trans %}
-									Are you sure to delete this project ? Times recorded to this project will also be lost.
-									You cannot reverse this action.
-								{% endtrans %}
+								{{ 'project.alert_msg' | trans }}
 							</p>
 							<div class="modal-footer">
 								<form method="POST" action="{{ path('delete_project') }}">
 									<input type="hidden" value="{{ projectToDelete }}" name="id">
-									<button type="submit" class="btn btn-secondary">{{ 'Yes I am sure'|trans }}</button>
+									<button type="submit" class="btn btn-secondary">{{ 'project.yes_msg'|trans }}</button>
 								</form>
-								<a href="{{ path('list_projects') }}" class="btn btn-primary">No, please cancel.</a>
+								<a href="{{ path('list_projects') }}" class="btn btn-primary">{{ 'project.no_msg'|trans }}</a>
 							</div>
 						{% endif %}
 
-						<a class="btn btn-outline-success" href="{{ path('addproject') }}">New project</a>
+						<a class="btn btn-outline-success" href="{{ path('addproject') }}">{{ 'New project'| trans }}</a>
 
 						<table class="table table-hover table-striped table-bordered">
 							<thead>
 							<tr>
-								<th>{{ 'Name'|trans }}</th>
-								<th>{{ 'Description'|trans }}</th>
-								<th>{{ 'Edit'|trans }}</th>
-								<th>{{ 'Delete'|trans }}</th>
+								<th>{{ 'project.name'|trans }}</th>
+								<th>{{ 'project.description'|trans }}</th>
+								<th>{{ 'project.edit'|trans }}</th>
+								<th>{{ 'project.delete'|trans }}</th>
 							</tr>
 							</thead>
 							<tbody>
@@ -50,7 +47,7 @@
 									<td>
 										<form action="{{ path('list_projects') }}" method="POST">
 											<input type="hidden" value="{{ project.id }}" name="projectToDelete">
-											<button class="btn btn-outline-danger" type="submit">Delete</button>
+											<button class="btn btn-outline-danger" type="submit">{{ 'Delete'|trans }}</button>
 										</form>
 									</td>
 								</tr>

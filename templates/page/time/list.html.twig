@@ -15,32 +15,29 @@
                     <div class="tile">
                         {% if timeToDelete is not null %}
                             <p class="alert alert-danger">
-                                {% trans %}
-                                    Are you sure to delete this time ?
-                                    You cannot reverse this action.
-                                {% endtrans %}
+                                {{ 'time.alert_msg' | trans }}
                             </p>
                             <div class="modal-footer">
                                 <form method="POST" action="{{ path('delete_time') }}">
                                     <input type="hidden" value="{{ timeToDelete }}" name="id">
-                                    <button type="submit" class="btn btn-secondary">Yes I am sure !</button>
+                                    <button type="submit" class="btn btn-secondary">{{ 'yes_msg' | trans }}</button>
                                 </form>
-                                <a href="{{ path('list_times') }}" class="btn btn-primary">No, please cancel.</a>
+                                <a href="{{ path('list_times') }}" class="btn btn-primary">{{ 'no_msg' | trans }}</a>
                             </div>
                         {% endif %}
 
-                        <a class="btn btn-outline-success" href="{{ path('add_time') }}">New Time</a>
+                        <a class="btn btn-outline-success" href="{{ path('add_time') }}">{{ 'New Time' | trans }}</a>
 
                         <table class="table table-hover table-striped table-bordered">
                             <thead>
                             <tr>
-                                <th>{{ 'Project'|trans }}</th>
-                                <th>{{ 'Task'|trans }}</th>
+                                <th>{{ 'time.project'|trans }}</th>
+                                <th>{{ 'time.task'|trans }}</th>
                                 {% if is_granted('ROLE_SUPER_ADMIN') %}
-                                    <th>{{ 'User'|trans }}</th>
+                                    <th>{{ 'time.user'|trans }}</th>
                                 {% endif %}
-                                <th>{{ 'startTime'|trans }}</th>
-                                <th>{{ 'endTime'|trans }}</th>
+                                <th>{{ 'time.start_time'|trans }}</th>
+                                <th>{{ 'time.end_time'|trans }}</th>
                                 <th>{{ 'Edit'|trans }}</th>
                                 <th>{{ 'Delete'|trans }}</th>
                             </tr>
@@ -57,12 +54,12 @@
                                     <td>{{ time.endTime|date('Y-m-d H:i') }}</td>
                                     {% if time.user == app.user or is_granted('ROLE_SUPER_ADMIN') %}
                                     <td>
-                                        <a class="btn btn-outline-primary" href="{{ path('edit_time', {'id':time.id}) }}">Edit</a>
+                                        <a class="btn btn-outline-primary" href="{{ path('edit_time', {'id':time.id}) }}">{{ 'Edit' | trans }}</a>
                                     </td>
                                     <td>
                                         <form action="{{ path('list_times') }}" method="post">
                                             <input type="hidden" value="{{ time.id }}" name="timeToDelete">
-                                            <button class="btn btn-outline-danger" type="submit">Delete</button>
+                                            <button class="btn btn-outline-danger" type="submit">{{ 'Delete' | trans }}</button>
                                         </form>
                                     </td>
                                     {% endif %}

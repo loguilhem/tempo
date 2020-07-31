@@ -19,6 +19,12 @@
 	</div>
 {% endblock %}
 
+{% block header_locale %}
+	<div class="app-locale">
+		{% include 'component/locale-switcher.html.twig' %}
+	</div>
+{% endblock %}
+
 {% block header_navigation %}
 	{% include 'component/navigation-top.html.twig' %}
 {% endblock %}

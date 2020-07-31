@@ -1,0 +1,12 @@
+<ul class="locale-links">
+{% for locale in locales|split('|') %}
+    {% if loop.index > 1 %}
+        <span class="locale-item-spacer"> - </span>
+    {% endif %}
+    {% if locale != app.request.locale %}
+        <a href="{{ path('change_locale', {'locale': locale}) }}" class="locale-link">{{ locale }}</a>
+    {% else %}
+        <span class="current-locale">{{ locale }}</span>
+    {% endif %}
+{% endfor %}
+</ul>

@@ -22,7 +22,7 @@
 
             <div class="row" id="projects" data-projects="{{ projects|json_encode }}">
                 <div class="col-6">
-                    <h2>{{ 'Total per Tasks in each Project' }}</h2>
+                    <h2>{{ 'Total per Tasks in each Project'|trans }}</h2>
                     {% for project in projects %}
                         <div class="tile">
                             <h3>{{ project.name }}</h3>
@@ -49,7 +49,7 @@
                     {% endfor %}
                 </div>
                 <div class="col-6">
-                    <h2>{{ 'Total per Users in each Project' }}</h2>
+                    <h2>{{ 'Total per Users in each Project'|trans }}</h2>
                     {% for project in projects %}
                         <div class="tile">
                             <h4>{{ project.name }}</h4>
@@ -85,7 +85,7 @@
 
             <div class="row" id="tasks" data-tasks="{{ tasks|json_encode }}">
                 <div class="col-6">
-                    <h2>{{ 'Total per Projects in each Task' }}</h2>
+                    <h2>{{ 'Total per Projects in each Task'|trans }}</h2>
                     {% for task in tasks %}
                         <div class="tile">
                             <h4>{{ task.name }}</h4>
@@ -112,7 +112,7 @@
                     {% endfor %}
                 </div>
                 <div class="col-6">
-                    <h2>{{ 'Total per Users in each Task' }}</h2>
+                    <h2>{{ 'Total per Users in each Task'|trans }}</h2>
                     {% for task in tasks %}
                         <div class="tile">
                             <h4>{{ task.name }}</h4>
@@ -215,11 +215,11 @@
                         <table class="table table-hover table-striped table-bordered" class="table table-bordered table-striped table-hover">
                             <thead>
                             <tr>
-                                <th>{{ 'Project'|trans }}</th>
-                                <th>{{ 'Task'|trans }}</th>
-                                <th>{{ 'User'|trans }}</th>
-                                <th>{{ 'StartTime'|trans }}</th>
-                                <th>{{ 'EndTime'|trans }}</th>
+                                <th>{{ 'analytics.project'|trans }}</th>
+                                <th>{{ 'analytics.task'|trans }}</th>
+                                <th>{{ 'analytics.user'|trans }}</th>
+                                <th>{{ 'analytics.start_time'|trans }}</th>
+                                <th>{{ 'analytics.end_time'|trans }}</th>
                             </tr>
                             </thead>
                             <tbody>

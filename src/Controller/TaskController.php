@@ -113,9 +113,9 @@ class TaskController extends AbstractController
         if (!count($task->getTimes()) > 0 && !count($task->getDaughterTasks()) > 0) {
             $entityManager->remove($task);
             $entityManager->flush();
-            $flashBag->add('success', $translator->trans('Task deleted.'));
+            $flashBag->add('success', $translator->trans('Task deleted'));
         } else {
-            $flashBag->add('error', $translator->trans('Cannot delete a task which has times recorded or subtasks.'));
+            $flashBag->add('error', $translator->trans('task.cannot_msg'));
         }
 
         return $this->redirectToRoute('list_tasks');
