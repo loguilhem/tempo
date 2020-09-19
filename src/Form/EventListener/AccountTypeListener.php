@@ -39,8 +39,6 @@ class AccountTypeListener implements EventSubscriberInterface
      */
     public function onPreSetData(FormEvent $event): void
     {
-        $user = $event->getData();
-
         $this->formRoleModifier($event->getForm(), $this->roles);
     }
 
@@ -55,7 +53,8 @@ class AccountTypeListener implements EventSubscriberInterface
      */
     private function formRoleModifier(FormInterface $form, array $roles = []): void
     {
-        if(in_array('ROLE_SUPER_ADMIN', $roles))
+        dump($roles);
+        if(in_array('ROLE_SUPER_ADMIN', $roles) || $roles[0] == null)
         {
             $form
                 ->add('Company', CompanyType::class, [

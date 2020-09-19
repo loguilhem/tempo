@@ -27,7 +27,7 @@
 									<td>
 										{% set break = false %}
 										{% for role in User.roles if not break %}
-											{{ role }}
+											{{ role|trans }}
 											{% set break = true %}
 										{% endfor %}
 										<a class="btn btn-outline-success" href="{{ path('promote_demote_user', { 'id': User.id, 'action': 'promote' }) }}">&uarr;</a>

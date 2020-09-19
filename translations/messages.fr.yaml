@@ -1,11 +1,38 @@
+#Global
+Submit: Envoyer
+Company: Organisation
+Email: Email
+ROLE_ADMIN: Leader
+ROLE_USER: Membre
+ROLE_SUPER_ADMIN: Manager
+
 # Anonymous user front page
 index:
   title: Enregistrez votre temps
 
 login: connexion
-register: créer un compte
+register: inscription
+Log in: Se connecter
+Remember me: Se souvenir de moi
+Sign in: S'identifier
+Forgotten password: Mot de passe oublié
+
+#Register page
+Register: Inscription
+Manager: Manager
+Leader: Leader
+Leader or Member: Leader ou Membre
+Your email address: Votre adresse email
+Repeat Password: Répetez le mot de passe
+Password: Mot de passe
+Activation token: Jeton d'activation
+Agree terms: Accepter les conditions d'utilisation
+Account: Compte
+I will create a company and manage the leaders and members: Je vais créer une organisation et gérer les Leaders et les membres
+I am a leader or a member of an existing company: Je suis un Leader ou un membre d'une organisation
 
 # Connected user front page
+You are logged in as: Vous êtes connecté en tant que
 dashboard:
   title: Tempo
   intro_text: Tempo vous aide à garder trace du temps passé sur vos projets et vos tâches pour vos collaborateurs et vous. C'est un projet open source. Vous pouvez le télécharger et l'héberger sur votre propre serveur ou prochainement l'utiliser dans notre cloud :).
