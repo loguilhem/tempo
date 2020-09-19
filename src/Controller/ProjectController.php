@@ -21,7 +21,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class ProjectController extends AbstractController
 {
     /**
-     * @Route(path="list", name="list_projects", methods={"GET", "POST"})
+     * @Route(path="/list", name="list_projects", methods={"GET", "POST"})
      * @IsGranted("ROLE_ADMIN")
      */
     public function listProjects(EntityManagerInterface $entityManager, Request $request)
