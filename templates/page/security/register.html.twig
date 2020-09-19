@@ -1,7 +1,6 @@
 {% extends 'layout/full-width.html.twig' %}
 
-{% block page_title %}Register
-{% endblock %}
+{% block page_title %}{{ 'Register'|trans }}{% endblock %}
 
 {% block page %}
 	<div class="container">
@@ -9,30 +8,29 @@
 			{{ form_start(registrationForm, {'attr': {'class' : 'login-form'}}) }}
 			<div id="registration_accountType" class="input-group input-account-types">
 				{% for accountType in registrationForm.accountType %}
-
 					<div class="input-control" tabindex="0" data-toggle="tooltip" title="
-														{% if accountType.vars.value == 'ROLE_SUPER_ADMIN' %}
-															I will manage the team leaders and team members
-														{% elseif accountType.vars.value == 'ROLE_USER' %}
-															I am a team leader or a team member of an existing company
-														{% endif %}
-														">
-						{{ form_widget(accountType)}}
-						{{ form_label(accountType)}}
+						{% if accountType.vars.value == 'ROLE_SUPER_ADMIN' %}
+							{{ 'I will create a company and manage the leaders and members'|trans }}
+						{% elseif accountType.vars.value == 'ROLE_USER' %}
+							{{ 'I am a leader or a member of an existing company'|trans }}
+						{% endif %}
+					">
+					{{ form_widget(accountType)}}
+					{{ form_label(accountType)}}
 					</div>
 				{% endfor %}
 			</div>
 			<div class="login-box">
 				<div class="form-header">
 					<h2 class="login-title">
-						Register
+						{{ 'Register'|trans }}
 					</h2>
 				</div>
 				<div class="form-body">
 					<div class="profil-form">
 						<div class="row">
 							<div class="col col-12">
-								<h4 class="">Our account</h4>
+								<h4 class="">{{ 'Account'|trans }}</h4>
 							</div>
 							<div class="col col-12 col-sm-6">
 								<div class="form-group">
@@ -54,11 +52,8 @@
 					</div>
 					<div class="account-type-form">
 						<div id="accoutTypeForm" class="row">
-							<div class="col col-12">
-								<h4>
-									Our Company</h4>
-							</div>
 							{% if registrationForm.Company is defined %}
+								<div class="col col-12"><h4>{{ 'Company'|trans }}</h4></div>
 								<div class="col col-12 col-md-6">
 									{{ form_row(registrationForm.Company.name)}}
 								</div>
@@ -100,7 +95,7 @@
 					</div>
 					<div class="form-group btn-container">
 						<button type="submit" class="btn btn-primary btn-block">
-							<i class="fa fa-sign-in fa-lg fa-fw"></i>Register</button>
+							<i class="fa fa-sign-in fa-lg fa-fw"></i>{{ 'Submit'|trans }}</button>
 					</div>
 				</div>
 			</div>
