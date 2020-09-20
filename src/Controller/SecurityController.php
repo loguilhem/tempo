@@ -129,13 +129,12 @@ class SecurityController extends AbstractController
         Request $request,
         UserPasswordEncoderInterface $passwordEncoder,
         GuardAuthenticatorHandler $guardHandler,
-        TranslatorInterface $translator,
         LoginFormAuthenticator $authenticator): Response
     {
         
         $user           = new User();
         $registration   = $request->request->get('registration');
-        $role           = null === $registration ? null : $registration['accountType'];
+        $role           = null === $registration ? 'ROLE_SUPER_ADMIN' : $registration['accountType'];
 
         $form = $this->createForm(
                 RegistrationType::class,

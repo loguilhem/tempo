@@ -53,7 +53,6 @@ class AccountTypeListener implements EventSubscriberInterface
      */
     private function formRoleModifier(FormInterface $form, array $roles = []): void
     {
-        dump($roles);
         if(in_array('ROLE_SUPER_ADMIN', $roles) || $roles[0] == null)
         {
             $form
