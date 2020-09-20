@@ -49,6 +49,7 @@ class RegistrationType extends AbstractType
                     'Manager' => User::ROLE_SUPER_ADMIN,
                     'Leader or Member' => User::ROLE_USER
                 ],
+                'data' => User::ROLE_SUPER_ADMIN,
                 'multiple' => false,
                 'expanded' => true
             ])
