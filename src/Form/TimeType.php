@@ -53,7 +53,7 @@ class TimeType extends AbstractType
                 'data' => new \DateTime(),
                 'required' => true,
                 'html5' => true,
-                'format' => 'dd-MM-yyyy H:m',
+                'format' => 'dd-MM-yyyy H:mm',
             ])
             ->add('save', SubmitType::class, [
                 'attr' => [
