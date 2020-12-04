@@ -43,12 +43,10 @@ class TimeType extends AbstractType
             ])
             ->add('startTime', DateTimeType::class, [
                     'widget' => 'single_text',
-                    'data' => new \DateTime(),
                     'required' => true,
             ])
             ->add('endTime', DateTimeType::class, [
                 'widget' => 'single_text',
-                'data' => new \DateTime(),
                 'required' => true,
             ])
             ->add('save', SubmitType::class, [
