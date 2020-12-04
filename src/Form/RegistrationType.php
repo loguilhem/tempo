@@ -19,6 +19,14 @@ class RegistrationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        if ($options['addCompany']) {
+            $accountTypes = [
+                'Manager' => User::ROLE_SUPER_ADMIN,
+                'Leader or Member' => User::ROLE_USER
+            ];
+        } else {
+            $accountTypes = ['Leader or Member' => User::ROLE_USER];
+        }
 
         $builder
             ->add('email', EmailType::class, [
@@ -45,10 +53,7 @@ class RegistrationType extends AbstractType
                 'mapped' => false,
                 'label' => 'Account type',
                 'required' => true,
-                'choices' => [
-                    'Manager' => User::ROLE_SUPER_ADMIN,
-                    'Leader or Member' => User::ROLE_USER
-                ],
+                'choices' => $accountTypes,
                 'data' => User::ROLE_SUPER_ADMIN,
                 'multiple' => false,
                 'expanded' => true
@@ -70,7 +75,8 @@ class RegistrationType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
-            'role' => null
+            'role' => null,
+            'addCompany' => false
         ]);
     }
 }
