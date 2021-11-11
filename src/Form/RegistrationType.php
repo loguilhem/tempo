@@ -20,7 +20,7 @@ class RegistrationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $accountTypes = ['Leader or Member' => User::ROLE_USER];
-        if (!$options['addCompany']) {
+        if ($options['addCompany']) {
             $accountTypes['Manager'] = User::ROLE_SUPER_ADMIN;
         }
 
@@ -50,18 +50,11 @@ class RegistrationType extends AbstractType
                 'label' => 'Account type',
                 'required' => true,
                 'choices' => $accountTypes,
-                'data' => User::ROLE_SUPER_ADMIN,
+                'data' => User::ROLE_USER,
                 'multiple' => false,
                 'expanded' => true
             ])
-            ->add('agreeTerms', CheckboxType::class, [
-                'mapped' => false,
-                'constraints' => [
-                    new IsTrue([
-                        'message' => 'You should agree to our terms.',
-                    ]),
-                ],
-            ]);
+        ;
 
         $builder
             ->addEventSubscriber(new EventListener\AccountTypeListener($options['role']));

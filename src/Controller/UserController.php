@@ -45,7 +45,7 @@ class UserController extends AbstractController
         TranslatorInterface $translator
     ): RedirectResponse
     {
-        $this->denyAccessUnlessGranted('setRole', $user);
+        $this->denyAccessUnlessGranted('edit', $user);
 
         $roles = $user->getLowerAndHigherRole();
 
@@ -82,6 +82,8 @@ class UserController extends AbstractController
         TranslatorInterface $translator
     ): RedirectResponse
     {
+        $this->denyAccessUnlessGranted('edit', $user);
+
         $locked = $user->isEnabled();
 
         if($locked == 0) {

@@ -136,11 +136,9 @@ class SecurityController extends AbstractController
         SessionInterface $session
     ): Response
     {
-        
         $user = new User();
         $registration = $request->request->get('registration');
-        $role = null === $registration ? 'ROLE_SUPER_ADMIN' : $registration['accountType'];
-
+        $role = null === $registration ? 'ROLE_USER' : $registration['accountType'];
         // if you want to disable the registration of a new company, pass ALLOW_ADD_COMPANY to 0 in .env
         $form = $this->createForm(RegistrationType::class, $user, [
             'role' => $role,

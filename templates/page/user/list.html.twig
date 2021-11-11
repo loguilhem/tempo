@@ -27,7 +27,7 @@
 									<td>
 										{% set break = false %}
 										{% for role in User.roles %}
-											{{ role[0]|trans }}
+											{{ role|trans }}
 										{% endfor %}
 										<a class="btn btn-outline-success" href="{{ path('promote_demote_user', { 'id': User.id, 'action': 'promote' }) }}">&uarr;</a>
 										<a class="btn btn-outline-warning" href="{{ path('promote_demote_user', { 'id': User.id, 'action': 'demote' }) }}">&darr;</a>

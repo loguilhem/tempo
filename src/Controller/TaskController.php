@@ -49,7 +49,7 @@ class TaskController extends AbstractController
      */
     public function listTasks(Request $request): Response
     {
-        $this->denyAccessUnlessGranted('view', $this->companySession);
+        $this->denyAccessUnlessGranted('view', new Task());
 
         return $this->render('page/task/list.html.twig', [
             'tasks' => $this->em->getRepository(Task::class)->findBy([
@@ -69,7 +69,7 @@ class TaskController extends AbstractController
         TranslatorInterface $translator
     )
     {
-        $this->denyAccessUnlessGranted('add', $this->companySession);
+        $this->denyAccessUnlessGranted('add', new Task());
 
         $task = new Task();
         $form = $this->createForm(TaskType::class, $task, [
@@ -96,7 +96,7 @@ class TaskController extends AbstractController
     /**
      * @Route(path="/{id}/edit", name="edit_task", methods={"GET", "POST"})
      * @IsGranted("ROLE_ADMIN")
-     * @ParamConverter("task", class="App\Entity\Task")
+     * @ParamConverter("id", class="App\Entity\Task")
      */
     public function edit(
         Request $request,
@@ -106,7 +106,7 @@ class TaskController extends AbstractController
     {
         $this->denyAccessUnlessGranted('edit', $task);
 
-        $choices = $this->em->getRepository(Task::class)->findExceptItself($task, $this->getUser()->getCompanies());
+        $choices = $this->em->getRepository(Task::class)->findExceptItself($task, $this->companySession);
         $form = $this->createForm(TaskType::class, $task, [
             'choices' => $choices
         ]);
