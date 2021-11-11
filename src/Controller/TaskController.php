@@ -49,6 +49,8 @@ class TaskController extends AbstractController
      */
     public function listTasks(Request $request): Response
     {
+        $this->denyAccessUnlessGranted('view', $this->companySession);
+
         return $this->render('page/task/list.html.twig', [
             'tasks' => $this->em->getRepository(Task::class)->findBy([
                 'company' => $this->companySession
@@ -67,6 +69,8 @@ class TaskController extends AbstractController
         TranslatorInterface $translator
     )
     {
+        $this->denyAccessUnlessGranted('add', $this->companySession);
+
         $task = new Task();
         $form = $this->createForm(TaskType::class, $task, [
             'choices' => $this->em->getRepository(Task::class)->findBy([

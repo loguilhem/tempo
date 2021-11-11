@@ -44,6 +44,8 @@ class ProjectController extends AbstractController
      */
     public function listProjects(EntityManagerInterface $entityManager, Request $request, SessionInterface $session)
     {
+        $this->denyAccessUnlessGranted('view', $this->companySession);
+
         return $this->render('page/project/list.html.twig', [
             'projects' => $entityManager->getRepository(Project::class)->findBy([
                 'company' => $session->get('_company')
@@ -62,6 +64,8 @@ class ProjectController extends AbstractController
         TranslatorInterface $translator
     )
     {
+        $this->denyAccessUnlessGranted('add', $this->companySession);
+
         $project = new Project();
         $form = $this->createForm(ProjectType::class, $project);
         $form->handleRequest($request);

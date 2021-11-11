@@ -29,7 +29,7 @@ class MainController extends AbstractController
     ): Response
     {
         if ($this->isGranted('ROLE_USER')) {
-            $companyService->setSession($request, $session, $this->getUser(), null);
+            $companyService->setSession($request, $session, null);
             return $this->render('page/dashboard.html.twig');
         } else {
             return $this->render('page/index.html.twig');

@@ -25,6 +25,7 @@ class ProjectVoter extends Voter
         }
 
         switch ($attribute) {
+            case 'add':
             case 'edit':
             case 'delete':
                 return $user->getCompanies()->contains($subject->getCompany());

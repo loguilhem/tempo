@@ -6,11 +6,13 @@ use App\Entity\Company;
 use App\Entity\User;
 use App\Form\RegistrationType;
 use App\Security\LoginFormAuthenticator;
+use App\Service\CompanyService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -129,12 +131,15 @@ class SecurityController extends AbstractController
         Request $request,
         UserPasswordEncoderInterface $passwordEncoder,
         GuardAuthenticatorHandler $guardHandler,
-        LoginFormAuthenticator $authenticator): Response
+        LoginFormAuthenticator $authenticator,
+        CompanyService $companyService,
+        SessionInterface $session
+    ): Response
     {
         
-        $user           = new User();
-        $registration   = $request->request->get('registration');
-        $role           = null === $registration ? 'ROLE_SUPER_ADMIN' : $registration['accountType'];
+        $user = new User();
+        $registration = $request->request->get('registration');
+        $role = null === $registration ? 'ROLE_SUPER_ADMIN' : $registration['accountType'];
 
         // if you want to disable the registration of a new company, pass ALLOW_ADD_COMPANY to 0 in .env
         $form = $this->createForm(RegistrationType::class, $user, [
@@ -154,7 +159,15 @@ class SecurityController extends AbstractController
                 )
                 ->addRole($role)
                 ->setEnabled(true)
-                ->generateUsername();
+                ->generateUsername()
+            ;
+
+            if ($form->has('Company')) {
+                /** @var Company $newCompany */
+                $company = $form->get('Company')->getData();
+                $company->addMember($user);
+                $em->persist($company);
+            }
 
             if ('ROLE_USER' === $role) {
                 $tokenField = $form->get('token');
@@ -186,6 +199,8 @@ class SecurityController extends AbstractController
 
             $em->persist($user);
             $em->flush();
+
+            $companyService->setSession($request, $session, $company);
 
             return $guardHandler->authenticateUserAndHandleSuccess(
                 $user,

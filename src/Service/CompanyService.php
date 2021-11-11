@@ -7,31 +7,37 @@ use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Security\Core\Security;
 
 class CompanyService
 {
-    private $em;
+    /**
+     * @var User
+     */
+    private $user;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(Security $security)
     {
-        $this->em = $em;
+        $this->user = $security->getUser();
     }
+
 
     public function setSession(
         Request          $request,
         SessionInterface $session,
-        User             $user,
         ?Company $company
-    )
+    ): void
     {
         if ($company) {
             $session->set('_company', $company->getId());
+
+            return;
         }
 
         if ($request->cookies->get('_company')) {
             $session->set('_company', $request->cookies->get('_company'));
         } else {
-            $lastCompany = $user->getCompanies();
+            $lastCompany = $this->user->getCompanies();
             $session->set('_company', $lastCompany[0]->getId());
         }
     }

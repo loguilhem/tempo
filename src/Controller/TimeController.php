@@ -49,6 +49,8 @@ class TimeController extends AbstractController
      */
     public function listTimes(Request $request)
     {
+        $this->denyAccessUnlessGranted('view', $this->companySession);
+
         if ($this->isGranted('ROLE_ADMIN')) {
             $times = $this->em->getRepository(Time::class)->getTimes($this->companySession);
         } else {

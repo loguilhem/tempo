@@ -18,6 +18,21 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class CompanyController extends AbstractController
 {
+    /**
+     * @var Company
+     */
+    private $companySession;
+
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
+
+    public function __construct(SessionInterface $session, EntityManagerInterface $em)
+    {
+        $this->companySession = $em->getRepository(Company::class)->find($session->get('_company'));
+        $this->em = $em;
+    }
 
     /**
      * @Route("/", name="company_show", methods={"GET"})
@@ -25,6 +40,8 @@ class CompanyController extends AbstractController
      */
     public function show(SessionInterface $session, EntityManagerInterface $entityManager): Response
     {
+        $this->denyAccessUnlessGranted('view', $this->companySession);
+
         return $this->render('page/company/show.html.twig', [
             'company' => $entityManager->getRepository(Company::class)->find($session->get('_company')),
         ]);
@@ -63,11 +80,9 @@ class CompanyController extends AbstractController
      */
     public function edit(Request $request, EntityManagerInterface $em, SessionInterface $session): Response
     {
-        $company = $em->getRepository(Company::class)->find($session->get('_company'));
+        $this->denyAccessUnlessGranted('edit', $this->companySession);
 
-        $this->denyAccessUnlessGranted('edit', $company);
-
-        $form = $this->createForm(CompanyType::class, $company);
+        $form = $this->createForm(CompanyType::class, $this->companySession);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

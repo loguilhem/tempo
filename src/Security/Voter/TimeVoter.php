@@ -42,6 +42,7 @@ class TimeVoter extends Voter
 
         // ... (check conditions and return true to grant permission) ...
         switch ($attribute) {
+            case 'view':
             case 'edit':
                 return $this->canEdit($user, $subject);
             case 'delete':
