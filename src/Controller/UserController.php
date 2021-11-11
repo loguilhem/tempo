@@ -7,6 +7,8 @@ use App\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -20,7 +22,7 @@ class UserController extends AbstractController
      * @Route(path="/", name="user_list", methods={"GET"})
      * @IsGranted("ROLE_SUPER_ADMIN")
      */
-    public function listUsers(EntityManagerInterface $entityManager)
+    public function listUsers(EntityManagerInterface $entityManager): Response
     {
         return $this->render('page/user/list.html.twig', [
             'users' => $entityManager->getRepository(User::class)->findTeamMembersExceptMe($this->getUser())
@@ -37,7 +39,7 @@ class UserController extends AbstractController
         EntityManagerInterface $entityManager,
         FlashBagInterface $flashBag,
         TranslatorInterface $translator
-    )
+    ): RedirectResponse
     {
         $this->denyAccessUnlessGranted('setRole', $user);
 
@@ -74,7 +76,7 @@ class UserController extends AbstractController
         EntityManagerInterface $entityManager,
         FlashBagInterface $flashBag,
         TranslatorInterface $translator
-    )
+    ): RedirectResponse
     {
         $locked = $user->isEnabled();
 

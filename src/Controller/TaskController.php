@@ -31,7 +31,7 @@ class TaskController extends AbstractController
     {
         return $this->render('page/task/list.html.twig', [
             'tasks' => $entityManager->getRepository(Task::class)->findBy([
-                'company' => $this->getUser()->getCompany()
+                'company' => $this->getUser()->getCompanies()
             ]),
             'taskToDelete' => $request->request->get('taskToDelete')
         ]);
@@ -51,13 +51,13 @@ class TaskController extends AbstractController
         $task = new Task();
         $form = $this->createForm(TaskType::class, $task, [
             'choices' => $entityManager->getRepository(Task::class)->findBy([
-                'company' => $this->getUser()->getCompany()
+                'company' => $this->getUser()->getCompanies()
             ])
         ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $task->setCompany($this->getUser()->getCompany());
+            $task->setCompany($this->getUser()->getCompanies());
             $entityManager->persist($task);
             $entityManager->flush();
             $flashBag->add('success', $translator->trans('Task added'));
@@ -84,7 +84,7 @@ class TaskController extends AbstractController
     {
         $this->denyAccessUnlessGranted('edit', $task);
 
-        $choices = $entityManager->getRepository(Task::class)->findExceptItself($task, $this->getUser()->getCompany());
+        $choices = $entityManager->getRepository(Task::class)->findExceptItself($task, $this->getUser()->getCompanies());
         $form = $this->createForm(TaskType::class, $task, [
             'choices' => $choices
         ]);

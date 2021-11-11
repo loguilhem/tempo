@@ -19,7 +19,7 @@ class AnalyticsServices
     public function __construct(EntityManagerInterface $em, Security $security)
     {
         $this->em = $em;
-        $this->company = $security->getUser()->getCompany();
+        $this->company = $security->getUser()->getCompanies();
     }
 
     public function analyzePerProjects(array $projects, array $tasks, array $users, array $times): array

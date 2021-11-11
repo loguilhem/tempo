@@ -28,7 +28,7 @@ class ProjectController extends AbstractController
     {
         return $this->render('page/project/list.html.twig', [
             'projects' => $entityManager->getRepository(Project::class)->findBy([
-                'company' => $this->getUser()->getCompany()
+                'company' => $this->getUser()->getCompanies()
             ]),
             'projectToDelete' => $request->request->get('projectToDelete')
         ]);
@@ -50,7 +50,7 @@ class ProjectController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $project->setCompany($this->getUser()->getCompany());
+            $project->setCompany($this->getUser()->getCompanies());
 
             $entityManager->persist($project);
             $entityManager->flush();

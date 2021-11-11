@@ -32,7 +32,7 @@ class TimeController extends AbstractController
     public function listTimes(Request $request, EntityManagerInterface $entityManager)
     {
         if ($this->isGranted('ROLE_ADMIN')) {
-            $times = $entityManager->getRepository(Time::class)->getByCompany($this->getUser()->getCompany());
+            $times = $entityManager->getRepository(Time::class)->getByCompany($this->getUser()->getCompanies());
         } else {
             $times = $entityManager->getRepository(Time::class)->findBy([
                 'user' => $this->getUser()
@@ -59,10 +59,10 @@ class TimeController extends AbstractController
         $time = new Time();
         $form = $this->createForm(TimeType::class, $time, [
             'projects' => $entityManager->getRepository(Project::class)->findBy([
-                'company' => $user->getCompany()
+                'company' => $user->getCompanies()
             ]),
             'tasks' => $entityManager->getRepository(Task::class)->findBy([
-                'company' => $user->getCompany()
+                'company' => $user->getCompanies()
             ])
         ]);
         $form->handleRequest($request);
@@ -99,10 +99,10 @@ class TimeController extends AbstractController
 
         $form = $this->createForm(TimeType::class, $time, [
             'projects' => $entityManager->getRepository(Project::class)->findBy([
-                'company' => $this->getUser()->getCompany()
+                'company' => $this->getUser()->getCompanies()
             ]),
             'tasks' => $entityManager->getRepository(Task::class)->findBy([
-                'company' => $this->getUser()->getCompany()
+                'company' => $this->getUser()->getCompanies()
             ])
         ]);
         $form->handleRequest($request);

@@ -50,6 +50,7 @@ company:
   tel: Tél
   token: Jeton
   edit: modifier
+  add: ajouter
 
 'Edit Company': 'Modifier la Société'
 'Save': 'Enregistrer'

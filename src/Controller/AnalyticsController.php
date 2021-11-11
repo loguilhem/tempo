@@ -22,7 +22,7 @@ class AnalyticsController extends AbstractController
      */
     public function index(Request $request, EntityManagerInterface $manager, AnalyticsServices $analyticsServices)
     {
-        $company = $this->getUser()->getCompany();
+        $company = $this->getUser()->getCompanies();
         $form = $this->createForm(AnalyticsType::class, null, [
             'projects' => $manager->getRepository(Project::class)->findBy(['company' => $company]),
             'tasks' => $manager->getRepository(Task::class)->findBy(['company' => $company]),

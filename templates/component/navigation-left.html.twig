@@ -49,10 +49,25 @@
 				</a>
 			</li>
 		</ul>
+		{% if app.user.companies|length %}
+		<hr>
+		<ul class="app-menu">
+			{% for company in app.user.companies %}
+				<li>
+					{% if app.request.cookies.get('_company') != company.id %}
+						<a class="app-menu__item" href="{{ path('company_select', {'company': company.id}) }}">
+							<span class="app-menu__label">{{ company.name }}</span>
+						</a>
+					{% else %}
+						<a class="app-menu__item active" href="{{ path('company_select', {'company': company.id}) }}">
+							<span class="app-menu__label">{{ company.name }}</span>
+						</a>
+					{% endif %}
+				</li>
+			{% endfor %}
+		</ul>
+		{% endif %}
 
-		<div class="app-sidebar-footer">
-			<div class="app-version"></div>
-			<div class="app-version-markdown"></div>
-		</div>
+
 	</aside>
 {% endblock %}

@@ -50,6 +50,12 @@
 					</div>
 				</div>
 			</div>
+			<div class="row">
+				<div class="col-md-12">
+					{% if allowAddCompany is same as 'true' %}
+						<a class="btn btn-outline-primary" href="{{ path('company_add') }}">{{ 'company.add' | trans }}</a>
+					{% endif %}
+				</div>
 		{% endblock %}
 	{% endembed %}
 {% endblock %}

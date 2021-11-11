@@ -1,7 +1,8 @@
 import '../scss/app.scss';
 import 'bootstrap';
 import 'material-icons';
-//import $ from 'jquery';
+const $ = require('jquery');
+require('bootstrap');
 
 import './navigation-left'
 // this "modifies" the jquery module: adding behavior to it

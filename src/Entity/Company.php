@@ -61,7 +61,7 @@ class Company
     private $tel;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="company", orphanRemoval=true)
+     * @ORM\ManyToMany(targetEntity="App\Entity\User", mappedBy="company", orphanRemoval=true)
      */
     private $members;
 
@@ -200,7 +200,7 @@ class Company
     {
         if (!$this->members->contains($member)) {
             $this->members[] = $member;
-            $member->setCompany($this);
+            $member->setCompanies($this);
         }
 
         return $this;
@@ -211,8 +211,8 @@ class Company
         if ($this->members->contains($member)) {
             $this->members->removeElement($member);
             // set the owning side to null (unless already changed)
-            if ($member->getCompany() === $this) {
-                $member->setCompany(null);
+            if ($member->getCompanies() === $this) {
+                $member->setCompanies(null);
             }
         }
 

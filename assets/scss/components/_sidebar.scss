@@ -79,7 +79,9 @@
 				background-color 0.3s ease;
 	@if $sidebar-accent == dark { color: $primary-color-dark }
 	@if $sidebar-accent == light { color: $primary-color-dark }
-	&.active,
+	&.active {
+		color: red;
+	}
 	&:hover,
 	&:focus {
 		background: $primary-color-light;

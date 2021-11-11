@@ -138,7 +138,7 @@ class SecurityController extends AbstractController
 
         $form = $this->createForm(RegistrationType::class, $user, [
             'role' => $role,
-            'addCompany' => false
+            'addCompany' => true
         ]);
         // if you want to disable the registration of a new company, pass addCompany to false
         // todo : add a vue to set this parameter in db, so a super admin non programmer can do it
@@ -183,7 +183,7 @@ class SecurityController extends AbstractController
                         'last_username' => $authenticationUtils->getLastUsername()
                     ]);
                 }
-                $user->setCompany($company);
+                $user->setCompanies($company);
             }
 
             $em->persist($user);

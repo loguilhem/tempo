@@ -19,6 +19,7 @@ company:
   tel: Tel
   token: Token
   edit: edit
+  add: add
 
 # Users management
 user:

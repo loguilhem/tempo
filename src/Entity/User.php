@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -77,10 +79,10 @@ class User implements UserInterface, \Serializable
     protected $roles;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Company", inversedBy="members" ,cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="App\Entity\Company", inversedBy="members" ,cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
-    private $company;
+    private $companies;
 
     /**
      * User constructor.
@@ -89,6 +91,7 @@ class User implements UserInterface, \Serializable
     {
         $this->enabled = false;
         $this->roles = [];
+        $this->companies = new ArrayCollection();
     }
 
     /** @see \Serializable::serialize() */
@@ -269,7 +272,8 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @param string $resetToken
+     * @param string|null $confirmationToken
+     * @return User
      */
     public function setConfirmationToken(?string $confirmationToken): self
     {
@@ -302,22 +306,30 @@ class User implements UserInterface, \Serializable
         foreach ($rolesSortByImportance as $key => $role) {
             if (in_array($role, $this->roles)) {
                 $roles['actual'] = $role;
-                $roles['previous'] = isset($rolesSortByImportance[$key-1]) ? $rolesSortByImportance[$key-1] : $rolesSortByImportance[$key];
-                $roles['next'] = isset($rolesSortByImportance[$key+1]) ? $rolesSortByImportance[$key+1] : $rolesSortByImportance[$key];
+                $roles['previous'] = $rolesSortByImportance[$key - 1] ?? $rolesSortByImportance[$key];
+                $roles['next'] = $rolesSortByImportance[$key + 1] ?? $rolesSortByImportance[$key];
 
                 return $roles;
             }
         }
+
+        return $roles;
     }
 
-    public function getCompany(): ?Company
+
+    /**
+     * @return ArrayCollection|Company[]
+     */
+    public function getCompanies(): Collection
     {
-        return $this->company;
+        return $this->companies;
     }
 
-    public function setCompany(?Company $company): self
+    public function setCompanies(?Company $company): self
     {
-        $this->company = $company;
+        if (!$this->companies->contains($company)) {
+            $this->companies[] = $company;
+        }
 
         return $this;
     }

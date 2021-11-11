@@ -8,4 +8,5 @@ twig:
         decimal_point: ','
     globals:
         locales: '%app_locales%'
+        allowAddCompany: '%allow_add_company%'
     form_themes: ['bootstrap_4_layout.html.twig']
