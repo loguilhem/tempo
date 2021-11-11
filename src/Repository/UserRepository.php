@@ -2,7 +2,9 @@
 
 namespace App\Repository;
 
+use App\Entity\Company;
 use App\Entity\User;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping;
@@ -22,18 +24,31 @@ class UserRepository extends EntityRepository implements UserLoaderInterface
             ->setParameter('username', $username)
             ->setParameter('email', $username)
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getOneOrNullResult()
+        ;
     }
 
-    public function findTeamMembersExceptMe($user)
+    public function findTeamMembersExceptMe(User $user, int $company): array
     {
         return $this->createQueryBuilder('u')
-            ->where('u.company = :company')
+            ->join('u.companies', 'c')
+            ->where('c.id = :company')
             ->andWhere('u.id != :me')
-            ->setParameter('company', $user->getCompany())
+            ->setParameter('company', $company)
             ->setParameter('me', $user)
             ->getQuery()
             ->getResult()
-            ;
+        ;
+    }
+
+    public function findByCompany(Company $company): array
+    {
+        return $this->createQueryBuilder('u')
+            ->join('u.companies', 'c')
+            ->where('c.id = :company')
+            ->setParameter('company', $company)
+            ->getQuery()
+            ->getResult()
+        ;
     }
 }

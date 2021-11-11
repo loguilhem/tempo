@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -22,10 +23,13 @@ class UserController extends AbstractController
      * @Route(path="/", name="user_list", methods={"GET"})
      * @IsGranted("ROLE_SUPER_ADMIN")
      */
-    public function listUsers(EntityManagerInterface $entityManager): Response
+    public function listUsers(EntityManagerInterface $entityManager, SessionInterface $session): Response
     {
         return $this->render('page/user/list.html.twig', [
-            'users' => $entityManager->getRepository(User::class)->findTeamMembersExceptMe($this->getUser())
+            'users' => $entityManager->getRepository(User::class)->findTeamMembersExceptMe(
+                $this->getUser(),
+                $session->get('_company')
+            )
         ]);
     }
     /**

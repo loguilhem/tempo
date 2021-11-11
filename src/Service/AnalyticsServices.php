@@ -4,22 +4,31 @@
 namespace App\Service;
 
 
+use App\Entity\Company;
 use App\Entity\Project;
 use App\Entity\Task;
 use App\Entity\Time;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Security;
 
 class AnalyticsServices
 {
+    /**
+     * @var EntityManagerInterface
+     */
     private $em;
+
+    /**
+     * @var Company
+     */
     private $company;
 
-    public function __construct(EntityManagerInterface $em, Security $security)
+    public function __construct(EntityManagerInterface $em, SessionInterface $session)
     {
         $this->em = $em;
-        $this->company = $security->getUser()->getCompanies();
+        $this->company = $em->getRepository(Company::class)->find($session->get('_company'));
     }
 
     public function analyzePerProjects(array $projects, array $tasks, array $users, array $times): array
@@ -185,9 +194,9 @@ class AnalyticsServices
     private function getUsers(array $users) : array
     {
         if (count($users) === 0) {
-            $users = $this->em->getRepository(User::class)->findBy([
-                'company' => $this->company
-            ]);
+            $users = $this->em->getRepository(User::class)->findByCompany(
+                $this->company
+            );
         }
 
         return $users;

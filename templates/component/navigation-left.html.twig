@@ -1,18 +1,6 @@
 {% block navigation_left %}
 	<div class="app-sidebar__overlay" data-toggle="sidebar"></div>
 	<aside class="app-sidebar">
-
-		<div class="app-sidebar__user">
-			{% if app.user.avatar is defined %}
-				<img class="app-sidebar__user-avatar" src="{{app.user.avatar}}" alt="User Image"/>
-			{% else %}
-				<img class="app-sidebar__user-avatar" src="{{ asset('build/images/no-avatar.png') }}" alt="User Image"/>
-			{% endif %}
-			<div>
-				<p class="app-sidebar__user-name">{{ app.user.username }}</p>
-			</div>
-		</div>
-
 		<ul class="app-menu">
 			{% if is_granted('ROLE_SUPER_ADMIN') %}
 				<li>

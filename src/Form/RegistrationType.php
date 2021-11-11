@@ -19,13 +19,9 @@ class RegistrationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        if ($options['addCompany']) {
-            $accountTypes = [
-                'Manager' => User::ROLE_SUPER_ADMIN,
-                'Leader or Member' => User::ROLE_USER
-            ];
-        } else {
-            $accountTypes = ['Leader or Member' => User::ROLE_USER];
+        $accountTypes = ['Leader or Member' => User::ROLE_USER];
+        if (!$options['addCompany']) {
+            $accountTypes['Manager'] = User::ROLE_SUPER_ADMIN;
         }
 
         $builder

@@ -2,8 +2,11 @@
 
 namespace App\Security\Voter;
 
+use App\Entity\Company;
 use App\Entity\Time;
 use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Security;
@@ -11,6 +14,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class TimeVoter extends Voter
 {
+    /**
+     * @var Security
+     */
     private $security;
 
     public function __construct(Security $security)

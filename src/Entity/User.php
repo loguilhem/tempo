@@ -79,8 +79,7 @@ class User implements UserInterface, \Serializable
     protected $roles;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Company", inversedBy="members" ,cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\ManyToMany(targetEntity="App\Entity\Company", inversedBy="members")
      */
     private $companies;
 
@@ -316,7 +315,6 @@ class User implements UserInterface, \Serializable
         return $roles;
     }
 
-
     /**
      * @return ArrayCollection|Company[]
      */
@@ -325,7 +323,7 @@ class User implements UserInterface, \Serializable
         return $this->companies;
     }
 
-    public function setCompanies(?Company $company): self
+    public function addCompany(?Company $company): self
     {
         if (!$this->companies->contains($company)) {
             $this->companies[] = $company;

@@ -136,15 +136,13 @@ class SecurityController extends AbstractController
         $registration   = $request->request->get('registration');
         $role           = null === $registration ? 'ROLE_SUPER_ADMIN' : $registration['accountType'];
 
+        // if you want to disable the registration of a new company, pass ALLOW_ADD_COMPANY to 0 in .env
         $form = $this->createForm(RegistrationType::class, $user, [
             'role' => $role,
-            'addCompany' => true
+            'addCompany' => (bool) $this->getParameter('allow_add_company'),
         ]);
-        // if you want to disable the registration of a new company, pass addCompany to false
-        // todo : add a vue to set this parameter in db, so a super admin non programmer can do it
 
         $form->handleRequest($request);
-        
         if ($form->isSubmitted() && $form->isValid())
         {
             $user
@@ -183,7 +181,7 @@ class SecurityController extends AbstractController
                         'last_username' => $authenticationUtils->getLastUsername()
                     ]);
                 }
-                $user->setCompanies($company);
+                $user->addCompany($company);
             }
 
             $em->persist($user);

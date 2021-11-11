@@ -5,6 +5,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Company;
 use App\Entity\Project;
 use App\Entity\Task;
 use App\Entity\Time;
@@ -15,6 +16,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -26,17 +28,36 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class TimeController extends AbstractController
 {
     /**
+     * @var Company
+     */
+    private $companySession;
+
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
+
+    public function __construct(SessionInterface $session, EntityManagerInterface $em)
+    {
+        $this->companySession = $em->getRepository(Company::class)->find($session->get('_company'));
+        $this->em = $em;
+    }
+
+    /**
      * @Route(path="/list", name="list_times", methods={"GET", "POST"})
      * @IsGranted("ROLE_USER")
      */
-    public function listTimes(Request $request, EntityManagerInterface $entityManager)
+    public function listTimes(Request $request)
     {
         if ($this->isGranted('ROLE_ADMIN')) {
-            $times = $entityManager->getRepository(Time::class)->getByCompany($this->getUser()->getCompanies());
+            $times = $this->em->getRepository(Time::class)->getTimes($this->companySession);
         } else {
-            $times = $entityManager->getRepository(Time::class)->findBy([
-                'user' => $this->getUser()
-            ]);
+            $times = $this->em->getRepository(Time::class)->getTimes(
+                $this->companySession,
+                null,
+                null,
+                [$this->getUser()]
+            );
         }
 
         return $this->render('page/time/list.html.twig', [
@@ -50,7 +71,6 @@ class TimeController extends AbstractController
      */
     public function add(
         Request $request,
-        EntityManagerInterface $entityManager,
         FlashBagInterface $flashBag,
         TranslatorInterface $translator
     )
@@ -58,19 +78,19 @@ class TimeController extends AbstractController
         $user = $this->getUser();
         $time = new Time();
         $form = $this->createForm(TimeType::class, $time, [
-            'projects' => $entityManager->getRepository(Project::class)->findBy([
-                'company' => $user->getCompanies()
+            'projects' => $this->em->getRepository(Project::class)->findBy([
+                'company' => $this->companySession
             ]),
-            'tasks' => $entityManager->getRepository(Task::class)->findBy([
-                'company' => $user->getCompanies()
+            'tasks' => $this->em->getRepository(Task::class)->findBy([
+                'company' => $this->companySession
             ])
         ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $time->setUser($user);
-            $entityManager->persist($time);
-            $entityManager->flush();
+            $this->em->persist($time);
+            $this->em->flush();
             $flashBag->add('success', $translator->trans('Time added'));
 
             return $this->redirectToRoute('list_times');
@@ -90,7 +110,6 @@ class TimeController extends AbstractController
     public function edit(
         Request $request,
         Time $time,
-        EntityManagerInterface $entityManager,
         FlashBagInterface $flashBag,
         TranslatorInterface $translator
     )
@@ -98,17 +117,17 @@ class TimeController extends AbstractController
         $this->denyAccessUnlessGranted('edit', $time);
 
         $form = $this->createForm(TimeType::class, $time, [
-            'projects' => $entityManager->getRepository(Project::class)->findBy([
-                'company' => $this->getUser()->getCompanies()
+            'projects' => $this->em->getRepository(Project::class)->findBy([
+                'company' => $this->companySession
             ]),
-            'tasks' => $entityManager->getRepository(Task::class)->findBy([
-                'company' => $this->getUser()->getCompanies()
+            'tasks' => $this->em->getRepository(Task::class)->findBy([
+                'company' => $this->companySession
             ])
         ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+            $this->em->flush();
             $flashBag->add('success', $translator->trans('Time edited'));
 
             return $this->redirectToRoute('list_times');
@@ -127,15 +146,14 @@ class TimeController extends AbstractController
     public function delete(
         Request $request,
         TranslatorInterface $translator,
-        FlashBagInterface $flashBag,
-        EntityManagerInterface $entityManager
+        FlashBagInterface $flashBag
     )
     {
-        $time = $entityManager->getRepository(Time::class)->find($request->request->get('id'));
+        $time = $this->em->getRepository(Time::class)->find($request->request->get('id'));
         $this->denyAccessUnlessGranted('delete', $time);
 
-        $entityManager->remove($time);
-        $entityManager->flush();
+        $this->em->remove($time);
+        $this->em->flush();
         $flashBag->add('success', $translator->trans('Time deleted'));
 
         return $this->redirectToRoute('list_times');

@@ -9,14 +9,14 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class ProjectVoter extends Voter
 {
-    protected function supports($attribute, $subject)
+    protected function supports($attribute, $subject): bool
     {
         // https://symfony.com/doc/current/security/voters.html
         return in_array($attribute, ['edit', 'delete'])
             && $subject instanceof Project;
     }
 
-    protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
+    protected function voteOnAttribute($attribute, $subject, TokenInterface $token): bool
     {
         $user = $token->getUser();
         // if the user is anonymous, do not grant access
@@ -26,9 +26,8 @@ class ProjectVoter extends Voter
 
         switch ($attribute) {
             case 'edit':
-                return $user->getCompanies() === $subject->getCompany();
             case 'delete':
-                return $user->getCompanies() === $subject->getCompany();
+                return $user->getCompanies()->contains($subject->getCompany());
         }
 
         return false;

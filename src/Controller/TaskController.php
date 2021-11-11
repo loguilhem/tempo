@@ -5,6 +5,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Company;
 use App\Entity\Task;
 use App\Form\TaskType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -12,7 +13,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -23,15 +26,32 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class TaskController extends AbstractController
 {
+
+    /**
+     * @var Company
+     */
+    private $companySession;
+
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
+
+    public function __construct(SessionInterface $session, EntityManagerInterface $em)
+    {
+        $this->companySession = $em->getRepository(Company::class)->find($session->get('_company'));
+        $this->em = $em;
+    }
+
     /**
      * @Route(path="/list", name="list_tasks", methods={"GET", "POST"})
      * @IsGranted("ROLE_ADMIN")
      */
-    public function listTasks(EntityManagerInterface $entityManager, Request $request)
+    public function listTasks(Request $request): Response
     {
         return $this->render('page/task/list.html.twig', [
-            'tasks' => $entityManager->getRepository(Task::class)->findBy([
-                'company' => $this->getUser()->getCompanies()
+            'tasks' => $this->em->getRepository(Task::class)->findBy([
+                'company' => $this->companySession
             ]),
             'taskToDelete' => $request->request->get('taskToDelete')
         ]);
@@ -44,22 +64,21 @@ class TaskController extends AbstractController
     public function add(
         Request $request,
         FlashBagInterface $flashBag,
-        EntityManagerInterface $entityManager,
         TranslatorInterface $translator
     )
     {
         $task = new Task();
         $form = $this->createForm(TaskType::class, $task, [
-            'choices' => $entityManager->getRepository(Task::class)->findBy([
-                'company' => $this->getUser()->getCompanies()
+            'choices' => $this->em->getRepository(Task::class)->findBy([
+                'company' => $this->companySession
             ])
         ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $task->setCompany($this->getUser()->getCompanies());
-            $entityManager->persist($task);
-            $entityManager->flush();
+            $task->setCompany($this->companySession);
+            $this->em->persist($task);
+            $this->em->flush();
             $flashBag->add('success', $translator->trans('Task added'));
 
             return $this->redirectToRoute('list_tasks');
@@ -77,21 +96,20 @@ class TaskController extends AbstractController
      */
     public function edit(
         Request $request,
-        EntityManagerInterface $entityManager,
         FlashBagInterface $flashBag,
         TranslatorInterface $translator,
         Task $task)
     {
         $this->denyAccessUnlessGranted('edit', $task);
 
-        $choices = $entityManager->getRepository(Task::class)->findExceptItself($task, $this->getUser()->getCompanies());
+        $choices = $this->em->getRepository(Task::class)->findExceptItself($task, $this->getUser()->getCompanies());
         $form = $this->createForm(TaskType::class, $task, [
             'choices' => $choices
         ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+            $this->em->flush();
             $flashBag->add('success', $translator->trans('Task edited'));
 
             return $this->redirectToRoute('list_tasks');
