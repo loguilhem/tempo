@@ -54,6 +54,8 @@ class AnalyticsServices
                         $stats[$project->getId()]['tasks'][$task->getId()]['total'] = $this->timeToHours($time) + $stats[$project->getId()]['tasks'][$task->getId()]['total'];
                     }
                 }
+
+                $stats = $this->cleanSubStats($stats, $project->getId(), 'tasks', $task->getId());
             }
 
             // Per projects and users
@@ -66,10 +68,15 @@ class AnalyticsServices
                         $stats[$project->getId()]['users'][$user->getId()]['total'] = $this->timeToHours($time) + $stats[$project->getId()]['users'][$user->getId()]['total'];
                     }
                 }
+
+                $stats = $this->cleanSubStats($stats, $project->getId(), 'users', $user->getId());
             }
+
+            $stats = $this->cleanStats($stats, $project->getId(), 'tasks');
         }
 
         return $stats;
+
     }
 
     public function analyzePerTasks(array $projects, array $tasks, array $users, array $times): array
@@ -95,6 +102,7 @@ class AnalyticsServices
                         $stats[$task->getId()]['projects'][$project->getId()]['total'] = $this->timeToHours($time) + $stats[$task->getId()]['projects'][$project->getId()]['total'];
                     }
                 }
+                $stats = $this->cleanSubStats($stats, $task->getId(), 'projects', $project->getId());
             }
 
             /** @var User $user */
@@ -106,7 +114,11 @@ class AnalyticsServices
                         $stats[$task->getId()]['users'][$user->getId()]['total'] = $this->timeToHours($time) + $stats[$task->getId()]['users'][$user->getId()]['total'];
                     }
                 }
+
+                $stats = $this->cleanSubStats($stats, $task->getId(), 'users', $user->getId());
             }
+
+            $stats = $this->cleanStats($stats, $task->getId(), 'projects');
         }
 
         return $stats;
@@ -135,6 +147,8 @@ class AnalyticsServices
                         $stats[$user->getId()]['projects'][$project->getId()]['total'] = $this->timeToHours($time) + $stats[$user->getId()]['projects'][$project->getId()]['total'];
                     }
                 }
+
+                $stats = $this->cleanSubStats($stats, $user->getId(), 'projects', $project->getId());
             }
 
             /** @var Task $task */
@@ -146,7 +160,11 @@ class AnalyticsServices
                         $stats[$user->getId()]['tasks'][$task->getId()]['total'] = $this->timeToHours($time) + $stats[$user->getId()]['tasks'][$task->getId()]['total'];
                     }
                 }
+
+                $stats = $this->cleanSubStats($stats, $user->getId(), 'tasks', $task->getId());
             }
+
+            $stats = $this->cleanStats($stats, $user->getId(), 'projects');
         }
 
         return $stats;
@@ -154,19 +172,9 @@ class AnalyticsServices
 
     public function timeToHours(Time $time): float
     {
-        $diff = $time->getEndTime()->diff($time->getStartTime());
-        $hours1 = $hours2 = $hours3 = 0;
-        if ($diff->format('%a') > 0) {
-            $hours1 = $diff->format('%a') * 24;
-        }
-        if ($diff->format('%h') > 0) {
-            $hours2 = $diff->format('%h');
-        }
-        if ($diff->format('%m') > 0) {
-            $hours3 = round($diff->format('%m') / 60, 2);
-        }
+        $diff = $time->getEndTime()->getTimestamp() - $time->getStartTime()->getTimestamp();
 
-        return $hours1 + $hours2 + $hours3;
+        return $diff / ( 60 * 60 );
     }
 
     private function getProjects(array $projects) : array
@@ -200,6 +208,25 @@ class AnalyticsServices
         }
 
         return $users;
+    }
+
+    private function cleanStats($stats, int $perId, string $category): array
+    {
+        if (0 === count($stats[$perId][$category])) {
+                unset($stats[$perId]);
+        }
+
+        return $stats;
+    }
+
+    private function cleanSubStats(array $stats, int $perId, string $subName, int $subId): array
+    {
+        // Delete tasks with no times
+        if (0 === $stats[$perId][$subName][$subId]['total']) {
+            unset($stats[$perId][$subName][$subId]);
+        }
+
+        return $stats;
     }
 
 }

@@ -5,9 +5,95 @@ $(document).ready(function () {
   graphProjects();
   graphTasks();
   graphUsers();
+
+  showProjects(true);
+  showTasks(false);
+  showUsers(false);
+  showRecords(false);
+
+  $('#showRecords').on('click', function () {
+      showRecords(true);
+      showProjects(false);
+      showTasks(false);
+      showUsers(false);
+  })
+
+  $('#showProjects').on('click', function () {
+    showRecords(false);
+    showProjects(true);
+    showTasks(false);
+    showUsers(false);
+  })
+
+  $('#showTasks').on('click', function () {
+    showRecords(false);
+    showProjects(false);
+    showTasks(true);
+    showUsers(false);
+  })
+
+  $('#showUsers').on('click', function () {
+    showRecords(false);
+    showProjects(false);
+    showTasks(false);
+    showUsers(true);
+  })
 })
 
-function graphProjects() {
+function showProjects(show)
+{
+  let $projects = $('#analytics-projects');
+  let $projectsTab = $('#projects');
+  if (show) {
+    $projects.show();
+    $projectsTab.show();
+  } else {
+    $projects.hide();
+    $projectsTab.hide();
+  }
+}
+
+function showTasks(show)
+{
+  let $tasks = $('#analytics-tasks');
+  let $tasksTab = $('#tasks');
+  if (show) {
+    $tasks.show();
+    $tasksTab.show();
+  } else {
+    $tasks.hide();
+    $tasksTab.hide();
+  }
+}
+
+function showUsers(show)
+{
+  let $users = $('#analytics-users');
+  let $usersTab = $('#users');
+  if (show) {
+    $users.show();
+    $usersTab.show();
+  } else {
+    $users.hide();
+    $usersTab.hide();
+  }
+}
+
+function showRecords(show)
+{
+  let $records = $('#analytics-all-records');
+  let $recordsTab = $('#all-records');
+  if (show) {
+    $records.show();
+    $recordsTab.show();
+  } else {
+    $records.hide();
+    $recordsTab.hide();
+  }
+}
+
+function graphProjects()
+{
   let $projects = $('#projects');
   let projects = $projects.attr('data-projects');
   let colorTasks = [];
@@ -31,27 +117,27 @@ function graphProjects() {
       colorUsers.push(colorGenerator());
     })
 
-    let ctxPt = document.getElementById('project-task-' + iProject).getContext("2d");
-    new Chart(ctxPt, {
-      type: 'pie',
-      data: {
-        labels: labelTasks,
-        datasets: [{
-          label: labelTasks,
-          data: dataTasks,
-          backgroundColor: colorTasks,
-          borderColor: colorTasks,
-          borderWidth: 1
-        }]
-      },
-      options: {
-        title: {
-          text: project.name,
-          display: true,
-          position: top,
+      let ctxPt = document.getElementById('project-task-' + iProject).getContext("2d");
+      new Chart(ctxPt, {
+        type: 'pie',
+        data: {
+          labels: labelTasks,
+          datasets: [{
+            label: labelTasks,
+            data: dataTasks,
+            backgroundColor: colorTasks,
+            borderColor: colorTasks,
+            borderWidth: 1
+          }]
+        },
+        options: {
+          title: {
+            text: project.name,
+            display: true,
+            position: top,
+          }
         }
-      }
-    });
+      });
 
     let ctxPu = document.getElementById('project-user-' + iProject).getContext("2d");
     new Chart(ctxPu, {
