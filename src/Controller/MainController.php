@@ -28,6 +28,11 @@ class MainController extends AbstractController
         CompanyService $companyService
     ): Response
     {
+        $locale = $request->cookies->get('_locale');
+        if ($locale) {
+            $request->getSession()->set('_locale', $locale);
+        }
+
         if ($this->isGranted('ROLE_USER')) {
             $companyService->setSession($request, $session, null);
             return $this->render('page/dashboard.html.twig');
@@ -48,8 +53,16 @@ class MainController extends AbstractController
         // Save locale in session
         $request->getSession()->set('_locale', $locale);
 
+        $response = new RedirectResponse($request->headers->get('referer'));
+        $response
+            ->prepare($request)
+            ->setStatusCode(200)
+            ->headers
+            ->setCookie(new Cookie('_locale', $locale, time() + (10 * 24 * 60 * 60)))
+        ;
+
         // Back to visited page
-        return $this->redirect($request->headers->get('referer'));
+        return $response;
     }
 
     /**

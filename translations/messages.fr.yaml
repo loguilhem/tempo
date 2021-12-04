@@ -63,6 +63,9 @@ user:
   email: Courriel
   role: Rôle
   status: Statut
+User role cannot be modified: Le rôle de l'utilisateur ne peut pas être modifié
+User is ROLE_USER: Le rôle de l'utilisateur est ROLE_USER
+User is ROLE_ADMIN: Le rôle de l'utilisateur est ROLE_ADMIN
 
 # Projects management
 'Projects Management': 'Gestion Projets'
@@ -73,12 +76,17 @@ project:
   edit: Modifier
   delete: Supprimer
   alert_msg: 'Êtes-vous sûr(e) de vouloir supprimer ce projet ? Les temps enregistrés dans ce projet seront aussi supprimés.'
+  yes_msg: Oui, je suis sûr(e)
+  no_msg: Non, anuller
 yes_msg: 'Oui je suis sûr(e)'
 no_msg: 'Non, annuler'
 'Edit': 'Modifier'
 'Delete': 'Supprimer'
 'New project': 'Créer un projet'
 'Add/edit Project': 'Ajouter/modifier un projet'
+Project edited: Projet modifié
+Project added: Projet ajouté
+Project deleted.: Projet supprimé
 
 # Tasks management
 'Tasks Management': 'Gestion Tâches'
@@ -110,6 +118,7 @@ time:
 'Time added': 'Temps ajouté'
 'Time edited': 'Temps modifié'
 'Time deleted': 'Temps supprimé'
+Start time must be inforior to End time: Le date de fin doit être supérieure à la date de début
 
 # Analytics
 Analytics: Analyse
