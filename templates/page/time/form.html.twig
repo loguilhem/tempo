@@ -16,3 +16,10 @@
         {% endblock %}
     {% endembed %}
 {% endblock %}
+
+{% block footer %}
+    {{ parent() }}
+    {% block javascripts_footer %}
+        {{ encore_entry_script_tags('time-form') }}
+    {% endblock %}
+{% endblock %}

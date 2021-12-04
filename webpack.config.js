@@ -24,6 +24,7 @@ Encore
     .addEntry('analytics-form', './assets/js/analytics-form.js')
     .addEntry('analytics-results', './assets/js/analytics-results.js')
     .addEntry('register-form', './assets/js/register-form.js')
+    .addEntry('time-form', './assets/js/time-form.js')
 
     // will require an extra script tag for runtime.js
     // but, you probably want this, unless you're building a single-page app
@@ -65,7 +66,7 @@ Encore
     )
 
     // uncomment if you're having problems with a jQuery plugin
-    //.autoProvidejQuery()
+    .autoProvidejQuery()
 ;
 
 module.exports = Encore.getWebpackConfig();

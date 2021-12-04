@@ -36,6 +36,9 @@ class AnalyticsType extends AbstractType
                 'placeholder' => self::all,
                 'required' => false,
                 'mapped' => false,
+                'attr' => [
+                    'class' => 'select2',
+                ],
             ])
             ->add('task', ChoiceType::class, [
                 'choices' => $options['tasks'],
@@ -45,6 +48,9 @@ class AnalyticsType extends AbstractType
                 'placeholder' => self::all,
                 'required' => false,
                 'mapped' => false,
+                'attr' => [
+                    'class' => 'select2',
+                ],
             ]);
 
             if ($this->security->isGranted('ROLE_ADMIN')) {
