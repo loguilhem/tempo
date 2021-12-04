@@ -55,13 +55,16 @@ class AnalyticsType extends AbstractType
 
             if ($this->security->isGranted('ROLE_ADMIN')) {
                 $builder->add('user', ChoiceType::class, [
-                        'choices' => $options['users'],
-                        'expanded' => false,
-                        'multiple' => true,
-                        'choice_label' => 'username',
-                        'placeholder' => self::all,
-                        'required' => false,
-                        'mapped' => false,
+                    'choices' => $options['users'],
+                    'expanded' => false,
+                    'multiple' => true,
+                    'choice_label' => 'username',
+                    'placeholder' => self::all,
+                    'required' => false,
+                    'mapped' => false,
+                    'attr' => [
+                        'class' => 'select2',
+                    ],
                 ]);
             }
 
