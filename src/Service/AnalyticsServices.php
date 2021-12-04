@@ -172,19 +172,9 @@ class AnalyticsServices
 
     public function timeToHours(Time $time): float
     {
-        $diff = $time->getEndTime()->diff($time->getStartTime());
-        $hours1 = $hours2 = $hours3 = 0;
-        if ($diff->format('%a') > 0) {
-            $hours1 = $diff->format('%a') * 24;
-        }
-        if ($diff->format('%h') > 0) {
-            $hours2 = $diff->format('%h');
-        }
-        if ($diff->format('%i') > 0) {
-            $hours3 = round($diff->format('%i') / 60, 2);
-        }
+        $diff = $time->getEndTime()->getTimestamp() - $time->getStartTime()->getTimestamp();
 
-        return $hours1 + $hours2 + $hours3;
+        return $diff / ( 60 * 60 );
     }
 
     private function getProjects(array $projects) : array
