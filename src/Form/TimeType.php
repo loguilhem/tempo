@@ -31,6 +31,9 @@ class TimeType extends AbstractType
                 'choice_label' => function($project) {
                     return $project->getName();
                 },
+                'attr' => [
+                    'class' => 'select2',
+                ],
             ])
             ->add('task', EntityType::class, [
                 'class' => Task::class,
@@ -40,6 +43,9 @@ class TimeType extends AbstractType
                 'choice_label' => function($task) {
                     return $task->getName();
                 },
+                'attr' => [
+                    'class' => 'select2',
+                ],
             ])
             ->add('startTime', DateTimeType::class, [
                     'widget' => 'single_text',
