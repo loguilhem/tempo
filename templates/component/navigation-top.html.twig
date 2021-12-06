@@ -15,8 +15,13 @@
 				x-placement="bottom-end"
 				>
 				<li>
+					<a class="dropdown-item" href="{{ path('profile') }}">
+						{{ 'Profile'|trans }}
+					</a>
+				</li>
+				<li>
 					<a class="dropdown-item" href="{{ path('app_logout') }}">
-						Logout
+						{{ 'Logout'|trans }}
 					</a>
 				</li>
 			</ul>

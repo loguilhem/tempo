@@ -1,0 +1,36 @@
+{% extends 'layout/left-side-column.html.twig' %}
+
+{% block page %}
+	{% embed "_page.html.twig" %}
+		{% block page_title %}
+			{{ 'Profile'|trans }}
+		{% endblock %}
+
+		{% block page_content %}
+			<div class="row">
+				<div class="col-md-12">
+					<div class="tile">
+						<table class="table table-hover table-striped table-bordered">
+							<thead>
+							<tr>
+								<th>{{ 'user.name'|trans }}</th>
+								<th>{{ 'user.email'|trans }}</th>
+								<th>{{ 'user.password'|trans }}</th>
+								<th>{{ 'user.dump.gdpr' }}</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr>
+								<td>{{ user.username }}</td>
+								<td>{{ user.email }}</td>
+								<td>{{ 'update'|trans }}</td>
+								<td>In development</td>
+							</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		{% endblock %}
+	{% endembed %}
+{% endblock %}

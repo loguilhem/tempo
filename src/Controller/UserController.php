@@ -32,6 +32,27 @@ class UserController extends AbstractController
             )
         ]);
     }
+
+    /**
+     * @Route(path="/my-profile", name="profile", methods={"GET"})
+     * @IsGranted("ROLE_USER")
+     */
+    public function profile()
+    {
+        return $this->render('page/user/profile.html.twig', [
+            'user' => $this->getUser()
+        ]);
+    }
+
+    /**
+     * @Route(path="/{id}/edit", name="profile-edit", methods={"POST"})
+     * @IsGranted("ROLE_SUPER_ADMIN")
+     */
+    public function editProfile()
+    {
+        // @todo
+    }
+
     /**
      * @Route(path="/{id}/{action}", name="promote_demote_user", methods={"GET"})
      * @IsGranted("ROLE_SUPER_ADMIN")
