@@ -124,21 +124,15 @@ class User implements UserInterface, \Serializable
     /**
      * getUsername
      *
-     * @return string
+     * @return string|null
      */
-    public function getUsername(): string
+    public function getUsername(): ?string
     {
-        return (string) $this->username;
+        return $this->username;
     }
-    
-    /**
-     * Auto generate Username from email user's 
-     *
-     * @return self
-     */
-    public function generateUsername() :self
+
+    public function setUsername(string $username): self
     {
-        $username = $this->getEmail();
         $this->username = $username;
 
         return $this;

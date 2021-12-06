@@ -37,7 +37,12 @@
 									{{ form_row(registrationForm.email, {'attr': {'class': 'form-control'}, 'label_attr': {'class': 'control-label'}}) }}
 								</div>
 							</div>
-							<div class="col col-12 col-sm-6"></div>
+							<div class="col col-12 col-sm-6">
+								<div class="form-group">
+									{{ form_row(registrationForm.username, {'attr': {'class': 'form-control'}, 'label_attr': {'class': 'control-label'}}) }}
+								</div>
+							</div>
+							<div class="col col-12 col-sm-12"></div>
 							<div class="col col-6">
 								<div class="form-group">
 									{{ form_row(registrationForm.plainPassword.second, {'attr': {'class': 'form-control'}, 'label_attr': {'class': 'control-label'}}) }}
