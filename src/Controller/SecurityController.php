@@ -157,7 +157,6 @@ class SecurityController extends AbstractController
                 )
                 ->addRole($role)
                 ->setEnabled(true)
-                ->generateUsername()
             ;
 
             if ($form->has('Company')) {
