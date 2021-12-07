@@ -1,0 +1,22 @@
+{% extends 'layout/left-side-column.html.twig' %}
+
+{% block page %}
+	{% embed "_page.html.twig" %}
+		{% block page_title %}
+			{{ 'Profile'|trans }}
+		{% endblock %}
+
+		{% block page_content %}
+			<div class="row">
+				<div class="col-md-12">
+					<div class="tile">
+						{{ form_start(form) }}
+						{{ form_widget(form) }}
+						<button class="btn btn-primary">{{ button_label|default('Save')|trans }}</button>
+						{{ form_end(form) }}
+					</div>
+				</div>
+			</div>
+		{% endblock %}
+	{% endembed %}
+{% endblock %}
