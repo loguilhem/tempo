@@ -2,16 +2,20 @@
 
 namespace App\Controller;
 
+use App\Form\UserPasswordType;
+use App\Form\UserType;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
@@ -45,16 +49,74 @@ class UserController extends AbstractController
     }
 
     /**
-     * @Route(path="/{id}/edit", name="profile-edit", methods={"POST"})
-     * @IsGranted("ROLE_SUPER_ADMIN")
+     * @Route(path="/my-profile/edit", name="profile_edit", methods={"GET", "POST"})
+     * @IsGranted("ROLE_USER")
      */
-    public function editProfile()
+    public function editProfile(
+        EntityManagerInterface $em,
+        Request $request
+    ): Response
     {
-        // @todo
+        $user = $this->getUser();
+        $this->denyAccessUnlessGranted('edit', $user);
+
+        $form = $this->createForm(UserType::class, $user);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $em->flush();
+
+            return $this->render('page/user/profile.html.twig', [
+                'user' => $user
+            ]);
+        }
+
+        return $this->render('page/user/profile-edit.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 
     /**
-     * @Route(path="/{id}/{action}", name="promote_demote_user", methods={"GET"})
+     * @Route(path="/my-profile/password/edit", name="profile_password_edit", methods={"GET", "POST"})
+     * @IsGranted("ROLE_USER")
+     */
+    public function editPassword(
+        UserPasswordEncoderInterface $passwordEncoder,
+        EntityManagerInterface $em,
+        Request $request
+    ): Response
+    {
+        $user = $this->getUser();
+        $this->denyAccessUnlessGranted('edit', $user);
+
+        $form = $this->createForm(UserPasswordType::class, $user);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $user
+                ->setPassword(
+                    $passwordEncoder->encodePassword(
+                        $user,
+                        $form->get('plainPassword')->getData()
+                    )
+                )
+            ;
+            $em->flush();
+
+            return $this->render('page/user/profile.html.twig', [
+                'user' => $user
+            ]);
+        }
+
+        return $this->render('page/user/profile-edit.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route(path="/roles/{id}/{action}", name="promote_demote_user", methods={"GET"})
      * @IsGranted("ROLE_SUPER_ADMIN")
      * @ParamConverter("user", class="App\Entity\User")
      */

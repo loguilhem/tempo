@@ -11,23 +11,20 @@
 				<div class="col-md-12">
 					<div class="tile">
 						<table class="table table-hover table-striped table-bordered">
-							<thead>
-							<tr>
-								<th>{{ 'user.name'|trans }}</th>
-								<th>{{ 'user.email'|trans }}</th>
-								<th>{{ 'user.password'|trans }}</th>
-								<th>{{ 'user.dump.gdpr' }}</th>
-							</tr>
-							</thead>
 							<tbody>
 							<tr>
+								<th>{{ 'user.name'|trans }}</th>
 								<td>{{ user.username }}</td>
+							</tr>
+							<tr>
+								<th>{{ 'user.email'|trans }}</th>
 								<td>{{ user.email }}</td>
-								<td>{{ 'update'|trans }}</td>
-								<td>In development</td>
 							</tr>
 							</tbody>
 						</table>
+
+						<a class="btn btn-outline-primary" href="{{ path('profile_edit') }}">{{ 'user.edit' | trans }}</a>
+						<a class="btn btn-outline-secondary" href="{{ path('profile_password_edit', {'id': user.id}) }}">{{ 'user.password.edit' | trans }}</a>
 					</div>
 				</div>
 			</div>

@@ -60,10 +60,14 @@ company:
 'User Management': 'Gestion utilisateurs'
 'Users List': 'Liste des utilisateurs'
 user:
-  name: Nom
+  name: Pseudonyme
   email: Courriel
   role: Rôle
   status: Statut
+  password: Mot de passe
+  password.edit: Modifier le mot de passe
+  gdpr: Données personnelles
+  edit: Modifier
 User role cannot be modified: Le rôle de l'utilisateur ne peut pas être modifié
 User is ROLE_USER: Le rôle de l'utilisateur est ROLE_USER
 User is ROLE_ADMIN: Le rôle de l'utilisateur est ROLE_ADMIN
