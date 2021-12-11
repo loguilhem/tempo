@@ -80,7 +80,7 @@ class SecurityController extends AbstractController
         ], UrlGeneratorInterface::ABSOLUTE_URL);
 
         $message = (new \Swift_Message('Forgot Password'))
-            ->setFrom('noreply@yourmailhost.com')
+            ->setFrom($this->getParameter('mail_from'))
             ->setTo($user->getEmail())
             ->setBody("use link below to reset password : " .
                 $url, 'text/html');
