@@ -21,7 +21,6 @@ class CompanyService
         $this->user = $security->getUser();
     }
 
-
     public function setSession(
         Request          $request,
         SessionInterface $session,
@@ -34,11 +33,7 @@ class CompanyService
             return;
         }
 
-        if ($request->cookies->get('_company')) {
-            $session->set('_company', $request->cookies->get('_company'));
-        } else {
-            $lastCompany = $this->user->getCompanies();
-            $session->set('_company', $lastCompany[0]->getId());
-        }
+        $lastCompany = $this->user->getCompanies();
+        $session->set('_company', $lastCompany[0]->getId());
     }
 }
