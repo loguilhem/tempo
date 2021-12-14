@@ -80,14 +80,6 @@ class MainController extends AbstractController
     {
         $session->set('_company', $company->getId());
 
-        $response = new RedirectResponse($request->headers->get('referer'));
-        $response
-            ->prepare($request)
-            ->setStatusCode(200)
-            ->headers
-            ->setCookie(new Cookie('_company', $company->getId(), time() + (10 * 24 * 60 * 60)))
-        ;
-
-        return $response;
+        return new RedirectResponse($request->headers->get('referer'));
     }
 }
