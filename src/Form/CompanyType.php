@@ -26,7 +26,7 @@ class CompanyType extends AbstractType
                 ]
             ])
             ->add('address', TextType::class, [
-                'required' => true,
+                'required' => false,
                 'label_attr' => [
                     'class' => 'control-label'  
                 ],
@@ -35,7 +35,7 @@ class CompanyType extends AbstractType
                 ]
             ])
             ->add('zipCode', NumberType::class, [
-                'required' => true,
+                'required' => false,
                 'label_attr' => [
                     'class' => 'control-label'  
                 ],
@@ -44,7 +44,7 @@ class CompanyType extends AbstractType
                 ]
             ])
             ->add('city', TextType::class, [
-                'required' => true,
+                'required' => false,
                 'label_attr' => [
                     'class' => 'control-label'  
                 ],
@@ -53,7 +53,7 @@ class CompanyType extends AbstractType
                 ]
             ])
             ->add('Country', TextType::class, [
-                'required' => true,
+                'required' => false,
                 'label_attr' => [
                     'class' => 'control-label'  
                 ],
@@ -62,6 +62,7 @@ class CompanyType extends AbstractType
                 ]
             ])
             ->add('email', EmailType::class, [
+                'required' => false,
                 'label_attr' => [
                     'class' => 'control-label'  
                 ],
@@ -79,7 +80,7 @@ class CompanyType extends AbstractType
                 ]
             ])
             ->add('token', TextType::class, [
-                'required' => false,
+                'required' => true,
                 'label_attr' => [
                     'class' => 'control-label'  
                 ],

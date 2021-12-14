@@ -5,10 +5,13 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CompanyRepository")
+ * @UniqueEntity(fields={"name"})
+ * @UniqueEntity(fields={"token"})
  */
 class Company
 {
@@ -26,32 +29,27 @@ class Company
     private $name;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=false)
-     * @Assert\NotBlank()
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $address;
 
     /**
-     * @ORM\Column(type="integer", nullable=false)
-     * @Assert\NotBlank()
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $zipCode;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=false)
-     * @Assert\NotBlank()
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $city;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=false)
-     * @Assert\NotBlank()
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $Country;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=false)
-     * @Assert\NotBlank()
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $email;
 
@@ -76,8 +74,9 @@ class Company
     private $tasks;
 
     /**
-     * @ORM\Column(type="string", length=12, nullable=true)
-     * @Assert\Length(min="0", max="8")
+     * @ORM\Column(type="string", length=12, nullable=false, unique=true)
+     * @Assert\Length(min="0", max="20")
+     * @Assert\NotBlank()
      */
     private $token;
 
