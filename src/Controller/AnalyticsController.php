@@ -58,6 +58,15 @@ class AnalyticsController extends AbstractController
             // We get all times according to data form
             $times = $this->em->getRepository(Time::class)->getTimes($company, $projectsData, $tasksData, $usersData, $form['startTime']->getData(), $form['endTime']->getData());
 
+            if ($form->get('export')->isClicked()) {
+                $content = $analyticsServices->exportTimesToCSV($times);
+
+                $response = new Response($content);
+                $response->headers->set('Content-Type', 'text/csv');
+
+                return $response;
+            }
+
             return $this->render('page/analytics/results.html.twig', [
                 'times' => $times,
                 'projects' => $analyticsServices->analyzePerProjects($projectsData, $tasksData, $usersData, $times),
