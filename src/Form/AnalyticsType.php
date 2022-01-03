@@ -68,29 +68,36 @@ class AnalyticsType extends AbstractType
                 ]);
             }
 
-            $builder->add('startTime', DateType::class, [
-                'widget' => 'single_text',
-                'data' => new \DateTime(),
-                'required' => false,
-                'html5' => true,
-                'format' => 'yyyy-MM-dd',
-            ])
-            ->add('endTime', DateType::class, [
-                'widget' => 'single_text',
-                'data' => new \DateTime(),
-                'required' => false,
-                'html5' => true,
-                'format' => 'yyyy-MM-dd',
-            ])
-            ->add('forever', CheckboxType::class, [
-                'label' => 'No time limit',
-                'required' => false
-            ])
-            ->add('calculate', SubmitType::class, [
-                'attr' => [
-                    'class' => 'btn btn-primary'
-                ]
-            ]);
+            $builder
+                ->add('startTime', DateType::class, [
+                    'widget' => 'single_text',
+                    'data' => new \DateTime(),
+                    'required' => false,
+                    'html5' => true,
+                    'format' => 'yyyy-MM-dd',
+                ])
+                ->add('endTime', DateType::class, [
+                    'widget' => 'single_text',
+                    'data' => new \DateTime(),
+                    'required' => false,
+                    'html5' => true,
+                    'format' => 'yyyy-MM-dd',
+                ])
+                ->add('forever', CheckboxType::class, [
+                    'label' => 'No time limit',
+                    'required' => false
+                ])
+                ->add('visualize', SubmitType::class, [
+                    'attr' => [
+                        'class' => 'btn btn-primary'
+                    ]
+                ])
+                ->add('export', SubmitType::class, [
+                    'attr' => [
+                        'class' => 'btn btn-secondary'
+                    ]
+                ])
+            ;
     }
 
     public function configureOptions(OptionsResolver $resolver)

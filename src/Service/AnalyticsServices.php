@@ -170,7 +170,26 @@ class AnalyticsServices
         return $stats;
     }
 
-    public function timeToHours(Time $time): float
+    public function exportTimesToCSV(array $times)
+    {
+        $rows = [];
+        /** @var Time $time */
+        foreach ($times as $time) {
+            $data = [
+                $time->getProject()->getName(),
+                $time->getTask()->getName(),
+                $time->getUser()->getEmail() . ' [' . $time->getUser()->getUsername() . ']',
+                $time->getStartTime()->format('d/m/Y H:i'),
+                $time->getEndTime()->format('d/m/Y H:i')
+            ];
+
+            $rows[] = implode(',', $data);
+        }
+
+        return implode("\n", $rows);
+    }
+
+    private function timeToHours(Time $time): float
     {
         $diff = $time->getEndTime()->getTimestamp() - $time->getStartTime()->getTimestamp();
 
