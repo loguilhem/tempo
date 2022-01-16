@@ -42,7 +42,7 @@
 		<ul class="app-menu">
 			{% for company in app.user.companies %}
 				<li>
-					{% if app.request.cookies.get('_company') != company.id %}
+					{% if app.session.get('_company') != company.id %}
 						<a class="app-menu__item" href="{{ path('company_select', {'company': company.id}) }}">
 							<span class="app-menu__label">{{ company.name }}</span>
 						</a>

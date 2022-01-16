@@ -10,6 +10,7 @@ use App\Entity\Project;
 use App\Entity\Task;
 use App\Entity\Time;
 use App\Form\TimeType;
+use App\Service\MobileService;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -74,7 +75,8 @@ class TimeController extends AbstractController
     public function add(
         Request $request,
         FlashBagInterface $flashBag,
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
+        MobileService $mobileService
     )
     {
         $user = $this->getUser();
@@ -85,7 +87,8 @@ class TimeController extends AbstractController
             ]),
             'tasks' => $this->em->getRepository(Task::class)->findBy([
                 'company' => $this->companySession
-            ])
+            ]),
+            'isMobile' => $mobileService->isMobile($request)
         ]);
         $form->handleRequest($request);
 
@@ -113,7 +116,8 @@ class TimeController extends AbstractController
         Request $request,
         Time $time,
         FlashBagInterface $flashBag,
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
+        MobileService $mobileService
     )
     {
         $this->denyAccessUnlessGranted('edit', $time);
@@ -124,7 +128,8 @@ class TimeController extends AbstractController
             ]),
             'tasks' => $this->em->getRepository(Task::class)->findBy([
                 'company' => $this->companySession
-            ])
+            ]),
+            'isMobile' => $mobileService->isMobile($request)
         ]);
         $form->handleRequest($request);
 
