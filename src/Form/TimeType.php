@@ -21,7 +21,13 @@ class TimeType extends AbstractType
      * {@inheritdoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
-    {        
+    {
+
+        $datetimeWidget = 'single_text';
+        if ($options['isMobile']) {
+            $datetimeWidget = 'choice';
+        }
+
         $builder
             ->add('project', EntityType::class, [
                 'class' => Project::class,
@@ -40,19 +46,17 @@ class TimeType extends AbstractType
                 'choices' => $options['tasks'],
                 'expanded' => false,
                 'multiple' => false,
-                'choice_label' => function($task) {
-                    return $task->getName();
-                },
+                'choice_label' => 'name',
                 'attr' => [
                     'class' => 'select2',
                 ],
             ])
             ->add('startTime', DateTimeType::class, [
-                    'widget' => 'single_text',
-                    'required' => true,
+                'widget' => $datetimeWidget,
+                'required' => true,
             ])
             ->add('endTime', DateTimeType::class, [
-                'widget' => 'single_text',
+                'widget' => $datetimeWidget,
                 'required' => true,
             ])
             ->add('save', SubmitType::class, [
@@ -67,12 +71,13 @@ class TimeType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => Time::class,
             'projects' => [],
             'tasks' => [],
             'translation_domain' => 'forms',
-        ));
+            'isMobile' => false
+        ]);
     }
 
     /**
